@@ -1,0 +1,90 @@
+<!DOCTYPE CrossStudio_Session_File>
+<session>
+ <Bookmarks/>
+ <Breakpoints groups="Breakpoints" active_group="Breakpoints">
+  <Exceptions set="MemManage;UsageFault_Coprocessor;UsageFault_CheckingError;UsageFault_StateError;BusFault;ExceptionEntryReturnFault;HardFault"/>
+ </Breakpoints>
+ <ExecutionProfileWindow/>
+ <FrameBufferWindow>
+  <FrameBufferWindow bufferHeight="-1" addressSpace="" addressText="" bufferWidth="-1"/>
+ </FrameBufferWindow>
+ <Memory1>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="GDCartReader" sizeText="" addressText=""/>
+ </Memory1>
+ <Memory2>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="GDCartReader" sizeText="" addressText=""/>
+ </Memory2>
+ <Memory3>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="GDCartReader" sizeText="" addressText=""/>
+ </Memory3>
+ <Memory4>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="GDCartReader" sizeText="" addressText=""/>
+ </Memory4>
+ <Project>
+  <ProjectSessionItem path="GDCartReader"/>
+  <ProjectSessionItem path="GDCartReader;GDCartReader"/>
+  <ProjectSessionItem path="GDCartReader;GDCartReader;CMSIS Files"/>
+  <ProjectSessionItem path="GDCartReader;GDCartReader;Script Files"/>
+  <ProjectSessionItem path="GDCartReader;GDCartReader;Source Files"/>
+  <ProjectSessionItem path="GDCartReader;GDCartReader;Source Files;Fatfs"/>
+  <ProjectSessionItem path="GDCartReader;GDCartReader;System Files"/>
+ </Project>
+ <Register1>
+  <RegisterWindow visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/MSP;CPU/PSP;CPU/PRIMASK;CPU/BASEPRI;CPU/FAULTMASK;CPU/CONTROL;CPU/internal" binaryNodes="" asciiNodes="" openNodes="CPU - Current Context" name="GDCartReader" decimalNodes="" octalNodes="" unsignedNodes=""/>
+ </Register1>
+ <Register2>
+  <RegisterWindow visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/MSP;CPU/PSP;CPU/PRIMASK;CPU/BASEPRI;CPU/FAULTMASK;CPU/CONTROL;CPU/internal" binaryNodes="" asciiNodes="" openNodes="CPU - Current Context" name="GDCartReader" decimalNodes="" octalNodes="" unsignedNodes=""/>
+ </Register2>
+ <Register3>
+  <RegisterWindow visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/MSP;CPU/PSP;CPU/PRIMASK;CPU/BASEPRI;CPU/FAULTMASK;CPU/CONTROL;CPU/internal" binaryNodes="" asciiNodes="" openNodes="CPU - Current Context" name="GDCartReader" decimalNodes="" octalNodes="" unsignedNodes=""/>
+ </Register3>
+ <Register4>
+  <RegisterWindow visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/MSP;CPU/PSP;CPU/PRIMASK;CPU/BASEPRI;CPU/FAULTMASK;CPU/CONTROL;CPU/internal" binaryNodes="" asciiNodes="" openNodes="CPU - Current Context" name="GDCartReader" decimalNodes="" octalNodes="" unsignedNodes=""/>
+ </Register4>
+ <Threads>
+  <ThreadsWindow showLists=""/>
+ </Threads>
+ <TraceWindow>
+  <Trace enabled="Yes"/>
+ </TraceWindow>
+ <Watch1>
+  <Watches active="1" update="Never">
+   <Watchpoint expression="sdBuffer" name="sdBuffer" radix="-1" linenumber="1940" filename="GBA.c"/>
+  </Watches>
+ </Watch1>
+ <Watch2>
+  <Watches active="0" update="Never"/>
+ </Watch2>
+ <Watch3>
+  <Watches active="0" update="Never"/>
+ </Watch3>
+ <Watch4>
+  <Watches active="0" update="Never"/>
+ </Watch4>
+ <Files>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="397" useTextEdit="1" path="main.c" left="0" top="351" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="40" y="279" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/main.c" path="fatfs/sdcard.c" left="0" top="253" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="29" y="8" useTextEdit="1" path="GB.h" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="94" useTextEdit="1" path="GB.c" left="0" selected="1" top="61" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="1986" useTextEdit="1" path="GBA.c" left="0" top="1924" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="30" y="11" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/GBA.c" path="GBA.h" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="36" y="64" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/GB.c" path="Common.h" left="0" top="4" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="113" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/GBA.c" path="Common.c" left="0" top="54" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="19" y="417" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/main.c" path="Operate.c" left="0" top="383" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="31" y="842" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/GBA.c" path="Display.c" left="0" top="818" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="10" y="41" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/GBA.c" path="Display.h" left="0" top="6" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="23" y="22" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/Operate.c" path="Operate.h" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="24" y="201" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/fatfs/diskio.c" path="fatfs/sdcard.h" left="0" top="169" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="4541" useTextEdit="1" path="fatfs/ff.c" left="0" top="4523" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="8" y="389" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/GB.c" path="fatfs/ff.h" left="0" top="354" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="15" y="153" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/GBA.c" path="GD32F10x/Device/Source/gd32f10x_gpio.c" left="0" top="132" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="26" y="623" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/Common.c" path="CMSIS_5/CMSIS/Core/Include/cmsis_gcc.h" left="0" top="588" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="25" y="904" useTextEdit="1" path="GBM.c" left="0" top="868" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="29" y="9" useTextEdit="1" path="GBM.h" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="24" y="313" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/GBA.c" path="GD32F10x/Device/Include/gd32f10x_gpio.h" left="0" top="289" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="8" y="323" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/GBA.c" path="GD32F10x/Device/Include/gd32f10x.h" left="0" top="261" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="241" useTextEdit="1" path="GD32F10x/Source/GD32F10x_Startup.s" left="0" top="219" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="32" y="83" useTextEdit="1" path="GDCartReader.emProject" left="0" top="50" codecName="Default"/>
+ </Files>
+ <EMStudioWindow activeProject="GDCartReader" fileDialogDefaultFilter="*" autoConnectTarget="J-Link" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="E:/work/??cartreader/new/GDCartReader/SEGGER_THUMB_Startup.s&#xa;" fileDialogInitialDirectory="E:/work/GZcartreader/new/GDCartReader/GD32F10x/Device/Source" debugSearchPath="" autoConnectCapabilities="3199"/>
+</session>

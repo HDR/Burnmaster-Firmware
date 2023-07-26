@@ -1,0 +1,112 @@
+<!DOCTYPE CrossStudio_Project_File>
+<solution Name="GDCartReader" target="8" version="2">
+  <project Name="GDCartReader">
+    <configuration
+      LIBRARY_IO_TYPE="RTT"
+      Name="Common"
+      Target="GD32F103VC"
+      arm_architecture="v7M"
+      arm_compiler_variant="SEGGER"
+      arm_core_type="Cortex-M3"
+      arm_endian="Little"
+      arm_fp_abi="Soft"
+      arm_fpu_type="None"
+      arm_linker_heap_size="0"
+      arm_linker_process_stack_size="0"
+      arm_linker_stack_size="2048"
+      arm_linker_variant="SEGGER"
+      arm_rtl_variant="SEGGER"
+      arm_target_debug_interface_type="ADIv5"
+      arm_target_device_name="GD32F103VC"
+      arm_target_interface_type="SWD"
+      c_preprocessor_definitions="GD32F10X_HD USE_STDPERIPH_DRIVER;__GD32F10X_FAMILY;__GD32F103_SUBFAMILY;ARM_MATH_CM3;__NO_FPU_ENABLE"
+      c_user_include_directories="$(ProjectDir)/CMSIS_5/CMSIS/Core/Include;$(ProjectDir)/GD32F10x/Device/Include"
+      debug_register_definition_file="$(ProjectDir)/GD32F10x_HD_Registers.xml"
+      debug_stack_pointer_start="__stack_end__"
+      debug_start_from_entry_point_symbol="Yes"
+      debug_target_connection="J-Link"
+      gcc_entry_point="Reset_Handler"
+      link_linker_script_file="$(ProjectDir)/GD32F10x_Flash.icf"
+      linker_memory_map_file="$(ProjectDir)/GD32F103VC_MemoryMap.xml"
+      linker_output_format="hex"
+      linker_printf_fp_enabled="Float"
+      macros="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceLibraryIdentifier=M3l;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103;Target=GD32F103VC"
+      project_directory=""
+      project_type="Executable"
+      target_reset_script="Reset();"
+      target_trace_initialize_script="EnableTrace(&quot;$(TraceInterfaceType)&quot;)" />
+    <folder Name="CMSIS Files">
+      <file file_name="GD32F10x/Device/Include/gd32f10x.h" />
+      <file file_name="GD32F10x/Device/Source/system_gd32f10x.c">
+        <configuration
+          Name="Common"
+          default_code_section=".init"
+          default_const_section=".init_rodata" />
+      </file>
+    </folder>
+    <folder Name="Script Files">
+      <file file_name="GD32F10x/Scripts/GD32F10x_Target.js">
+        <configuration Name="Common" file_type="Reset Script" />
+      </file>
+    </folder>
+    <folder Name="Source Files">
+      <configuration Name="Common" filter="c;cpp;cxx;cc;h;s;asm;inc" />
+      <file file_name="main.c" />
+      <folder Name="Fatfs">
+        <file file_name="fatfs/diskio.c" />
+        <file file_name="fatfs/diskio.h" />
+        <file file_name="fatfs/ff.c" />
+        <file file_name="fatfs/ff.h" />
+        <file file_name="fatfs/ffconf.h" />
+        <file file_name="fatfs/ffsystem.c" />
+        <file file_name="fatfs/ffunicode.c" />
+        <file file_name="fatfs/sdcard.c" />
+        <file file_name="fatfs/sdcard.h" />
+      </folder>
+      <file file_name="GD32F10x/Device/Source/gd32f10x_gpio.c" />
+      <file file_name="GD32F10x/Device/Source/gd32f10x_rcu.c" />
+      <file file_name="GD32F10x/Device/Source/gd32f10x_i2c.c" />
+      <file file_name="main.h" />
+      <file file_name="Display.c" />
+      <file file_name="Display.h" />
+      <file file_name="Operate.c" />
+      <file file_name="Operate.h" />
+      <file file_name="Common.c" />
+      <file file_name="Common.h" />
+      <file file_name="GB.c" />
+      <file file_name="GB.h" />
+      <file file_name="GD32F10x/Device/Source/gd32f10x_sdio.c" />
+      <file file_name="GD32F10x/Device/Source/gd32f10x_dma.c" />
+      <file file_name="flashparam.h" />
+      <file file_name="flashparam.c" />
+      <file file_name="GD32F10x/Device/Source/gd32f10x_fmc.c" />
+      <file file_name="GBA.c" />
+      <file file_name="GBA.h" />
+      <file file_name="GBM.c" />
+      <file file_name="GBM.h" />
+    </folder>
+    <folder Name="System Files">
+      <file file_name="SEGGER_THUMB_Startup.s" />
+      <file file_name="GD32F10x/Source/GD32F10x_Startup.s" />
+      <file file_name="GD32F10x/Source/gd32f10x_hd_Vectors.s">
+        <configuration Name="Common" file_type="Assembly" />
+      </file>
+    </folder>
+    <configuration
+      Name="Release"
+      arm_linker_stack_size="3000"
+      linker_output_format="bin" />
+  </project>
+  <configuration
+    Name="Debug"
+    c_preprocessor_definitions="DEBUG"
+    gcc_debugging_level="Level 3"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="None" />
+  <configuration
+    Name="Release"
+    c_preprocessor_definitions="NDEBUG"
+    gcc_debugging_level="Level 2"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="Level 2 balanced" />
+</solution>
