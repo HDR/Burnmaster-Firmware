@@ -16,17 +16,22 @@ jobs:
           
       - name: Install EmeddedStudio
         run: |
-            wget https://dl.a.segger.com/embedded-studio/Setup_EmbeddedStudio_ARM_v730_linux_x64.tar.gz
-            tar -xvf Setup_EmbeddedStudio_ARM_v730_linux_x64.tar.gz
-            cd arm_segger_embedded_studio_v730_linux_x64/
+            wget https://www.segger.com/downloads/embedded-studio/Setup_EmbeddedStudio_ARM_v622a_linux_x64.tar.gz
+            tar -xvf Setup_EmbeddedStudio_ARM_v622a_linux_x64.tar.gz
+            cd arm_segger_embedded_studio_v622a_linux_x64/
             sudo ./install_segger_embedded_studio --minimal-install --accept-license --copy-files-to .
         
       - name: Compile Firmware
         run: |
-            cd arm_segger_embedded_studio_v730_linux_x64/bin
-            ./emBuild -config "Release" ${{ github.workspace }}//Burnmaster-Firmware/GDCartReader.emProject
+            cd arm_segger_embedded_studio_v622a_linux_x64/bin
+            ./emBuild -config "Debug" ${{ github.workspace }}//Burnmaster-Firmware/GDCartReader.emProject
+            
+      - name: ELF2Bin
+        run: |
+            cd arm_segger_embedded_studio_v622a_linux_x64/gcc/arm-none-eabi/bin
+            ./objcopy ${{ github.workspace }}//Burnmaster-Firmware/Output/Debug/Exe/GDCartReader.elf ${{ github.workspace }}//Burnmaster-Firmware/Output/Debug/Exe/update.bin -Obinary
           
       - uses: actions/upload-artifact@v3
         with:
           name: Burnmaster-Firmware
-          path: ${{ github.workspace }}//Burnmaster-Firmware/Output/Release/Exe/GDCartReader.bin
+          path: ${{ github.workspace }}//Burnmaster-Firmware/Output/Debug/Exe/update.bin

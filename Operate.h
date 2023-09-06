@@ -29,6 +29,6 @@ uint8_t checkButton();
 void WaitOKBtn();
 
 // Display a question box with selectable answers. Make sure default choice is in (0, num_answers]
-unsigned char questionBox_OLED(char * question, const char* const answers[7], int num_answers, int default_choice, uint8_t rollselect);
+unsigned char questionBox_OLED(char * question, const char* const answers[7], int num_answers, int default_choice, uint8_t rollselect, uint8_t clrSrc);
 uint8_t my_mkdir(char * dir);
 void fileBrowser(char * start_dir , const char * browserTitle);

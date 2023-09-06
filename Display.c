@@ -664,7 +664,7 @@ void OledShowChar(uint8_t x,uint8_t y,uint8_t chr,uint8_t Char_Size)
 
 
 //显示一个字符串
-void OledShowString(uint8_t x,uint8_t y,char *str,uint8_t Char_Size)
+uint8_t OledShowString(uint8_t x,uint8_t y,char *str,uint8_t Char_Size)
 {
   unsigned char j=0;
   
@@ -682,14 +682,34 @@ void OledShowString(uint8_t x,uint8_t y,char *str,uint8_t Char_Size)
       x+=(Char_Size >> 1) + 2;
       if(x>120)
       {
-        x=0;
-        y+=1;
+        return 1;
+        //x=0;
+        //y+=1;
       }
     }
     j++;//移动一次就是一个page，取值0-7
   }
+  OledShowChar(x,y,' ',Char_Size);
+  return  0;
 }
  
+
+//在指定位置显示一个图片
+ void OledShowPicData(uint8_t x,uint8_t y,uint8_t wdt,uint8_t hgt,uint8_t *pPicData)
+ {
+    uint8_t i = 0,j = 0;
+    uint8_t real_wdt = (x+wdt > 127)?(128-x):wdt;
+    uint8_t real_hgt = (y+hgt > 7)?(8-y):hgt;
+    
+    for(i = 0;i<real_hgt;i++)
+    {
+        OledSetPos(x,y+i);
+        for(j = 0;j<real_wdt;j++)
+        {
+            SSD1306_WriteData(pPicData[i*wdt + j]);
+        }
+    }
+ }
 
 
  void OledInit(void)
@@ -842,7 +862,7 @@ void showPersent(uint32_t processed, uint32_t total, uint8_t x, uint8_t line)
 
   if(processed == 0)oripst = 0;
 
-  if(tpst > oripst && tpst <= 100)
+  if(tpst != oripst && tpst <= 100)
   {
     oripst = tpst;
     sprintf(szt,"%d%%",tpst);

@@ -773,6 +773,51 @@ unsigned long verifySRAM_GBA(unsigned long sramSize, uint32_t pos)
 }
 
 
+void TestSRAM_GBA(unsigned long sramSize)
+{
+  //
+  OledClear();
+  //
+  OledShowString(0,0,"Start SRAM testing...",8);
+  OledShowString(0,1,"write:",8);
+
+  //
+  setAddrOutMode();
+  for (unsigned long currAddress = 0; currAddress < sramSize; currAddress++) 
+  {
+    //fill sdBuffer
+    byte wb = currAddress & 0xFF;
+    // Write byte
+    writeByte_GBA(currAddress, wb);
+    if(wb == 0xFF)showPersent(currAddress,sramSize,36,1);
+  }
+  showPersent(1,1,36,1);
+  OledShowString(68,1,"read:",8);
+
+
+  setAddrOutMode();
+  uint32_t wErrors = 0;
+  for (unsigned long currAddress = 0; currAddress < sramSize; currAddress++) {
+    // Read byte
+    byte bt = currAddress & 0xFF;
+    byte br = readByte_GBA(currAddress);
+    //printf("\r\n%02x",bt);
+    if (bt != br) {
+      wErrors++;
+    }
+    if(bt == 0xFF)showPersent(currAddress,sramSize,96,1);
+  }
+  showPersent(1,1,96,1);
+  char msgbuf[64] = {0};
+  if(wErrors > 0){
+    //
+    sprintf(msgbuf,"Error %d bytes...",wErrors);
+  }else{
+    //
+    strcpy(msgbuf,"RAM Test ok!");
+  }
+  OledShowString(0,2,msgbuf,8);
+}
 
 
 /******************************************
@@ -1645,7 +1690,7 @@ void idFlashrom_GBA()
     sprintf(flashid, "%02X%02X", ((readWord_GAB(0x2) >> 8) & 0xFF), (readWord_GAB(0x2) & 0xFF));
 
     // MX29GL128E or MSP55LV128
-    if (strcmp(flashid, "227E") == 0) {
+    if (strcmp(flashid, "227E") == 0 || strcmp(flashid, "227A") == 0) {
       // MX is 0xC2 and MSP is 0x4 or 0x1
       romType = (readWord_GAB(0x0) & 0xFF);
       cartSize = 0x1000000;
@@ -1864,10 +1909,8 @@ void eraseIntel4400_GBA()
 
 #define deley_us_lv128 (1)
 
-void sectorEraseMSP55LV128_GBA() 
+void sectorEraseMSP55LV128_GBA(unsigned long lastSector) 
 {
-  unsigned long lastSector = 0xFFFFFF;
-
   // Erase 256 sectors with 64kbytes each
   unsigned long currSector;
   for (currSector = 0x0; currSector < lastSector; currSector += 0x10000) {
@@ -1905,10 +1948,47 @@ void sectorEraseMSP55LV128_GBA()
 
 
 
+void sectorEraseTest_GBA(unsigned long lastSector) 
+{
+  // Erase 256 sectors with 64kbytes each
+  unsigned long currSector;
+  for (currSector = 0x0; currSector < lastSector; currSector += 0x10000) {
+    writeWord_GAB(0xAAA, 0xAA);
+    delayMicroseconds(deley_us_lv128);   
+    writeWord_GAB(0x555, 0x55);
+    delayMicroseconds(deley_us_lv128);   
+    writeWord_GAB(0xAAA, 0x80);
+    delayMicroseconds(deley_us_lv128);   
+    writeWord_GAB(0xAAA, 0xAA);
+    delayMicroseconds(deley_us_lv128);   
+    writeWord_GAB(0x555, 0x55);
+    delayMicroseconds(deley_us_lv128);     
+    writeWord_GAB(currSector, 0x30);
+    delayMicroseconds(deley_us_lv128);    
 
-void sectorEraseMX29GL128E_GBA() {
-  unsigned long lastSector = 0xFFFFFF;
+    // Blink LED
+    LED_RED_BLINK;
+    showPersent(currSector,lastSector,88,4);
 
+    // Read the status register
+    word statusReg = readWord_GAB(currSector);
+    while ((statusReg | 0xFF7F) != 0xFFFF) {
+    
+      delayMicroseconds(deley_us_lv128);        
+      statusReg = readWord_GAB(currSector);
+    }
+
+    delayMicroseconds(deley_us_lv128); 
+
+  }
+
+   showPersent(1,1,88,4);
+}
+
+
+
+void sectorEraseMX29GL128E_GBA(unsigned long lastSector) 
+{
   // Erase 128 sectors with 128kbytes each
   unsigned long currSector;
   for (currSector = 0x0; currSector < lastSector; currSector += 0x20000) {
@@ -2125,6 +2205,9 @@ void writeMSP55LV128_GBA(FIL * ptf)
   showPersent(1,1,68,3);
 }
 
+
+
+
 void writeMX29GL128E_GBA(FIL * ptf) 
 {
   for (unsigned long currSector = 0; currSector < fileSize; currSector += 0x20000) 
@@ -2151,14 +2234,16 @@ void writeMX29GL128E_GBA(FIL * ptf)
 
         // Write buffer
         word currWord;
-        for (byte currByte = 0; currByte < 64; currByte += 2) {
+        for (byte cnt = 0; cnt < 64; cnt ++) {
           // Join two bytes into one word
-          currWord = ( ( sdBuffer[currWriteBuffer + currByte + 1] & 0xFF ) << 8 ) | ( sdBuffer[currWriteBuffer + currByte] & 0xFF );
-          writeWord_GBA(currSector + currSdBuffer + currWriteBuffer + currByte, currWord);
+          currWord = ((word *)sdBuffer)[currWriteBuffer>>1 + cnt];
+          writeWord_GBA(currSector + currSdBuffer + currWriteBuffer + cnt*2, currWord);
         }
 
         // Confirm write buffer
+        delay(1);
         writeWord_GAB(currSector, 0x29);
+        delay(1);
 
         // Read the status register
         word statusReg = readWord_GAB(currSector + currSdBuffer + currWriteBuffer + 62);
@@ -2281,6 +2366,39 @@ boolean verifyFlashrom_GBA_new()
 
 
 
+boolean verifyFlashromTest_GBA(uint32_t testSize) 
+{
+  word wWord = 0;
+  uint32_t wErrors = 0;
+  for (unsigned long currSector = 0; currSector < testSize; currSector += 131072) 
+  {
+    // Blink led
+    LED_GREEN_BLINK;
+    showPersent(currSector,fileSize,96,6);
+    for (unsigned long currSdBuffer = 0; currSdBuffer < 131072; currSdBuffer += 512) 
+    {
+      readWord_buf_GBA(currSector + currSdBuffer,tbuf,256);
+      for (int i = 0; i < (512>>1); i++) 
+      {
+        // Join two bytes into one word
+        if (tbuf[i] != (wWord & 0x7FFF)) {
+          wErrors++;
+          return 0;
+        }
+        wWord++;
+      }
+    }
+  }
+  showPersent(1,1,96,6);
+  if (wErrors == 0) {
+    return 1;
+  }
+  else {
+    return 0;
+  }
+}
+
+
 
 void flashRepro_GBA() 
 {
@@ -2292,11 +2410,11 @@ void flashRepro_GBA()
   OledClear();
   idFlashrom_GBA();
 
-  if ((strcmp(flashid, "8802") == 0) || (strcmp(flashid, "8816") == 0) || (strcmp(flashid, "227E") == 0)) 
+  if ((strcmp(flashid, "8802") == 0) || (strcmp(flashid, "8816") == 0) || (strcmp(flashid, "227E") == 0) || (strcmp(flashid, "227A") == 0)) 
   {
     sprintf(tmsg,"ID:%s size:%d MB.",flashid,cartSize / 0x100000);
     // MX29GL128E or MSP55LV128(N)
-    if (strcmp(flashid, "227E") == 0) 
+    if (strcmp(flashid, "227E") == 0 || strcmp(flashid, "227A") == 0) 
     {
       // MX is 0xC2 and MSP55LV128 is 0x4 and MSP55LV128N 0x1
       if (romType == 0xC2) {
@@ -2356,7 +2474,7 @@ void flashRepro_GBA()
         eraseIntel4400_GBA();
         resetIntel_GBA(0x200000);
       }
-      else if (strcmp(flashid, "227E") == 0) {
+      else if (strcmp(flashid, "227E") == 0 || strcmp(flashid, "227A") == 0) {
         //if (sectorCheckMX29GL128E_GBA()) {
         //print_Error(F("Sector Protected"), true);
         //}
@@ -2367,13 +2485,13 @@ void flashRepro_GBA()
           //MX29GL128E
           //PC28F256M29 (0x89)
           
-          sectorEraseMX29GL128E_GBA();
+          sectorEraseMX29GL128E_GBA(fileSize - 1);
           
         }
         else if ((romType == 0x1) || (romType == 0x4)) {
           //MSP55LV128(N)
           //#ifndef TEST_MY_CART
-          sectorEraseMSP55LV128_GBA();
+          sectorEraseMSP55LV128_GBA(fileSize - 1);
           //#endif
         }
         //}
@@ -2397,7 +2515,7 @@ void flashRepro_GBA()
         OledShowString(0,1,"Intel 4x00",8);
         writeIntel4000_GBA(&tf);
       }
-      else if (strcmp(flashid, "227E") == 0) 
+      else if (strcmp(flashid, "227E") == 0 || strcmp(flashid, "227A") == 0) 
       {
         if ((romType == 0xC2) || (romType == 0x89) || (romType == 0x20)) {
           //MX29GL128E (0xC2)
@@ -2433,7 +2551,7 @@ void flashRepro_GBA()
         resetIntel_GBA(0x200000);
         delay(1000);
       }
-      else if (strcmp(flashid, "227E") == 0) 
+      else if (strcmp(flashid, "227E") == 0 || strcmp(flashid, "227A") == 0) 
       {
         resetMX29GL128E_GBA();
         delay(1000);
@@ -2458,12 +2576,162 @@ void flashRepro_GBA()
       */
 
 
-      use_tick = (getSystick() - use_tick)/1000;
+      use_tick = (getSystick() - use_tick)/1055;
       sprintf(tmsg,"Use Time: %d(s)",use_tick);
       OledShowString(10,6,tmsg,8);
     }
     else {
       print_Error("Can't open file!", true);
+    }
+  }
+  else 
+  {
+    sprintf(tmsg,"Error!\nUnknown Flash!\nFlash ID: %s",flashid);
+    OledShowString(0,0,tmsg,8);
+    print_Error("Check voltage?", true);
+  }
+}
+
+
+
+
+
+
+void writeTEST_GBA(uint32_t testSize) 
+{
+
+  for (unsigned long currSector = 0; currSector < testSize; currSector += 0x10000) 
+  {
+    // Blink led
+    LED_BLUE_BLINK;
+    showPersent(currSector,testSize,88,5);
+    word wWord = 0;
+    word tw = 0;
+
+    // Write to flashrom
+    for (unsigned long currSdBuffer = 0; currSdBuffer < 0x10000; currSdBuffer += 32) 
+    {
+        _reProgram:
+        // Write Buffer command
+        writeWord_GAB(0xAAA, 0xAA);
+        delayMicroseconds(deley_us_lv128);
+        writeWord_GAB(0x555, 0x55);
+        delayMicroseconds(deley_us_lv128);
+        writeWord_GAB(currSector, 0x25);
+        delayMicroseconds(deley_us_lv128);
+
+        // Write word count (minus 1)
+        writeWord_GAB(currSector, 0xF);
+
+        // Write buffer
+        for (byte currByte = 0; currByte < 32; currByte+=2) 
+        {
+          // Join two bytes into one word
+          delayMicroseconds(deley_us_lv128);
+          tw = wWord;
+          writeWord_GBA(currSector + currSdBuffer + currByte, wWord);
+          wWord++;  
+        }
+
+        delayMicroseconds(deley_us_lv128);
+        delayMicroseconds(deley_us_lv128);
+        // Confirm write buffer
+        writeWord_GAB(currSector, 0x29);
+
+        delayMicroseconds(deley_us_lv128);
+        delayMicroseconds(deley_us_lv128);
+
+
+        // Read the status register
+        word statusReg = readWord_GAB(currSector + currSdBuffer + 30);
+       // int i= 0;
+
+
+        while ((statusReg | 0xFF7F) != (tw | 0xFF7F)) 
+        {
+          delayMicroseconds(deley_us_lv128);          
+          if(statusReg&0x22)
+          {            
+            statusReg = readWord_GAB(currSector + currSdBuffer + 30);
+            delayMicroseconds(deley_us_lv128);
+            
+            if((statusReg | 0xFF7F) != (tw | 0xFF7F))
+            {
+              //
+              if(statusReg&0x20)
+              {
+                writeWord_GAB(0xAAA, 0xAA);
+                delayMicroseconds(deley_us_lv128);
+                writeWord_GAB(0x555, 0x55);
+                delayMicroseconds(deley_us_lv128);
+                writeWord_GAB(0xAAA, 0xF0);
+
+                delay(1000);
+                printf("write err1!\n");
+
+                LED_BLUE_BLINK;
+                goto _reProgram;
+              }
+              else
+              if(statusReg&0x2)
+              {
+                //write buffer abort reset
+                writeWord_GAB(0xAAA, 0xAA);
+                delayMicroseconds(deley_us_lv128);
+                writeWord_GAB(0x555, 0x55);
+                delayMicroseconds(deley_us_lv128);
+                writeWord_GAB(0xAAA, 0xF0);
+
+                delay(1000);
+                printf("write err2!\n");
+
+                LED_BLUE_BLINK;
+                goto _reProgram;
+              }
+            }
+            else break;
+          }
+          else
+          {
+            //
+            statusReg = readWord_GAB(currSector + currSdBuffer + 30);
+          }
+        }
+        delayMicroseconds(deley_us_lv128); 
+      }
+  }
+  showPersent(1,1,88,5);
+}
+
+void flashTest_GBA(uint32_t testSize) 
+{
+  // Check flashrom ID's
+  char tmsg[100] = {0};
+
+  OledShowString(0,3,"Start ROM Testing...",8);
+  idFlashrom_GBA();
+
+  if (strcmp(flashid, "227E") == 0 && romType == 0x1) 
+  {
+    OledShowString(0,4,"Erasing ROM...",8);
+    sectorEraseTest_GBA(testSize - 1);
+
+    //Write flashrom
+    OledShowString(0,5,"Writing ROM...",8);
+    writeTEST_GBA(testSize);
+
+    // Verify
+    OledShowString(0,6,"Verifying ROM...",8);
+    resetMX29GL128E_GBA();
+    delay(888);
+
+    if (verifyFlashromTest_GBA(testSize) == 1)
+    {
+    }
+    else 
+    {
+      OledClear();
+      print_Error("verify ERROR!", true);
     }
   }
   else 
@@ -2542,6 +2810,26 @@ void setup_GBA()
 
 
 
+
+
+void TestMemGBA(boolean bFast)
+{
+  //
+  setup_GBA();
+  if(bFast){
+    TestSRAM_GBA(0x2000);
+    flashTest_GBA(0x20000);
+  }else{
+    TestSRAM_GBA(0x20000);
+    flashTest_GBA(0x2000000);
+  }
+  OledShowString(0,7,"Press OK Button...",8);
+  WaitOKBtn();
+  ResetSystem();
+}
+
+
+
 /******************************************
    Menu
  *****************************************/
@@ -2576,7 +2864,7 @@ uint8_t gbaMenu() {
   // create menu with title and 4 options to choose from
 
   uint8_t bret = 0;
-  unsigned char retMenu = questionBox_OLED("GBA Cart Reader", menuOptionsGBA, 6, 1, 1);
+  unsigned char retMenu = questionBox_OLED("GBA Cart Reader", menuOptionsGBA, 6, 1, 1, 1);
   char tmsg[32] = {0};
 
   // wait for user choice to come back from the question box menu
@@ -2602,7 +2890,7 @@ uint8_t gbaMenu() {
         case 0:
           // create submenu with title and 4 options to choose from
           {
-            unsigned char GBARomMenu = questionBox_OLED("Select ROM size", romOptionsGBA, 6, 1, 1);
+            unsigned char GBARomMenu = questionBox_OLED("Select ROM size", romOptionsGBA, 6, 1, 1, 1);
             // wait for user choice to come back from the question box menu
             switch (GBARomMenu)
             {
@@ -2678,7 +2966,7 @@ uint8_t gbaMenu() {
       if (saveType == 0) 
       {
         // create submenu with title and 6 options to choose from
-        unsigned char GBASaveMenu = questionBox_OLED("Select save type:", saveOptionsGBA, 6, 1, 1);
+        unsigned char GBASaveMenu = questionBox_OLED("Select save type:", saveOptionsGBA, 6, 1, 1, 1);
         // wait for user choice to come back from the question box menu
         switch (GBASaveMenu)
         {
@@ -2767,7 +3055,7 @@ uint8_t gbaMenu() {
       if (saveType == 0) 
       {
         // create submenu with title and 6 options to choose from
-        unsigned char GBASavesMenu = questionBox_OLED("Select save type:", saveOptionsGBA, 6, 1, 1);
+        unsigned char GBASavesMenu = questionBox_OLED("Select save type:", saveOptionsGBA, 6, 1, 1, 1);
         // wait for user choice to come back from the question box menu
         switch (GBASavesMenu)
         {
@@ -2946,7 +3234,7 @@ uint8_t gbaMenu() {
       {
        
         // create submenu with title and 7 options to choose from
-        unsigned char GBASaveMenu = questionBox_OLED("Select save type:", saveOptionsGBA, 6, 1, 1);
+        unsigned char GBASaveMenu = questionBox_OLED("Select save type:", saveOptionsGBA, 6, 1, 1, 1);
 
         // wait for user choice to come back from the question box menu
         switch (GBASaveMenu)

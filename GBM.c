@@ -790,7 +790,7 @@ uint8_t gbmMenu()
 {
   // create menu with title and 7 options to choose from
   uint8_t bret = 0;
-  unsigned char gbmMenu = questionBox_OLED("GB Memory Menu -", menuOptionsGBM, 7, 1, 1);
+  unsigned char gbmMenu = questionBox_OLED("GB Memory Menu -", menuOptionsGBM, 7, 1, 1, 1);
 
   // wait for user choice to come back from the question box menu
   switch (gbmMenu)

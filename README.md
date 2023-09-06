@@ -4,9 +4,11 @@ Based on Sanni's [cartreader](https://github.com/sanni/cartreader) firmware
 
 
 ## Building the firmware
-**Requires [SEGGER Embedded Studio](https://www.segger.com/products/development-tools/embedded-studio/)**
+**Requires [SEGGER Embedded Studio (6.22a recommended)](https://www.segger.com/products/development-tools/embedded-studio/)** 
 
-To build the firmware open `GDCartReader.emProject` in Embedded Studio, then right click `Project 'GDCartReader'` and click `Build` the compiled firmware can be found at either `ProjectFolder/Release/Exe/GDCartReader.bin` or `ProjectFolder/Debug/Exe/GDCartReader.bin` depending on your build configuration, rename the file to `update.bin`and put it on your SD Card to flash it to the burnmaster
+To build the firmware open `GDCartReader.emProject` in Embedded Studio, then right click `Project 'GDCartReader'` and click `Build` the compiled firmware can be found at `ProjectFolder/Debug/Exe/GDCartReader.elf`, you will need to run `SEGGER_INSTALL_DIRECTORY/gcc/arm-none-eabi/bin/objcopy ProjectFolder/Debug/Exe/GDCartReader.elf ProjectFolder/Debug/Exe/update.bin -Obinary` to get the update.bin, which can now be put at the root of your SD Card to update your BurnMaster
+
+**Alternatively** you can simply clone this repository and make your changes, Github will automatically build your firmware (See Actions Tab)
 
 ### Repository Notes:
 

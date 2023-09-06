@@ -30,7 +30,9 @@ void OledClear(void);
 //Char_Size:选择字体 16/12 
 void OledShowChar(uint8_t x,uint8_t y,uint8_t chr,uint8_t Char_Size);
 //显示一个字符串
-void OledShowString(uint8_t x,uint8_t y,char *str,uint8_t Char_Size);
+uint8_t OledShowString(uint8_t x,uint8_t y,char *str,uint8_t Char_Size);
+//显示一个位图
+void OledShowPicData(uint8_t x,uint8_t y,uint8_t wdt,uint8_t hgt,uint8_t *pPicData);
 //初始化
 void OledInit(void);
 

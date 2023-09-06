@@ -32,7 +32,7 @@ uint8_t keyState()
 uint8_t checkButton()
 {
   uint8_t keycode = keyState();
-  delay(66);
+  delay(44);
 
   if(gpio_input_bit_get(GPIOB,GPIO_PIN_1) == RESET)
   {
@@ -67,12 +67,12 @@ void WaitOKBtn()
 
 
 // Display a question box with selectable answers. Make sure default choice is in (0, num_answers]
-unsigned char questionBox_OLED(char * question, const char* const answers[7], int num_answers, int default_choice, uint8_t rollselect) 
+unsigned char questionBox_OLED(char * question, const char* const answers[7], int num_answers, int default_choice, uint8_t rollselect, uint8_t clrSrc) 
 {
   
   
   //clear the screen
-  OledClear();
+  if(clrSrc > 0)OledClear();
 
   // change the rgb led to the start menu color
   //rgbLed(default_choice);
@@ -95,6 +95,11 @@ unsigned char questionBox_OLED(char * question, const char* const answers[7], in
   //unsigned long idleTime = millis();
   uint8_t currentColor = 0;
 
+  //
+  uint32_t scroll_tick = 0;
+  uint8_t scroll_start = 0;
+
+
   // wait until user makes his choice
   while (1) 
   {
@@ -115,9 +120,24 @@ unsigned char questionBox_OLED(char * question, const char* const answers[7], in
       rgbLed(currentColor);
     }*/
     int b = checkButton();
-    if(b!=BTNNONE)
+    if(b==BTNNONE)
+    {
+      //
+      scroll_tick = scroll_tick + 1;
+      if((scroll_tick > 14) && (scroll_tick%3 == 1))
+      {
+        //
+        if(OledShowString(6,choice,answers[choice - 1] + scroll_start,8) > 0)
+        {
+          scroll_start++;
+        }
+      }
+    }
+    else
     {
       printf("getKey-%d\n",b);
+      scroll_tick = 0;
+      scroll_start = 0;
     }
     
     if(b==BTNLEFT)
@@ -197,6 +217,7 @@ unsigned char questionBox_OLED(char * question, const char* const answers[7], in
     {
       //
       OledShowChar(0,choice_ori,' ',8);
+      OledShowString(6,choice_ori,answers[choice_ori-1],8);
       OledShowChar(0,choice,'*',8);
       choice_ori=choice;
     }
@@ -366,7 +387,7 @@ next_page:
 
 next_page1:
 
-  mret = questionBox_OLED((char *)browserTitle,(const char **)tanswers,menucnt,default_select,0);
+  mret = questionBox_OLED((char *)browserTitle,(const char **)tanswers,menucnt,default_select,0, 1);
   switch(mret)
   {
     case MENU_CANCEL:

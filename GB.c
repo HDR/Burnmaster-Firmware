@@ -785,7 +785,94 @@ unsigned long verifySRAM_GB() {
   return 0;
 }
 
+//检测sram
+void TestSramGB(byte bankCnt , word wTestSize)
+{
 
+  OledClear();
+  OledShowString(0,0,"start RAM testing...",8);
+  //
+  // Set pins to input
+  dataIn_GB();
+
+  // MBC2 Fix
+  readByte_GB(0x0134);
+
+  dataOut_GB();
+
+  // Enable SRAM for MBC1
+  if (romType <= 4) {
+    writeByte_GB(0x6000, 1);
+  }
+
+  // Initialise MBC
+  writeByte_GB(0x0000, 0x0A);
+
+  // Switch RAM banks
+  for (byte currBank = 0; currBank < bankCnt; currBank++) {
+    writeByte_GB(0x4000, currBank);
+
+    LED_GREEN_BLINK;
+    // Write RAM
+    for (word sramAddress = 0xA000; sramAddress <= wTestSize; sramAddress++) {
+      byte bdata = sramAddress & 0xFF;
+      writeByteSRAM_GB(sramAddress, bdata);      
+    }
+  }
+  // Disable SRAM
+  writeByte_GB(0x0000, 0x00);
+
+  // Set pins to input
+  dataIn_GB();
+
+
+
+  
+  // Variable for errors
+  int32_t wErrors = 0;
+
+  // MBC2 Fix
+  readByte_GB(0x0134);
+
+  // Check SRAM size
+  dataOut_GB();
+  if (romType <= 4) { // MBC1
+    writeByte_GB(0x6000, 1); // Set RAM Mode
+  }
+
+  // Initialise MBC
+  writeByte_GB(0x0000, 0x0A);
+
+  // Switch SRAM banks
+  for (byte currBank = 0; currBank < bankCnt; currBank++) {
+    dataOut_GB();
+    writeByte_GB(0x4000, currBank);
+
+    LED_RED_BLINK;
+    // Read SRAM
+    dataIn_GB();
+    for (word sramAddress = 0xA000; sramAddress <= wTestSize; sramAddress++) {
+        byte bdata = sramAddress & 0xFF;
+        if (readByteSRAM_GB(sramAddress) != bdata) {
+          wErrors++;
+        }
+    }
+  }
+  dataOut_GB();
+  // Disable RAM
+  writeByte_GB(0x0000, 0x00);
+  dataIn_GB();
+
+  char msgbuf[64] = {0};
+  if(wErrors > 0){
+    //
+    sprintf(msgbuf,"Error %d bytes...",wErrors);
+  }else{
+    //
+    strcpy(msgbuf,"RAM Test ok!");
+  }
+  OledShowString(0,1,msgbuf,8);
+}
 
 
 /******************************************
@@ -1611,7 +1698,7 @@ bool writeCFI_GB() {
 
     if (writeErrors == 0) {
       //OledShowString(0,6,"OK",8);
-      use_tick = (getSystick() - use_tick)/1000;
+      use_tick = (getSystick() - use_tick)/1055;
       sprintf(msgbuf,"Use Time: %d(s)",use_tick);
       OledShowString(10,6,msgbuf,8);
     }
@@ -1625,6 +1712,262 @@ bool writeCFI_GB() {
     OledShowString(0,1,"Can't open file!",8);
   }
   return true;
+}
+
+
+
+void testCFI_GB(uint16_t testBanks) {
+  //
+  OledShowString(0,2,"Start ROM Testing...",8);
+  // Set data pins to output
+  dataOut_GB();
+
+  // Set ROM bank hi 0
+  writeByte_GB(0x3000, 0);
+  // Set ROM bank low 0
+  writeByte_GB(0x2000, 0);
+  delay(100);
+
+  // Reset flash
+  writeByteCompensated(0xAAA, 0xf0);
+  delay(100);
+  dataOut_GB();
+  // Reset flash
+  writeByte_GB(0x555, 0xf0);
+  delay(100);
+
+
+  // Erase flash   
+  OledShowString(0,3,"Erasing...",8);
+  int lastSector = (testBanks << 1);
+  printf("lastSector=%d\n",lastSector);
+  for (int currSector = 0x0; currSector < lastSector; currSector++)
+  {
+      //
+      int SA = ((currSector >> 1)?0x4000:0) + (currSector & 0x01)*0x2000;
+      dataOut_GB();
+      //writeByte_GB(0x2000, 0);
+      writeByte_GB(0x2100, currSector >> 1);
+      delayMicroseconds(1); 
+      
+            
+      writeByteCompensated(0xAAA, 0xAA);
+      //delayMicroseconds(1);   
+      writeByteCompensated(0x555, 0x55);
+      //delayMicroseconds(1);   
+      writeByteCompensated(0xAAA, 0x80);
+      //delayMicroseconds(1);   
+      writeByteCompensated(0xAAA, 0xAA);
+      //delayMicroseconds(1);   
+      writeByteCompensated(0x555, 0x55);
+
+      //writeByte_GB(0x2000, currSector >> 1);
+      //delayMicroseconds(1); 
+      writeByteCompensated(SA, 0x30);
+      //delay(50);
+
+      // Blink LED
+      LED_BLUE_BLINK;
+      showPersent(currSector,lastSector,60,3);
+
+      //
+      dataIn_GB();
+      // Read the status register
+      byte statusReg = readByte_GB(SA);
+      printf("curSector = %d,SA=0x%04x\n",currSector,SA);
+
+      // After a completed erase D7 will output 1
+      while ((statusReg | 0x7F) != 0xFF) {
+        // Blink led
+        delay(5);
+        // Update Status
+        statusReg = readByte_GB(SA);
+      }      
+  }
+  showPersent(1,1,60,3);
+
+
+  OledShowString(0,4,"Writing...",8);
+  // Write flash
+  // Set data pins to output
+  dataOut_GB();
+  // Set ROM bank hi 0
+  writeByte_GB(0x3000, 0);
+  // Set ROM bank low 0
+  writeByte_GB(0x2000, 0);
+  delay(100);
+  // Reset flash
+  writeByteCompensated(0xAAA, 0xf0);
+  delay(100);
+  dataOut_GB();
+  // Reset flash
+  writeByte_GB(0x555, 0xf0);
+  delay(100);
+
+
+
+  word currAddr = 0;
+  word endAddr = 0x3FFF;
+
+  for (int currBank = 0; currBank < testBanks; currBank++) 
+  {
+      // Blink led
+      LED_GREEN_BLINK;
+      showPersent(currBank,testBanks,60,4);
+
+      // Set ROM bank
+      writeByte_GB(0x2100, currBank);
+      writeByte_GB(0x3000, 0x0);//bank addr high byte, maybe recovered by normal write, need to reset to zero here.
+
+      if (currBank > 0) 
+      {
+        currAddr = 0x4000;
+        endAddr = 0x7FFF;
+      }
+      //else
+      {
+        // 0x2A8000 fix        
+      }
+
+      while (currAddr <= endAddr)
+      {
+        for (int currByte = 0; currByte < 512; currByte++) 
+        {
+          // Write command sequence
+          writeByteCompensated(0xAAA, 0xaa);
+          writeByteCompensated(0x555, 0x55);
+          writeByteCompensated(0xAAA, 0xa0);
+          byte tb = currByte & 0xFF;
+          // Write current byte
+          writeByteCompensated(currAddr + currByte, tb);
+
+          delay_GB();
+          // Set data pins to input
+          dataIn_GB();
+
+          delay_GB();
+          // Setting CS(PH3) and OE/RD(PH6) LOW
+          //PORTH &= ~((1 << 3) | (1 << 6));
+          gpio_bit_reset(CTRL,CS);
+
+          //delay_GB();
+          gpio_bit_reset(CTRL,RD);
+          //delay_GB();
+
+          // Busy check
+          short i = 0;
+
+          //for(i = 0;i<40;i++){delay_GB();}          
+          while (((GPIO_ISTAT(DATA) >> 8) & 0x80) != (tb & 0x80)) 
+          {
+            i++;
+            if (i > 2000) 
+            {
+              if (currAddr >= 0x4000) 
+              { 
+                // This happens when trying to flash an MBC5 as if it was an MBC3. Retry to flash as MBC5, starting from last successfull byte.
+                currByte--;
+                currAddr += 0x4000;
+                endAddr = 0x7FFF;
+                break;
+              } 
+              else 
+              { 
+                return;
+              }
+            }
+          }
+
+          // Switch CS(PH3) and OE/RD(PH6) to HIGH
+          gpio_bit_set(CTRL,RD);
+          gpio_bit_set(CTRL,CS);
+          
+          // Waste a few CPU cycles to remove write errors
+          delay_GB();
+          delay_GB();
+          delay_GB();
+
+          // Set data pins to output
+          dataOut_GB();
+        }
+        currAddr += 512;
+      }
+  }
+  showPersent(1,1,60,4);
+
+
+  OledShowString(0,5,"Verifying...",8);
+  // Set data pins to input again
+  dataIn_GB();
+  uint32_t wErrors = 0;
+  // Verify flashrom
+  word romAddress = 0;
+  // Read number of banks and switch banks
+  for (word bank = 1; bank < testBanks; bank++) 
+  {
+      // Switch data pins to output
+      dataOut_GB();
+      if (romType >= 5) { // MBC2 and above
+        writeByte_GB(0x2100, bank); // Set ROM bank
+      }
+      else { // MBC1
+        writeByte_GB(0x6000, 0); // Set ROM Mode
+        writeByte_GB(0x4000, bank >> 5); // Set bits 5 & 6 (01100000) of ROM bank
+        writeByte_GB(0x2000, bank & 0x1F); // Set bits 0 & 4 (00011111) of ROM bank
+      }
+
+      // Switch data pins to intput
+      dataIn_GB();
+      if (bank > 1) {
+        romAddress = 0x4000;
+      }
+      // Blink led
+      LED_GREEN_BLINK;
+      showPersent(bank - 1,testBanks,72,5);
+
+      // Read up to 7FFF per bank
+      while (romAddress <= 0x7FFF) 
+      {
+        // Compare
+        for (int i = 0; i < 512; i++) {
+          byte tb = i & 0xFF;
+          if (readByte_GB(romAddress + i) != tb) {
+            wErrors++;
+          }
+        }
+        romAddress += 512;
+      }
+  }
+  showPersent(1,1,72,5);
+
+  if (wErrors == 0) {
+      OledShowString(0,6,"ROM Test OK!",8);
+  }
+  else {
+      char msgbuf[64] = {0};
+      sprintf(msgbuf,"Error:%d bytes",wErrors);
+      OledShowString(0,6,msgbuf,8);
+      print_Error("Did not verify...", false);
+  }
+}
+
+
+
+void TestMemGB(boolean bFast)
+{
+  //
+  setup_GB();
+  identifyCFI_GB();
+  if(bFast){
+    TestSramGB(8,0xA100);
+    testCFI_GB(8);
+  }else{
+    TestSramGB(8,0xBFFF);
+    testCFI_GB(512);
+  }
+  OledShowString(0,7,"Press OK Button...",8);
+  WaitOKBtn();
+  ResetSystem();
 }
 
 
@@ -1645,7 +1988,7 @@ uint8_t gbFlashMenu()
   //
   uint8_t bret = 0;
 
-  unsigned char gbFlash = questionBox_OLED("Select type:", menuOptionsGBFlash, 6, 1, 1);
+  unsigned char gbFlash = questionBox_OLED("Select type:", menuOptionsGBFlash, 6, 1, 1, 1);
   OledClear();
   // wait for user choice to come back from the question box menu
   switch (gbFlash)
@@ -1826,7 +2169,7 @@ uint8_t gbMenu()
   uint8_t bret = 0;
   
   // create menu with title and 3 options to choose from
-  unsigned char gbMenu = questionBox_OLED("GB Cart Reader", menuOptionsGB, 6, 1, 1);
+  unsigned char gbMenu = questionBox_OLED("GB Cart Reader", menuOptionsGB, 6, 1, 1, 1);
 
   // wait for user choice to come back from the question box menu
   switch (gbMenu)
