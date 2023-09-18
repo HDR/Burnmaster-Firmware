@@ -1,0 +1,166 @@
+<projects>
+  <project cpu_manufacturer="GigaDevice" cpu_name="" cpu_generic_name="GD32F10x" board_manufacturer="" board_name="" name="GD32F10x C/C++ Executable" description="A C/C++ executable for GigaDevice GD32F10x." type="Executable" template_name="GD32F10x_EXE" template_target="8">
+    <configuration name="Debug" />
+    <configuration name="Release" />
+    <property name="arm_compiler_variant" value="SEGGER" choose="Yes" />
+    <property name="c_user_include_directories" value="$(PackagesDir)/CMSIS_5/CMSIS/Core/Include" />
+    <property name="c_preprocessor_definitions" value="" />
+    <property name="c_user_include_directories" value="" />
+    <property name="property_groups_file_path" value="$(PackagesDir)/GD32F10x/XML/property_groups.xml" />
+    <propertygroup name="Target" value="GD32F101T4" choose="Yes" />
+    <property name="arm_target_debug_interface_type" value="ADIv5" />
+    <property name="arm_target_interface_type" value="SWD" />
+    <property name="debug_target_connection" value="J-Link" />
+    <property name="debug_stack_pointer_start" value="__stack_end__" />
+    <property name="target_reset_script" value="Reset();" />
+    <property name="target_trace_initialize_script" value="EnableTrace(&quot;$(TraceInterfaceType)&quot;)" />
+    <property name="debug_start_from_entry_point_symbol" value="Yes" />
+    <property name="target_attach_script" value="" />
+    <property name="target_connect_script" value="" />
+    <property name="target_debug_begin_script" value="" />
+    <property name="target_debug_end_script" value="" />
+    <property name="target_disconnect_script" value="" />
+    <property name="target_load_begin_script" value="" />
+    <property name="target_load_end_script" value="" />
+    <property name="arm_linker_variant" value="SEGGER" />
+    <property name="gcc_entry_point" value="Reset_Handler" />
+    <property name="link_linker_script_file" value="$(PackagesDir)/GD32F10x/Scripts/GD32F10x_Flash.icf" />
+    <property name="arm_rtl_variant" value="SEGGER" />
+    <property name="LIBRARY_IO_TYPE" value="RTT" />
+    <property name="linker_output_format" />
+    <property name="linker_printf_fmt_level" />
+    <property name="linker_printf_width_precision_supported" />
+    <property name="linker_printf_fp_enabled" />
+    <property name="linker_scanf_fmt_level" />
+    <property name="linker_scanf_fp_enabled" />
+    <property name="linker_scanf_character_group_matching_enabled" />
+    <property name="arm_linker_stack_size" value="2048" choose="Yes" />
+    <property name="arm_linker_process_stack_size" value="0" choose="Yes" />
+    <property name="arm_linker_heap_size" value="1024" choose="Yes" />
+    <folder name="CMSIS Files">
+      <file name="$(DeviceHeaderFile)" expand="no" />
+      <file name="$(DeviceSystemFile)" expand="no">
+        <property name="default_code_section" value=".init" />
+        <property name="default_const_section" value=".init_rodata" />
+      </file>
+    </folder>
+    <folder name="Script Files">
+      <file name="$(PackagesDir)/GD32F10x/Scripts/GD32F10x_Target.js" expand="no">
+        <property name="file_type" value="Reset Script" />
+      </file>
+    </folder>
+    <folder name="Source Files" filter="c;cpp;cxx;cc;h;s;asm;inc">
+      <file name="main.c" source="$(StudioDir)/samples/main.c" />
+    </folder>
+    <folder name="System Files">
+      <file name="$(StudioDir)/samples/SEGGER_THUMB_Startup.s" expand="no">
+        <property name="c_preprocessor_definitions" value="" />
+      </file>
+      <file name="$(PackagesDir)/GD32F10x/Source/GD32F10x_Startup.s" expand="no" />
+      <file name="$(DeviceVectorsFile)" expand="no">
+        <property name="file_type" value="Assembly" />
+      </file>
+    </folder>
+  </project>
+  <project cpu_manufacturer="GigaDevice" cpu_name="" cpu_generic_name="GD32F10x" board_manufacturer="" board_name="" name="GD32F10x Assembly Code Only Executable" description="An assembly code only executable for GigaDevice GD32F10x." type="Executable" template_name="GD32F10x_ASM_EXE" template_target="8">
+    <configuration name="Debug" />
+    <configuration name="Release" />
+    <property name="arm_compiler_variant" value="SEGGER" choose="Yes" />
+    <property name="c_user_include_directories" value="$(PackagesDir)/CMSIS_5/CMSIS/Core/Include" />
+    <property name="c_preprocessor_definitions" value="" />
+    <property name="c_user_include_directories" value="" />
+    <property name="property_groups_file_path" value="$(PackagesDir)/GD32F10x/XML/property_groups.xml" />
+    <propertygroup name="Target" value="GD32F101T4" choose="Yes" />
+    <property name="arm_target_debug_interface_type" value="ADIv5" />
+    <property name="arm_target_interface_type" value="SWD" />
+    <property name="debug_target_connection" value="J-Link" />
+    <property name="debug_stack_pointer_start" value="__stack_end__" />
+    <property name="target_reset_script" value="Reset();" />
+    <property name="target_trace_initialize_script" value="EnableTrace(&quot;$(TraceInterfaceType)&quot;)" />
+    <property name="debug_start_from_entry_point_symbol" value="Yes" />
+    <property name="target_attach_script" value="" />
+    <property name="target_connect_script" value="" />
+    <property name="target_debug_begin_script" value="" />
+    <property name="target_debug_end_script" value="" />
+    <property name="target_disconnect_script" value="" />
+    <property name="target_load_begin_script" value="" />
+    <property name="target_load_end_script" value="" />
+    <property name="arm_linker_variant" value="SEGGER" />
+    <property name="gcc_entry_point" value="Reset_Handler" />
+    <property name="link_linker_script_file" value="$(PackagesDir)/GD32F10x/Scripts/GD32F10x_Flash.icf" />
+    <property name="arm_rtl_variant" value="SEGGER" />
+    <property name="LIBRARY_IO_TYPE" value="RTT" />
+    <property name="arm_linker_stack_size" value="2048" choose="Yes" />
+    <property name="arm_linker_process_stack_size" value="0" choose="Yes" />
+    <property name="arm_linker_heap_size" value="0" choose="Yes" />
+    <property name="debug_initial_breakpoint" value="_start" />
+    <property name="debug_startup_completion_point" value="_start" />
+    <property name="link_include_standard_libraries" value="No" />
+    <folder name="Script Files">
+      <file name="$(PackagesDir)/GD32F10x/Scripts/GD32F10x_Target.js" expand="no">
+        <property name="file_type" value="Reset Script" />
+      </file>
+    </folder>
+    <folder name="Source Files" filter="c;cpp;cxx;cc;h;s;asm;inc">
+      <file name="start.s" source="$(PackagesDir)/GD32F10x/Source/start.s" />
+    </folder>
+    <folder name="System Files">
+      <property name="c_preprocessor_definitions" value="__NO_SYSTEM_INIT" />
+      <file name="$(PackagesDir)/GD32F10x/Source/GD32F10x_Startup.s" expand="no" />
+      <file name="$(DeviceVectorsFile)" expand="no">
+        <property name="file_type" value="Assembly" />
+      </file>
+    </folder>
+  </project>
+  <project cpu_manufacturer="GigaDevice" cpu_name="" cpu_generic_name="GD32F10x" board_manufacturer="" board_name="" name="GD32F10x Externally Built Executable" description="An externally built executable for GigaDevice GD32F10x." type="Externally Built Executable" template_name="GD32F10x_EXT_EXE" template_target="8">
+    <configuration name="Debug" />
+    <configuration name="Release" />
+    <property name="property_groups_file_path" value="$(PackagesDir)/GD32F10x/XML/property_groups.xml" />
+    <propertygroup name="Target" value="GD32F101T4" choose="Yes" />
+    <property name="arm_target_debug_interface_type" value="ADIv5" />
+    <property name="arm_target_interface_type" value="SWD" />
+    <property name="debug_target_connection" value="J-Link" />
+    <property name="debug_stack_pointer_start" value="__stack_end__" />
+    <property name="target_reset_script" value="Reset();" />
+    <property name="target_trace_initialize_script" value="EnableTrace(&quot;$(TraceInterfaceType)&quot;)" />
+    <property name="debug_start_from_entry_point_symbol" value="Yes" />
+    <property name="target_attach_script" value="" />
+    <property name="target_connect_script" value="" />
+    <property name="target_debug_begin_script" value="" />
+    <property name="target_debug_end_script" value="" />
+    <property name="target_disconnect_script" value="" />
+    <property name="target_load_begin_script" value="" />
+    <property name="target_load_end_script" value="" />
+    <property name="external_build_file_name" />
+    <folder name="Script Files">
+      <file name="$(PackagesDir)/GD32F10x/Scripts/GD32F10x_Target.js" expand="no">
+        <property name="file_type" value="Reset Script" />
+      </file>
+    </folder>
+  </project>
+  <project cpu_manufacturer="GigaDevice" cpu_name="" cpu_generic_name="GD32F10x" board_manufacturer="" board_name="" name="GD32F10x Library" description="A library for GigaDevice GD32F10x." type="Library" template_name="GD32F10x_LIB" template_target="8">
+    <configuration name="Debug" />
+    <configuration name="Release" />
+    <property name="arm_compiler_variant" value="SEGGER" choose="Yes" />
+    <property name="c_user_include_directories" value="$(PackagesDir)/CMSIS_5/CMSIS/Core/Include" />
+    <property name="c_preprocessor_definitions" value="" />
+    <property name="c_user_include_directories" value="" />
+    <property name="property_groups_file_path" value="$(PackagesDir)/GD32F10x/XML/property_groups.xml" />
+    <propertygroup name="Target" value="GD32F101T4" choose="Yes" />
+    <property name="arm_target_debug_interface_type" value="ADIv5" />
+    <property name="arm_target_interface_type" value="SWD" />
+    <property name="debug_target_connection" value="J-Link" />
+    <property name="debug_stack_pointer_start" value="__stack_end__" />
+    <property name="target_reset_script" value="Reset();" />
+    <property name="target_trace_initialize_script" value="EnableTrace(&quot;$(TraceInterfaceType)&quot;)" />
+    <property name="debug_start_from_entry_point_symbol" value="Yes" />
+    <property name="target_attach_script" value="" />
+    <property name="target_connect_script" value="" />
+    <property name="target_debug_begin_script" value="" />
+    <property name="target_debug_end_script" value="" />
+    <property name="target_disconnect_script" value="" />
+    <property name="target_load_begin_script" value="" />
+    <property name="target_load_end_script" value="" />
+    <folder name="Source Files" filter="c;cpp;cxx;cc;h;s;asm;inc" />
+  </project>
+</projects>

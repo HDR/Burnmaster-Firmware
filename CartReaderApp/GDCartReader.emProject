@@ -28,7 +28,7 @@
       gcc_entry_point="Reset_Handler"
       link_linker_script_file="$(ProjectDir)/GD32F10x_Flash.icf"
       linker_memory_map_file="$(ProjectDir)/GD32F103VC_MemoryMap.xml"
-      linker_output_format="hex"
+      linker_output_format="bin"
       linker_printf_fp_enabled="Float"
       macros="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceLibraryIdentifier=M3l;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103;Target=GD32F103VC"
       project_directory=""

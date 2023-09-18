@@ -1,0 +1,2019 @@
+<!DOCTYPE CrossStudio_Group_Values>
+<propertyGroups>
+  <group short="Target Processor" group="Build Options" long="Select a set of target options" name="Target" default="GD32F101T4">
+    <groupEntry name="GD32F101T4" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00004000;RAM;0x20000000;0x00001000" />
+      <property name="arm_target_device_name" value="GD32F101T4" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101T4_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_md_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101T6" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00008000;RAM;0x20000000;0x00001800" />
+      <property name="arm_target_device_name" value="GD32F101T6" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101T6_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_md_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101T8" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00010000;RAM;0x20000000;0x00002800" />
+      <property name="arm_target_device_name" value="GD32F101T8" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101T8_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_md_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101TB" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00020000;RAM;0x20000000;0x00004000" />
+      <property name="arm_target_device_name" value="GD32F101TB" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101TB_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_md_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101C4" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00004000;RAM;0x20000000;0x00001000" />
+      <property name="arm_target_device_name" value="GD32F101C4" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101C4_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101C6" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00008000;RAM;0x20000000;0x00001800" />
+      <property name="arm_target_device_name" value="GD32F101C6" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101C6_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101C8" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00010000;RAM;0x20000000;0x00002800" />
+      <property name="arm_target_device_name" value="GD32F101C8" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101C8_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101CB" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00020000;RAM;0x20000000;0x00004000" />
+      <property name="arm_target_device_name" value="GD32F101CB" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101CB_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101R4" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00004000;RAM;0x20000000;0x00001000" />
+      <property name="arm_target_device_name" value="GD32F101R4" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101R4_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_md_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101R6" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00008000;RAM;0x20000000;0x00001800" />
+      <property name="arm_target_device_name" value="GD32F101R6" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101R6_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_md_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101R8" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00010000;RAM;0x20000000;0x00002800" />
+      <property name="arm_target_device_name" value="GD32F101R8" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101R8_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_md_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101RB" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00020000;RAM;0x20000000;0x00004000" />
+      <property name="arm_target_device_name" value="GD32F101RB" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101RB_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_md_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101V8" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00010000;RAM;0x20000000;0x00002800" />
+      <property name="arm_target_device_name" value="GD32F101V8" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101V8_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_md_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101VB" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00020000;RAM;0x20000000;0x00004000" />
+      <property name="arm_target_device_name" value="GD32F101VB" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101VB_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_md_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101RC" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00040000;RAM;0x20000000;0x00008000" />
+      <property name="arm_target_device_name" value="GD32F101RC" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_HD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101RC_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_HD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101VC" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00040000;RAM;0x20000000;0x00008000" />
+      <property name="arm_target_device_name" value="GD32F101VC" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_HD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101VC_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_HD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101ZC" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00040000;RAM;0x20000000;0x00008000" />
+      <property name="arm_target_device_name" value="GD32F101ZC" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_HD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101ZC_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_HD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101RD" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00060000;RAM;0x20000000;0x0000C000" />
+      <property name="arm_target_device_name" value="GD32F101RD" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_HD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101RD_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_HD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101VD" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00060000;RAM;0x20000000;0x0000C000" />
+      <property name="arm_target_device_name" value="GD32F101VD" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_HD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101VD_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_HD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101ZD" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00060000;RAM;0x20000000;0x0000C000" />
+      <property name="arm_target_device_name" value="GD32F101ZD" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_HD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101ZD_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_HD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101RE" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00080000;RAM;0x20000000;0x0000C000" />
+      <property name="arm_target_device_name" value="GD32F101RE" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_HD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101RE_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_HD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101VE" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00080000;RAM;0x20000000;0x0000C000" />
+      <property name="arm_target_device_name" value="GD32F101VE" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_HD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101VE_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_HD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101ZE" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00080000;RAM;0x20000000;0x0000C000" />
+      <property name="arm_target_device_name" value="GD32F101ZE" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_HD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101ZE_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_HD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101RF" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x000C0000;RAM;0x20000000;0x00014000" />
+      <property name="arm_target_device_name" value="GD32F101RF" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101RF_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101VF" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x000C0000;RAM;0x20000000;0x00014000" />
+      <property name="arm_target_device_name" value="GD32F101VF" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101VF_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101ZF" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x000C0000;RAM;0x20000000;0x00014000" />
+      <property name="arm_target_device_name" value="GD32F101ZF" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101ZF_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101RG" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00100000;RAM;0x20000000;0x00014000" />
+      <property name="arm_target_device_name" value="GD32F101RG" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101RG_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101VG" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00100000;RAM;0x20000000;0x00014000" />
+      <property name="arm_target_device_name" value="GD32F101VG" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101VG_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101ZG" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00100000;RAM;0x20000000;0x00014000" />
+      <property name="arm_target_device_name" value="GD32F101ZG" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101ZG_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101RI" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00200000;RAM;0x20000000;0x00014000" />
+      <property name="arm_target_device_name" value="GD32F101RI" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101RI_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101VI" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00200000;RAM;0x20000000;0x00014000" />
+      <property name="arm_target_device_name" value="GD32F101VI" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101VI_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101ZI" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00200000;RAM;0x20000000;0x00014000" />
+      <property name="arm_target_device_name" value="GD32F101ZI" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101ZI_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101RK" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00300000;RAM;0x20000000;0x00014000" />
+      <property name="arm_target_device_name" value="GD32F101RK" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101RK_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101VK" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00300000;RAM;0x20000000;0x00014000" />
+      <property name="arm_target_device_name" value="GD32F101VK" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101VK_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F101ZK" family="GD32F101">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00300000;RAM;0x20000000;0x00014000" />
+      <property name="arm_target_device_name" value="GD32F101ZK" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F101ZK_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F101" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F101_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103T4" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00004000;RAM;0x20000000;0x00001800" />
+      <property name="arm_target_device_name" value="GD32F103T4" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103T4_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_md_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103C4" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00004000;RAM;0x20000000;0x00001800" />
+      <property name="arm_target_device_name" value="GD32F103C4" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103C4_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103R4" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00004000;RAM;0x20000000;0x00001800" />
+      <property name="arm_target_device_name" value="GD32F103R4" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103R4_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_md_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103T6" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00008000;RAM;0x20000000;0x00002800" />
+      <property name="arm_target_device_name" value="GD32F103T6" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103T6_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_md_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103C6" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00008000;RAM;0x20000000;0x00002800" />
+      <property name="arm_target_device_name" value="GD32F103C6" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103C6_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103R6" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00008000;RAM;0x20000000;0x00002800" />
+      <property name="arm_target_device_name" value="GD32F103R6" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103R6_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_md_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103T8" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00010000;RAM;0x20000000;0x00005000" />
+      <property name="arm_target_device_name" value="GD32F103T8" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103T8_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_md_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103C8" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00010000;RAM;0x20000000;0x00005000" />
+      <property name="arm_target_device_name" value="GD32F103C8" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103C8_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103R8" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00010000;RAM;0x20000000;0x00005000" />
+      <property name="arm_target_device_name" value="GD32F103R8" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103R8_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_md_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103TB" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00020000;RAM;0x20000000;0x00005000" />
+      <property name="arm_target_device_name" value="GD32F103TB" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103TB_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_md_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103CB" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00020000;RAM;0x20000000;0x00005000" />
+      <property name="arm_target_device_name" value="GD32F103CB" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103CB_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103V8" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00010000;RAM;0x20000000;0x00005000" />
+      <property name="arm_target_device_name" value="GD32F103V8" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103V8_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_md_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103VB" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00020000;RAM;0x20000000;0x00005000" />
+      <property name="arm_target_device_name" value="GD32F103VB" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103VB_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_md_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103RB" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00020000;RAM;0x20000000;0x00005000" />
+      <property name="arm_target_device_name" value="GD32F103RB" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_MD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103RB_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_md_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_MD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103RC" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00040000;RAM;0x20000000;0x0000C000" />
+      <property name="arm_target_device_name" value="GD32F103RC" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_HD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103RC_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_HD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103VC" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00040000;RAM;0x20000000;0x0000C000" />
+      <property name="arm_target_device_name" value="GD32F103VC" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_HD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103VC_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_HD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103ZC" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00040000;RAM;0x20000000;0x0000C000" />
+      <property name="arm_target_device_name" value="GD32F103ZC" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_HD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103ZC_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_HD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103RD" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00060000;RAM;0x20000000;0x00010000" />
+      <property name="arm_target_device_name" value="GD32F103RD" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_HD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103RD_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_HD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103VD" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00060000;RAM;0x20000000;0x00010000" />
+      <property name="arm_target_device_name" value="GD32F103VD" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_HD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103VD_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_HD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103ZD" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00060000;RAM;0x20000000;0x00010000" />
+      <property name="arm_target_device_name" value="GD32F103ZD" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_HD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103ZD_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_HD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103RE" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00080000;RAM;0x20000000;0x00010000" />
+      <property name="arm_target_device_name" value="GD32F103RE" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_HD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103RE_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_HD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103VE" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00080000;RAM;0x20000000;0x00010000" />
+      <property name="arm_target_device_name" value="GD32F103VE" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_HD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103VE_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_HD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103ZE" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00080000;RAM;0x20000000;0x00010000" />
+      <property name="arm_target_device_name" value="GD32F103ZE" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_HD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103ZE_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_hd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_HD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103RF" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x000C0000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F103RF" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103RF_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103VF" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x000C0000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F103VF" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103VF_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103ZF" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x000C0000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F103ZF" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103ZF_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103RG" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00100000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F103RG" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103RG_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103VG" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00100000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F103VG" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103VG_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103ZG" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00100000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F103ZG" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103ZG_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103RI" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00200000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F103RI" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103RI_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103VI" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00200000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F103VI" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103VI_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103ZI" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00200000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F103ZI" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103ZI_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103RK" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00300000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F103RK" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103RK_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103VK" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00300000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F103VK" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103VK_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F103ZK" family="GD32F103">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00300000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F103ZK" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_XD_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F103ZK_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_xd_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F103" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_XD" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F103_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F105R8" family="GD32F105">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00010000;RAM;0x20000000;0x00010000" />
+      <property name="arm_target_device_name" value="GD32F105R8" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F105R8_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F105" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F105_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F105V8" family="GD32F105">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00010000;RAM;0x20000000;0x00010000" />
+      <property name="arm_target_device_name" value="GD32F105V8" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F105V8_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F105" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F105_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F105RB" family="GD32F105">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00020000;RAM;0x20000000;0x00010000" />
+      <property name="arm_target_device_name" value="GD32F105RB" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F105RB_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F105" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F105_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F105VB" family="GD32F105">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00020000;RAM;0x20000000;0x00010000" />
+      <property name="arm_target_device_name" value="GD32F105VB" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F105VB_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F105" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F105_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F105RC" family="GD32F105">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00040000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F105RC" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F105RC_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F105" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F105_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F105VC" family="GD32F105">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00040000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F105VC" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F105VC_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F105" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F105_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F105ZC" family="GD32F105">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00040000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F105ZC" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F105ZC_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F105" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F105_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F105RD" family="GD32F105">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00060000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F105RD" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F105RD_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F105" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F105_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F105VD" family="GD32F105">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00060000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F105VD" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F105VD_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F105" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F105_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F105ZD" family="GD32F105">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00060000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F105ZD" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F105ZD_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F105" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F105_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F105RE" family="GD32F105">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00080000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F105RE" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F105RE_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F105" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F105_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F105VE" family="GD32F105">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00080000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F105VE" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F105VE_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F105" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F105_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F105ZE" family="GD32F105">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00080000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F105ZE" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F105ZE_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F105" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F105_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F105RF" family="GD32F105">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x000C0000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F105RF" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F105RF_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F105" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F105_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F105VF" family="GD32F105">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x000C0000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F105VF" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F105VF_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F105" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F105_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F105ZF" family="GD32F105">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x000C0000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F105ZF" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F105ZF_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F105" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F105_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F105RG" family="GD32F105">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00100000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F105RG" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F105RG_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F105" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F105_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F105VG" family="GD32F105">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00100000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F105VG" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F105VG_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F105" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F105_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F105ZG" family="GD32F105">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00100000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F105ZG" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F105ZG_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F105" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F105_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F107RB" family="GD32F107">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00020000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F107RB" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F107RB_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F107" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F107_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F107VB" family="GD32F107">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00020000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F107VB" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F107VB_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F107" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F107_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F107RC" family="GD32F107">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00040000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F107RC" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F107RC_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F107" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F107_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F107VC" family="GD32F107">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00040000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F107VC" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F107VC_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F107" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F107_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F107ZC" family="GD32F107">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00040000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F107ZC" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F107ZC_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F107" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F107_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F107RD" family="GD32F107">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00060000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F107RD" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F107RD_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F107" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F107_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F107VD" family="GD32F107">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00060000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F107VD" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F107VD_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F107" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F107_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F107ZD" family="GD32F107">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00060000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F107ZD" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F107ZD_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F107" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F107_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F107RE" family="GD32F107">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00080000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F107RE" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F107RE_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F107" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F107_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F107VE" family="GD32F107">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00080000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F107VE" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F107VE_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F107" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F107_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F107ZE" family="GD32F107">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00080000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F107ZE" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F107ZE_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F107" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F107_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F107RF" family="GD32F107">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x000C0000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F107RF" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F107RF_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F107" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F107_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F107VF" family="GD32F107">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x000C0000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F107VF" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F107VF_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F107" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F107_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F107ZF" family="GD32F107">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x000C0000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F107ZF" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F107ZF_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F107" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F107_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F107RG" family="GD32F107">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00100000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F107RG" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F107RG_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F107" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F107_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F107VG" family="GD32F107">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00100000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F107VG" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F107VG_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F107" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F107_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+    <groupEntry name="GD32F107ZG" family="GD32F107">
+      <property name="arm_architecture" value="v7M" />
+      <property name="arm_core_type" value="Cortex-M3" />
+      <property name="arm_endian" value="Little" />
+      <property name="arm_fpu_type" value="None" />
+      <property name="arm_fp_abi" value="Soft" />
+      <property name="arm_simulator_memory_simulation_parameter" value="ROM;0x08000000;0x00100000;RAM;0x20000000;0x00018000" />
+      <property name="arm_target_device_name" value="GD32F107ZG" />
+      <property name="debug_register_definition_file" value="$(PackagesDir)/GD32F10x/XML/GD32F10x_CL_Registers.xml" />
+      <property name="linker_memory_map_file" value="$(PackagesDir)/GD32F10x/XML/GD32F107ZG_MemoryMap.xml" />
+      <property name="macros" value="DeviceHeaderFile=$(PackagesDir)/GD32F10x/Device/Include/gd32f10x.h;DeviceSystemFile=$(PackagesDir)/GD32F10x/Device/Source/system_gd32f10x.c;DeviceVectorsFile=$(PackagesDir)/GD32F10x/Source/gd32f10x_cl_Vectors.s;DeviceFamily=GD32F10x;DeviceSubFamily=GD32F107" />
+      <cdefine name="ARM_MATH_CM3" />
+      <cdefine name="GD32F10X_CL" />
+      <cdefine name="USE_STDPERIPH_DRIVER" />
+      <cdefine name="__GD32F107_SUBFAMILY" />
+      <cdefine name="__GD32F10X_FAMILY" />
+      <cdefine name="__NO_FPU_ENABLE" />
+      <cinclude value="$(PackagesDir)/GD32F10x/Device/Include" />
+    </groupEntry>
+  </group>
+</propertyGroups>
