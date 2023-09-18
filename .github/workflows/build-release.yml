@@ -25,13 +25,8 @@ jobs:
         run: |
             cd arm_segger_embedded_studio_v622a_linux_x64/bin
             ./emBuild -config "Debug" ${{ github.workspace }}//Burnmaster-Firmware/CartReaderApp/GDCartReader.emProject
-            
-      - name: ELF2Bin
-        run: |
-            cd arm_segger_embedded_studio_v622a_linux_x64/gcc/arm-none-eabi/bin
-            ./objcopy ${{ github.workspace }}//Burnmaster-Firmware/CartReaderApp//Output/Debug/Exe/GDCartReader.elf ${{ github.workspace }}//Burnmaster-Firmware/CartReaderApp/Output/Debug/Exe/update.bin -Obinary
           
       - uses: actions/upload-artifact@v3
         with:
           name: Burnmaster-Firmware
-          path: ${{ github.workspace }}//Burnmaster-Firmware/CartReaderApp/Output/Debug/Exe/update.bin
+          path: ${{ github.workspace }}//Burnmaster-Firmware/CartReaderApp/Output/Debug/Exe/GDCartReader.bin
