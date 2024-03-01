@@ -2534,7 +2534,7 @@ void flashRepro_GBA()
 
   if ((strcmp(flashid, "8802") == 0) || (strcmp(flashid, "8816") == 0) || (strcmp(flashid, "227E") == 0) || (strcmp(flashid, "227A") == 0)) 
   {
-    sprintf(tmsg,"ID:%s size:%d MB.",flashid,cartSize / 0x10000);
+    sprintf(tmsg,"ID:%s size:%d MB.",flashid,cartSize / 0x20000);
     // MX29GL128E or MSP55LV128(N) or S29GL256N
     if (strcmp(flashid, "217E") == 0 ||strcmp(flashid, "227E") == 0 || strcmp(flashid, "237E") == 0 || strcmp(flashid, "227A") == 0) 
     {
