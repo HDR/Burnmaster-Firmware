@@ -1718,7 +1718,7 @@ void idFlashrom_GBA()
       sprintf(flashid3, "%02X%02X", ((readWord_GBA(0x2) >> 8) & 0xFF), (readWord_GBA(0x1C) & 0xFF));
 
       char tmsg[64] = {0};
-      sprintf(tmsg,"Flash ID swapped: %s\nFlash ID: %s\nFlash ID: %s",flashid, flashid2, flashid3);
+      sprintf(tmsg,"Flash ID: %s",flashid2);
       OledShowString(0,0,tmsg,8);
       print_Error("Check voltage?", true);
     }
