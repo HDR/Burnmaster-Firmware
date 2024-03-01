@@ -2316,6 +2316,8 @@ void writeMX29GL128E_GBA(FIL * ptf)
   showPersent(1,1,68,3);
 }
 
+
+
 void writeSpansion_GBA(FIL * ptf) 
 {
   for (unsigned long currSector = 0; currSector < fileSize; currSector += 0x20000) 
@@ -2338,14 +2340,14 @@ void writeSpansion_GBA(FIL * ptf)
         writeWord_GBA(currSector, 0x25);
 
         // Write word count (minus 1)
-        writeWord_GBA(currSector, 0x1F);
+        writeWord_GBA(currSector, 0xF);
 
         // Write buffer
         word currWord;
-        for (byte cnt = 0; cnt < 32; cnt ++) {
+        for (byte cnt = 0; cnt < 32; cnt +=2) {
           // Join two bytes into one word
           currWord = ((word *)sdBuffer)[currWriteBuffer>>1 + cnt];
-          writeWord_GBA(currSector + currSdBuffer + currWriteBuffer + cnt*2, currWord);
+          writeWord_GBA(currSector + currSdBuffer + currWriteBuffer + cnt, currWord);
         }
 
         // Confirm write buffer
