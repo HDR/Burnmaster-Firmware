@@ -28,6 +28,7 @@ boolean root = 0;
 char romName[64];
 unsigned long sramSize = 0;
 int romType = 0;
+int manufacturerid = 0;
 byte saveType;
 word romSize = 0;
 word numBanks = 128;

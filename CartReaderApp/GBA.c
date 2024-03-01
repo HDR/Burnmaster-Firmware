@@ -1679,21 +1679,10 @@ void idFlashrom_GBA()
   // Intel Strataflash
   if (strcmp(flashid, "8802") == 0 || (strcmp(flashid, "8816") == 0)) 
   {
-    manufacturerid = 0;
     cartSize = 0x2000000;
   }
   else {
     // Send swapped MX29GL128E/MSP55LV128 ID command to flashrom
-
-    writeWord_GAB(0xAAA, 0xAA);
-    writeWord_GAB(0x555, 0x55);
-    writeWord_GAB(0xAAA, 0x90);
-    
-    delay_GBA();
-    delay_GBA();
-    delay_GBA();
-    delay_GBA();
-    manufacturerid = (readWord_GBA(0x0) & 0xFF);
     writeWord_GAB(0xAAA, 0xAA);
     writeWord_GAB(0x555, 0x55);
     writeWord_GAB(0xAAA, 0x90);
@@ -2463,23 +2452,38 @@ void flashRepro_GBA()
     // MX29GL128E or MSP55LV128(N) or S29GL256N
     if (strcmp(flashid, "227E") == 0 || strcmp(flashid, "227A") == 0) 
     {
-      // MX is 0xC2 and MSP55LV128 is 0x4 and MSP55LV128N 0x1
-      if (romType == 0xC2) {
-        strcat(tmsg,"\n Macronix\n MX29GL128E");
+      // Spansion
+      if(manufacturerid == 0x1) {
+        // S29GL256N
+        if (strcmp(flashid, "227E") == 0 && romType == 0x1) {
+          strcat(tmsg, "\n Spansion\n S29GL256N");
+        }
+        else {
+          sprintf(tmsg,"%s\n RomType : 0x%04x",tmsg,romType);
+          OledShowString(0,0,tmsg,8);
+          print_Error("Unknown manufacturer", true);
+        }
       }
-      else if ((romType == 0x1) || (romType == 0x4)) {
-        strcat(tmsg,"\n Fujitsu\n MSP55LV128N");
-      }
-      else if (romType == 0x89) {
-        strcat(tmsg,"\n Intel\n PC28F256M29");
-      }
-      else if (romType == 0x20) {
-        strcat(tmsg,"\n ST\n M29W128GH");
-      }
-      else {
-        sprintf(tmsg,"%s\n RomType : 0x%04x",tmsg,romType);
-        OledShowString(0,0,tmsg,8);
-        print_Error("Unknown manufacturer", true);
+      else 
+      {
+        // MX is 0xC2 and MSP55LV128 is 0x4 and MSP55LV128N 0x1
+        if (romType == 0xC2) {
+          strcat(tmsg,"\n Macronix\n MX29GL128E");
+        }
+        else if ((romType == 0x1) || (romType == 0x4)) {
+          strcat(tmsg,"\n Fujitsu\n MSP55LV128N");
+        }
+        else if (romType == 0x89) {
+          strcat(tmsg,"\n Intel\n PC28F256M29");
+        }
+        else if (romType == 0x20) {
+          strcat(tmsg,"\n ST\n M29W128GH");
+        }
+        else {
+          sprintf(tmsg,"%s\n RomType : 0x%04x",tmsg,romType);
+          OledShowString(0,0,tmsg,8);
+          print_Error("Unknown manufacturer", true);
+        }
       }
     }
     // Intel 4000L0YBQ0
