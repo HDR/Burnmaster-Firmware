@@ -2330,8 +2330,8 @@ void writeSpansion_GBA(FIL * ptf)
       UINT rdt;
       f_read(ptf, sdBuffer, 512, &rdt);
 
-      // Write 32 words at a time
-      for (int currWriteBuffer = 0; currWriteBuffer < 512; currWriteBuffer += 64) {
+      // Write 16 words at a time
+      for (int currWriteBuffer = 0; currWriteBuffer < 512; currWriteBuffer += 32) {
         // Write Buffer command
         writeWord_GBA(0xAAA, 0xAA);
         writeWord_GBA(0x555, 0x55);
@@ -2342,7 +2342,7 @@ void writeSpansion_GBA(FIL * ptf)
 
         // Write buffer
         word currWord;
-        for (byte cnt = 0; cnt < 64; cnt ++) {
+        for (byte cnt = 0; cnt < 32; cnt ++) {
           // Join two bytes into one word
           currWord = ((word *)sdBuffer)[currWriteBuffer>>1 + cnt];
           writeWord_GBA(currSector + currSdBuffer + currWriteBuffer + cnt*2, currWord);
@@ -2354,11 +2354,11 @@ void writeSpansion_GBA(FIL * ptf)
         delay(1);
 
         // Read the status register
-        word statusReg = readWord_GBA(currSector + currSdBuffer + currWriteBuffer + 62);
+        word statusReg = readWord_GBA(currSector + currSdBuffer + currWriteBuffer + 30);
 
         while ((statusReg | 0xFF7F) != (currWord | 0xFF7F)) {
           delay_GBA();
-          statusReg = readWord_GBA(currSector + currSdBuffer + currWriteBuffer + 62);
+          statusReg = readWord_GBA(currSector + currSdBuffer + currWriteBuffer + 30);
           
         }
       }
