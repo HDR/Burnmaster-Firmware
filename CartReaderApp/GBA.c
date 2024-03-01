@@ -1698,8 +1698,27 @@ void idFlashrom_GBA()
     }
     else 
     {
+      char flashid2[5];
+      char flashid3[5];
+      writeWord_GBA(0xAAA, 0xAA);
+      writeWord_GBA(0x555, 0x55);
+      writeWord_GBA(0xAAA, 0x90);
+      delay_GBA();
+      delay_GBA();
+      delay_GBA();
+      delay_GBA();
+      sprintf(flashid2, "%02X%02X", ((readWord_GBA(0x2) >> 8) & 0xFF), (readWord_GBA(0x2) & 0xFF));
+      writeWord_GBA(0xAAA, 0xAA);
+      writeWord_GBA(0x555, 0x55);
+      writeWord_GBA(0xAAA, 0x90);
+      delay_GBA();
+      delay_GBA();
+      delay_GBA();
+      delay_GBA();
+      sprintf(flashid3, "%02X%02X", ((readWord_GBA(0x2) >> 8) & 0xFF), (readWord_GBA(0x1C) & 0xFF));
+
       char tmsg[64] = {0};
-      sprintf(tmsg,"Error!\nUnknown Flash!\nFlash ID: %s",flashid);
+      sprintf(tmsg,"Flash ID swapped: %s\nFlash ID: %s\nFlash ID: %s",flashid, flashid2, flashid3);
       OledShowString(0,0,tmsg,8);
       print_Error("Check voltage?", true);
     }
