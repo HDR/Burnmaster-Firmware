@@ -1712,7 +1712,7 @@ void idFlashrom_GBA()
       if(strcmp(flashid, "227E") == 0) {
         romType = (readWord_GBA(0x0) & 0xFF);
         char tmsg[64] = {0};
-        sprintf(tmsg,"Rom type : %s", romType);
+        sprintf(tmsg,"Rom type : %02X", romType);
         OledShowString(0,0,tmsg,8);
         print_Error("Check voltage?", true);
         cartSize = 0x2000000;
