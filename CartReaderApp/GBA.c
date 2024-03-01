@@ -1679,11 +1679,21 @@ void idFlashrom_GBA()
   // Intel Strataflash
   if (strcmp(flashid, "8802") == 0 || (strcmp(flashid, "8816") == 0)) 
   {
+    manufacturerid = 0;
     cartSize = 0x2000000;
   }
   else {
     // Send swapped MX29GL128E/MSP55LV128 ID command to flashrom
 
+    writeWord_GAB(0xAAA, 0xAA);
+    writeWord_GAB(0x555, 0x55);
+    writeWord_GAB(0xAAA, 0x90);
+    
+    delay_GBA();
+    delay_GBA();
+    delay_GBA();
+    delay_GBA();
+    manufacturerid = (readWord_GBA(0x0) & 0xFF);
     writeWord_GAB(0xAAA, 0xAA);
     writeWord_GAB(0x555, 0x55);
     writeWord_GAB(0xAAA, 0x90);
@@ -1707,14 +1717,28 @@ void idFlashrom_GBA()
       writeWord_GBA(0xAAA, 0xAA);
       writeWord_GBA(0x555, 0x55);
       writeWord_GBA(0xAAA, 0x90);
+      delay_GBA();
+      delay_GBA();
+      delay_GBA();
+      delay_GBA();
+      manufacturerid = (readWord_GBA(0x0) & 0xFF);
+      writeWord_GBA(0xAAA, 0xAA);
+      writeWord_GBA(0x555, 0x55);
+      writeWord_GBA(0xAAA, 0x90);
+      delay_GBA();
+      delay_GBA();
+      delay_GBA();
+      delay_GBA();
       sprintf(flashid, "%02X%02X", ((readWord_GBA(0x2) >> 8) & 0xFF), (readWord_GBA(0x2) & 0xFF));
+      romType = (readWord_GBA(0x0) & 0xFF);
+      char tmsg[64] = {0};
+      sprintf(tmsg,"%s %02X %02X",flashid, romType, manufacturerid);
+      OledShowString(0,0,tmsg,8);
+      print_Error("Check voltage?", true);
       // S29GL256N
       if(strcmp(flashid, "227E") == 0) {
-        romType = (readWord_GBA(0x0) & 0xFF);
-        char tmsg[64] = {0};
-        sprintf(tmsg,"Rom type : %02X", romType);
-        OledShowString(0,0,tmsg,8);
-        print_Error("Check voltage?", true);
+        
+
         cartSize = 0x2000000;
         resetS29GL256N_GBA();
       } 
