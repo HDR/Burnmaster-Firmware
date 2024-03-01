@@ -1645,6 +1645,12 @@ void resetMX29GL128E_GBA()
   delay(1);
 }
 
+void resetS29GL256N_GBA() 
+{
+  writeWord_GBA(0, 0xF0);
+  delay(1);
+}
+
 boolean sectorCheckMX29GL128E_GBA() {
   boolean sectorProtect = 0;
   writeWord_GAB(0xAAA, 0xAA);
@@ -1698,29 +1704,27 @@ void idFlashrom_GBA()
     }
     else 
     {
-      char flashid2[5];
-      char flashid3[5];
       writeWord_GBA(0xAAA, 0xAA);
       writeWord_GBA(0x555, 0x55);
       writeWord_GBA(0xAAA, 0x90);
-      delay_GBA();
-      delay_GBA();
-      delay_GBA();
-      delay_GBA();
-      sprintf(flashid2, "%02X%02X", ((readWord_GBA(0x2) >> 8) & 0xFF), (readWord_GBA(0x2) & 0xFF));
-      writeWord_GBA(0xAAA, 0xAA);
-      writeWord_GBA(0x555, 0x55);
-      writeWord_GBA(0xAAA, 0x90);
-      delay_GBA();
-      delay_GBA();
-      delay_GBA();
-      delay_GBA();
-      sprintf(flashid3, "%02X%02X", ((readWord_GBA(0x2) >> 8) & 0xFF), (readWord_GBA(0x1C) & 0xFF));
-
-      char tmsg[64] = {0};
-      sprintf(tmsg,"Flash ID: %s",flashid2);
-      OledShowString(0,0,tmsg,8);
-      print_Error("Check voltage?", true);
+      sprintf(flashid, "%02X%02X", ((readWord_GBA(0x2) >> 8) & 0xFF), (readWord_GBA(0x2) & 0xFF));
+      // S29GL256N
+      if(strcmp(flashid, "227E") == 0) {
+        romType = (readWord_GBA(0x0) & 0xFF);
+        char tmsg[64] = {0};
+        sprintf(tmsg,"Rom type : %s", romType);
+        OledShowString(0,0,tmsg,8);
+        print_Error("Check voltage?", true);
+        cartSize = 0x2000000;
+        resetS29GL256N_GBA();
+      } 
+      else 
+      {
+        char tmsg[64] = {0};
+        sprintf(tmsg,"Error!\nUnknown Flash!\nFlash ID: %s",flashid);
+        OledShowString(0,0,tmsg,8);
+        print_Error("Check voltage?", true);
+      }
     }
   }
 }
@@ -2432,7 +2436,7 @@ void flashRepro_GBA()
   if ((strcmp(flashid, "8802") == 0) || (strcmp(flashid, "8816") == 0) || (strcmp(flashid, "227E") == 0) || (strcmp(flashid, "227A") == 0)) 
   {
     sprintf(tmsg,"ID:%s size:%d MB.",flashid,cartSize / 0x100000);
-    // MX29GL128E or MSP55LV128(N)
+    // MX29GL128E or MSP55LV128(N) or S29GL256N
     if (strcmp(flashid, "227E") == 0 || strcmp(flashid, "227A") == 0) 
     {
       // MX is 0xC2 and MSP55LV128 is 0x4 and MSP55LV128N 0x1
