@@ -1722,12 +1722,24 @@ void idFlashrom_GBA()
       romType = (readWord_GBA(0x0) & 0xFF);
       // Spansion
       if(manufacturerid == 0x1) {
-      // S29GL256N
+        // S29GL128N
+        if(strcmp(flashid, "217E") == 0 && romType == 0x1) {
+          cartSize = 0x1000000;
+          resetSpansion_GBA();
+          return;
+        }
+        // S29GL256N
         if(strcmp(flashid, "227E") == 0 && romType == 0x1) {
           cartSize = 0x2000000;
           resetSpansion_GBA();
           return;
-        } 
+        }
+        // S29GL512N
+        if(strcmp(flashid, "237E") == 0 && romType == 0x1) {
+          cartSize = 0x4000000;
+          resetSpansion_GBA();
+          return;
+        }
       }
       char tmsg[64] = {0};
       sprintf(tmsg,"Error!\nUnknown Flash!\nFlash ID: %s",flashid);
@@ -2522,15 +2534,23 @@ void flashRepro_GBA()
 
   if ((strcmp(flashid, "8802") == 0) || (strcmp(flashid, "8816") == 0) || (strcmp(flashid, "227E") == 0) || (strcmp(flashid, "227A") == 0)) 
   {
-    sprintf(tmsg,"ID:%s size:%d MB.",flashid,cartSize / 0x100000);
+    sprintf(tmsg,"ID:%s size:%d MB.",flashid,cartSize / 0x10000);
     // MX29GL128E or MSP55LV128(N) or S29GL256N
-    if (strcmp(flashid, "227E") == 0 || strcmp(flashid, "227A") == 0) 
+    if (strcmp(flashid, "217E") == 0 ||strcmp(flashid, "227E") == 0 || strcmp(flashid, "237E") == 0 || strcmp(flashid, "227A") == 0) 
     {
       // Spansion
       if(manufacturerid == 0x1) {
         // S29GL256N
         if (strcmp(flashid, "227E") == 0 && romType == 0x1) {
           strcat(tmsg, "\n Spansion\n S29GL256N");
+        }
+        // S29GL128N
+        else if (strcmp(flashid, "217E") == 0 && romType == 0x1) {
+          strcat(tmsg, "\n Spansion\n S29GL128N");
+        }
+        // S29GL512N
+        else if (strcmp(flashid, "217E") == 0 && romType == 0x1) {
+          strcat(tmsg, "\n Spansion\n S29GL512N");
         }
         else {
           sprintf(tmsg,"%s\n RomType : 0x%04x",tmsg,romType);
@@ -2607,8 +2627,8 @@ void flashRepro_GBA()
         OledShowString(10,2,"Erasing...",8);
         // Spansion
         if(manufacturerid = 0x1) {
-          // S29GL256N
-          if(strcmp(flashid, "227E") == 0 && romType == 0x1) {
+          // S29GLXXXN
+          if((strcmp(flashid, "227E") == 0 || strcmp(flashid, "217E") == 0 || strcmp(flashid, "237E") == 0) && romType == 0x1) {
             sectorEraseSpansion_GBA(fileSize - 1);
           }
         }
@@ -2654,9 +2674,9 @@ void flashRepro_GBA()
         // Spansion
         if(manufacturerid == 0x1)
         {
-          // S29GL256N
-          if(strcmp(flashid, "227E") == 0 && romType == 0x1) {
-            OledShowString(0,1,"S29GL256N",8);
+          // S29GLXXXN
+          if((strcmp(flashid, "227E") == 0 || strcmp(flashid, "217E") == 0 || strcmp(flashid, "237E") == 0) && romType == 0x1) {
+            OledShowString(0,1,"S29GLXXXN",8);
             writeSpansion_GBA(&tf);
           }
         }
