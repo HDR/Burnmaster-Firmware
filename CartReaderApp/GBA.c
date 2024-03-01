@@ -2353,13 +2353,15 @@ void writeSpansion_GBA(FIL * ptf)
 
         // Write word count (minus 1)
         writeWord_GBA(currSector, 0xF);
+        delay(1);
 
         // Write buffer
         word currWord;
-        for (byte cnt = 0; cnt < 32; cnt +=2) {
+        for (byte cnt = 0; cnt < 16; cnt++) {
           // Join two bytes into one word
           currWord = ((word *)sdBuffer)[currWriteBuffer>>1 + cnt];
-          writeWord_GBA(currSector + currSdBuffer + currWriteBuffer + cnt, currWord);
+          // currWord = ( ( sdBuffer[currWriteBuffer + cnt + 1] & 0xFF ) << 8 ) | ( sdBuffer[currWriteBuffer + cnt] & 0xFF );
+          writeWord_GBA(currSector + currSdBuffer + currWriteBuffer + cnt*2, currWord);
         }
 
         // Confirm write buffer
