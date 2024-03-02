@@ -1724,19 +1724,19 @@ void idFlashrom_GBA()
       if(manufacturerid == 0x1) {
         // S29GL128N
         if(strcmp(flashid, "217E") == 0 && romType == 0x1) {
-          cartSize = 0x20000000;
+          cartSize = 0x8000000;
           resetSpansion_GBA();
           return;
         }
         // S29GL256N
         if(strcmp(flashid, "227E") == 0 && romType == 0x1) {
-          cartSize = 0x40000000;
+          cartSize = 0x10000000;
           resetSpansion_GBA();
           return;
         }
         // S29GL512N
         if(strcmp(flashid, "237E") == 0 && romType == 0x1) {
-          cartSize = 0x80000000;
+          cartSize = 0x20000000;
           resetSpansion_GBA();
           return;
         }
