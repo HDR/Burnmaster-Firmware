@@ -1724,19 +1724,19 @@ void idFlashrom_GBA()
       if(manufacturerid == 0x1) {
         // S29GL128N
         if(strcmp(flashid, "217E") == 0 && romType == 0x1) {
-          cartSize = 0x1000000;
+          cartSize = 0x20000000;
           resetSpansion_GBA();
           return;
         }
         // S29GL256N
         if(strcmp(flashid, "227E") == 0 && romType == 0x1) {
-          cartSize = 0x2000000;
+          cartSize = 0x40000000;
           resetSpansion_GBA();
           return;
         }
         // S29GL512N
         if(strcmp(flashid, "237E") == 0 && romType == 0x1) {
-          cartSize = 0x4000000;
+          cartSize = 0x80000000;
           resetSpansion_GBA();
           return;
         }
@@ -2346,37 +2346,89 @@ void writeSpansion_GBA(FIL * ptf)
 
       // Write 16 words at a time
       for (int currWriteBuffer = 0; currWriteBuffer < 512; currWriteBuffer += 32) {
+        _reProgram:
         // Write Buffer command
         writeWord_GBA(0xAAA, 0xAA);
+        delayMicroseconds(deley_us_lv128);
         writeWord_GBA(0x555, 0x55);
+        delayMicroseconds(deley_us_lv128);
         writeWord_GBA(currSector, 0x25);
+        delayMicroseconds(deley_us_lv128);
 
         // Write word count (minus 1)
         writeWord_GBA(currSector, 0xF);
-        delay(1);
 
         // Write buffer
         word currWord;
-        for (byte cnt = 0; cnt < 16; cnt++) {
+        for (byte currByte = 0; currByte < 16; currByte++) 
+        {
           // Join two bytes into one word
-          currWord = ((word *)sdBuffer)[currWriteBuffer>>1 + cnt];
-          // currWord = ( ( sdBuffer[currWriteBuffer + cnt + 1] & 0xFF ) << 8 ) | ( sdBuffer[currWriteBuffer + cnt] & 0xFF );
-          writeWord_GBA(currSector + currSdBuffer + currWriteBuffer + cnt*2, currWord);
+          delayMicroseconds(deley_us_lv128);
+          currWord = ((word *)sdBuffer)[(currWriteBuffer>>1) + currByte];
+          writeWord_GBA(currSector + currSdBuffer + currWriteBuffer + currByte*2, currWord);
         }
 
         // Confirm write buffer
-        delay(1);
+        delayMicroseconds(deley_us_lv128);
+        delayMicroseconds(deley_us_lv128);
         writeWord_GBA(currSector, 0x29);
-        delay(1);
+        delayMicroseconds(deley_us_lv128);
+        delayMicroseconds(deley_us_lv128);
 
         // Read the status register
         word statusReg = readWord_GBA(currSector + currSdBuffer + currWriteBuffer + 30);
 
         while ((statusReg | 0xFF7F) != (currWord | 0xFF7F)) {
-          delay_GBA();
-          statusReg = readWord_GBA(currSector + currSdBuffer + currWriteBuffer + 30);
-          
+          delayMicroseconds(deley_us_lv128);
+          if(statusReg&0x22)
+          {
+            statusReg = readWord_GBA(currSector + currSdBuffer + currWriteBuffer + 30);
+            delayMicroseconds(deley_us_lv128);
+            
+            if((statusReg | 0xFF7F) != (currWord | 0xFF7F))
+            {
+              //
+              if(statusReg&0x20)
+              {
+                //write buffer abort reset
+                writeWord_GBA(0xAAA, 0xAA);
+                delayMicroseconds(deley_us_lv128);
+                writeWord_GBA(0x555, 0x55);
+                delayMicroseconds(deley_us_lv128);
+                writeWord_GBA(0xAAA, 0xF0);
+
+                delay(1000);
+                printf("write err1!\n");
+
+                LED_BLUE_BLINK;
+                goto _reProgram;
+              }
+              else
+              if(statusReg&0x2)
+              {
+                //write buffer abort reset
+                writeWord_GBA(0xAAA, 0xAA);
+                delayMicroseconds(deley_us_lv128);
+                writeWord_GBA(0x555, 0x55);
+                delayMicroseconds(deley_us_lv128);
+                writeWord_GBA(0xAAA, 0xF0);
+
+                delay(1000);
+                printf("write err2!\n");
+
+                LED_BLUE_BLINK;
+                goto _reProgram;
+              }
+            }
+            else break;
+          }
+          else
+          {
+            //
+            statusReg = readWord_GBA(currSector + currSdBuffer + currWriteBuffer + 30);
+          }
         }
+        delayMicroseconds(deley_us_lv128); 
       }
     }
   }
@@ -2536,7 +2588,7 @@ void flashRepro_GBA()
 
   if ((strcmp(flashid, "8802") == 0) || (strcmp(flashid, "8816") == 0) || (strcmp(flashid, "227E") == 0) || (strcmp(flashid, "227A") == 0)) 
   {
-    sprintf(tmsg,"ID:%s size:%d MB.",flashid,cartSize / 0x20000);
+    sprintf(tmsg,"ID:%s size:%d MB.",flashid,cartSize / 0x100000);
     // MX29GL128E or MSP55LV128(N) or S29GL256N
     if (strcmp(flashid, "217E") == 0 ||strcmp(flashid, "227E") == 0 || strcmp(flashid, "237E") == 0 || strcmp(flashid, "227A") == 0) 
     {
