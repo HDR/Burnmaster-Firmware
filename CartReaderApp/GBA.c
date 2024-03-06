@@ -2680,7 +2680,7 @@ void flashRepro_GBA()
         //else {
         OledShowString(10,2,"Erasing...",8);
         // Spansion
-        if(manufacturerid = 0x1) {
+        if(manufacturerid == 0x1) {
           // S29GLXXXN
           if((strcmp(flashid, "227E") == 0 || strcmp(flashid, "217E") == 0 || strcmp(flashid, "237E") == 0) && romType == 0x1) {
             sectorEraseSpansion_GBA(fileSize - 1);
