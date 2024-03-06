@@ -1645,6 +1645,12 @@ void resetMX29GL128E_GBA()
   delay(1);
 }
 
+void resetSpansion_GBA() 
+{
+  writeWord_GBA(0, 0xF0);
+  delay(1);
+}
+
 boolean sectorCheckMX29GL128E_GBA() {
   boolean sectorProtect = 0;
   writeWord_GAB(0xAAA, 0xAA);
@@ -1677,7 +1683,6 @@ void idFlashrom_GBA()
   }
   else {
     // Send swapped MX29GL128E/MSP55LV128 ID command to flashrom
-
     writeWord_GAB(0xAAA, 0xAA);
     writeWord_GAB(0x555, 0x55);
     writeWord_GAB(0xAAA, 0x90);
@@ -1698,10 +1703,49 @@ void idFlashrom_GBA()
     }
     else 
     {
+      writeWord_GBA(0xAAA, 0xAA);
+      writeWord_GBA(0x555, 0x55);
+      writeWord_GBA(0xAAA, 0x90);
+      delay_GBA();
+      delay_GBA();
+      delay_GBA();
+      delay_GBA();
+      manufacturerid = (readWord_GBA(0x0) & 0xFF);
+      writeWord_GBA(0xAAA, 0xAA);
+      writeWord_GBA(0x555, 0x55);
+      writeWord_GBA(0xAAA, 0x90);
+      delay_GBA();
+      delay_GBA();
+      delay_GBA();
+      delay_GBA();
+      sprintf(flashid, "%02X%02X", ((readWord_GBA(0x2) >> 8) & 0xFF), (readWord_GBA(0x2) & 0xFF));
+      romType = (readWord_GBA(0x0) & 0xFF);
+      // Spansion
+      if(manufacturerid == 0x1) {
+        // S29GL128N
+        if(strcmp(flashid, "217E") == 0 && romType == 0x1) {
+          cartSize = 0x8000000;
+          resetSpansion_GBA();
+          return;
+        }
+        // S29GL256N
+        if(strcmp(flashid, "227E") == 0 && romType == 0x1) {
+          cartSize = 0x10000000;
+          resetSpansion_GBA();
+          return;
+        }
+        // S29GL512N
+        if(strcmp(flashid, "237E") == 0 && romType == 0x1) {
+          cartSize = 0x20000000;
+          resetSpansion_GBA();
+          return;
+        }
+      }
       char tmsg[64] = {0};
       sprintf(tmsg,"Error!\nUnknown Flash!\nFlash ID: %s",flashid);
       OledShowString(0,0,tmsg,8);
       print_Error("Check voltage?", true);
+      
     }
   }
 }
@@ -2012,6 +2056,31 @@ void sectorEraseMX29GL128E_GBA(unsigned long lastSector)
   showPersent(1,1,68,2);
 }
 
+void sectorEraseSpansion_GBA(unsigned long lastSector) 
+{
+  // Erase 128 sectors with 128kbytes each
+  unsigned long currSector;
+  for (currSector = 0x0; currSector < lastSector; currSector += 0x20000) {
+    writeWord_GBA(0xAAA, 0xAA);
+    writeWord_GBA(0x555, 0x55);
+    writeWord_GBA(0xAAA, 0x80);
+    writeWord_GBA(0xAAA, 0xAA);
+    writeWord_GBA(0x555, 0x55);
+    writeWord_GBA(currSector, 0x30);
+    // Blink LED
+    LED_RED_BLINK;
+    showPersent(currSector,lastSector,68,2);
+    // Read the status register
+    word statusReg = readWord_GBA(currSector);
+    while ((statusReg | 0xFF7F) != 0xFFFF) {
+      statusReg = readWord_GBA(currSector);
+    }
+
+  }
+
+  showPersent(1,1,68,2);
+}
+
 void writeIntel4000_GBA(FIL * ptf) 
 {
   for (unsigned long currBlock = 0; currBlock < fileSize; currBlock += 0x20000) 
@@ -2259,6 +2328,113 @@ void writeMX29GL128E_GBA(FIL * ptf)
   showPersent(1,1,68,3);
 }
 
+
+
+void writeSpansion_GBA(FIL * ptf) 
+{
+  for (unsigned long currSector = 0; currSector < fileSize; currSector += 0x20000) 
+  {
+    // Blink led
+    LED_BLUE_BLINK;
+    showPersent(currSector,fileSize,68,3);
+    // Write to flashrom
+    for (unsigned long currSdBuffer = 0; currSdBuffer < 0x20000; currSdBuffer += 512) 
+    {
+      // Fill SD buffer
+      UINT rdt;
+      f_read(ptf, sdBuffer, 512, &rdt);
+
+      // Write 16 words at a time
+      for (int currWriteBuffer = 0; currWriteBuffer < 512; currWriteBuffer += 32) {
+        _reProgram:
+        // Write Buffer command
+        writeWord_GBA(0xAAA, 0xAA);
+        delayMicroseconds(deley_us_lv128);
+        writeWord_GBA(0x555, 0x55);
+        delayMicroseconds(deley_us_lv128);
+        writeWord_GBA(currSector, 0x25);
+        delayMicroseconds(deley_us_lv128);
+
+        // Write word count (minus 1)
+        writeWord_GBA(currSector, 0xF);
+
+        // Write buffer
+        word currWord;
+        for (byte currByte = 0; currByte < 16; currByte++) 
+        {
+          // Join two bytes into one word
+          delayMicroseconds(deley_us_lv128);
+          currWord = ((word *)sdBuffer)[(currWriteBuffer>>1) + currByte];
+          writeWord_GBA(currSector + currSdBuffer + currWriteBuffer + currByte*2, currWord);
+        }
+
+        // Confirm write buffer
+        delayMicroseconds(deley_us_lv128);
+        delayMicroseconds(deley_us_lv128);
+        writeWord_GBA(currSector, 0x29);
+        delayMicroseconds(deley_us_lv128);
+        delayMicroseconds(deley_us_lv128);
+
+        // Read the status register
+        word statusReg = readWord_GBA(currSector + currSdBuffer + currWriteBuffer + 30);
+
+        while ((statusReg | 0xFF7F) != (currWord | 0xFF7F)) {
+          delayMicroseconds(deley_us_lv128);
+          if(statusReg&0x22)
+          {
+            statusReg = readWord_GBA(currSector + currSdBuffer + currWriteBuffer + 30);
+            delayMicroseconds(deley_us_lv128);
+            
+            if((statusReg | 0xFF7F) != (currWord | 0xFF7F))
+            {
+              //
+              if(statusReg&0x20)
+              {
+                //write buffer abort reset
+                writeWord_GBA(0xAAA, 0xAA);
+                delayMicroseconds(deley_us_lv128);
+                writeWord_GBA(0x555, 0x55);
+                delayMicroseconds(deley_us_lv128);
+                writeWord_GBA(0xAAA, 0xF0);
+
+                delay(1000);
+                printf("write err1!\n");
+
+                LED_BLUE_BLINK;
+                goto _reProgram;
+              }
+              else
+              if(statusReg&0x2)
+              {
+                //write buffer abort reset
+                writeWord_GBA(0xAAA, 0xAA);
+                delayMicroseconds(deley_us_lv128);
+                writeWord_GBA(0x555, 0x55);
+                delayMicroseconds(deley_us_lv128);
+                writeWord_GBA(0xAAA, 0xF0);
+
+                delay(1000);
+                printf("write err2!\n");
+
+                LED_BLUE_BLINK;
+                goto _reProgram;
+              }
+            }
+            else break;
+          }
+          else
+          {
+            //
+            statusReg = readWord_GBA(currSector + currSdBuffer + currWriteBuffer + 30);
+          }
+        }
+        delayMicroseconds(deley_us_lv128); 
+      }
+    }
+  }
+  showPersent(1,1,68,3);
+}
+
 boolean verifyFlashrom_GBA() 
 {
   // Open file on sd card
@@ -2413,26 +2589,49 @@ void flashRepro_GBA()
   if ((strcmp(flashid, "8802") == 0) || (strcmp(flashid, "8816") == 0) || (strcmp(flashid, "227E") == 0) || (strcmp(flashid, "227A") == 0)) 
   {
     sprintf(tmsg,"ID:%s size:%d MB.",flashid,cartSize / 0x100000);
-    // MX29GL128E or MSP55LV128(N)
-    if (strcmp(flashid, "227E") == 0 || strcmp(flashid, "227A") == 0) 
+    // MX29GL128E or MSP55LV128(N) or S29GL256N
+    if (strcmp(flashid, "217E") == 0 ||strcmp(flashid, "227E") == 0 || strcmp(flashid, "237E") == 0 || strcmp(flashid, "227A") == 0) 
     {
-      // MX is 0xC2 and MSP55LV128 is 0x4 and MSP55LV128N 0x1
-      if (romType == 0xC2) {
-        strcat(tmsg,"\n Macronix\n MX29GL128E");
+      // Spansion
+      if(manufacturerid == 0x1) {
+        // S29GL256N
+        if (strcmp(flashid, "227E") == 0 && romType == 0x1) {
+          strcat(tmsg, "\n Spansion\n S29GL256N");
+        }
+        // S29GL128N
+        else if (strcmp(flashid, "217E") == 0 && romType == 0x1) {
+          strcat(tmsg, "\n Spansion\n S29GL128N");
+        }
+        // S29GL512N
+        else if (strcmp(flashid, "217E") == 0 && romType == 0x1) {
+          strcat(tmsg, "\n Spansion\n S29GL512N");
+        }
+        else {
+          sprintf(tmsg,"%s\n RomType : 0x%04x",tmsg,romType);
+          OledShowString(0,0,tmsg,8);
+          print_Error("Unknown manufacturer", true);
+        }
       }
-      else if ((romType == 0x1) || (romType == 0x4)) {
-        strcat(tmsg,"\n Fujitsu\n MSP55LV128N");
-      }
-      else if (romType == 0x89) {
-        strcat(tmsg,"\n Intel\n PC28F256M29");
-      }
-      else if (romType == 0x20) {
-        strcat(tmsg,"\n ST\n M29W128GH");
-      }
-      else {
-        sprintf(tmsg,"%s\n RomType : 0x%04x",tmsg,romType);
-        OledShowString(0,0,tmsg,8);
-        print_Error("Unknown manufacturer", true);
+      else 
+      {
+        // MX is 0xC2 and MSP55LV128 is 0x4 and MSP55LV128N 0x1
+        if (romType == 0xC2) {
+          strcat(tmsg,"\n Macronix\n MX29GL128E");
+        }
+        else if ((romType == 0x1) || (romType == 0x4)) {
+          strcat(tmsg,"\n Fujitsu\n MSP55LV128N");
+        }
+        else if (romType == 0x89) {
+          strcat(tmsg,"\n Intel\n PC28F256M29");
+        }
+        else if (romType == 0x20) {
+          strcat(tmsg,"\n ST\n M29W128GH");
+        }
+        else {
+          sprintf(tmsg,"%s\n RomType : 0x%04x",tmsg,romType);
+          OledShowString(0,0,tmsg,8);
+          print_Error("Unknown manufacturer", true);
+        }
       }
     }
     // Intel 4000L0YBQ0
@@ -2480,19 +2679,28 @@ void flashRepro_GBA()
         //}
         //else {
         OledShowString(10,2,"Erasing...",8);
-
-        if ((romType == 0xC2) || (romType == 0x89) || (romType == 0x20)) {
-          //MX29GL128E
-          //PC28F256M29 (0x89)
-          
-          sectorEraseMX29GL128E_GBA(fileSize - 1);
-          
+        // Spansion
+        if(manufacturerid == 0x1) {
+          // S29GLXXXN
+          if((strcmp(flashid, "227E") == 0 || strcmp(flashid, "217E") == 0 || strcmp(flashid, "237E") == 0) && romType == 0x1) {
+            sectorEraseSpansion_GBA(fileSize - 1);
+          }
         }
-        else if ((romType == 0x1) || (romType == 0x4)) {
-          //MSP55LV128(N)
-          //#ifndef TEST_MY_CART
-          sectorEraseMSP55LV128_GBA(fileSize - 1);
-          //#endif
+        else
+        {
+          if ((romType == 0xC2) || (romType == 0x89) || (romType == 0x20)) {
+            //MX29GL128E
+            //PC28F256M29 (0x89)
+            
+            sectorEraseMX29GL128E_GBA(fileSize - 1);
+            
+          }
+          else if ((romType == 0x1) || (romType == 0x4)) {
+            //MSP55LV128(N)
+            //#ifndef TEST_MY_CART
+            sectorEraseMSP55LV128_GBA(fileSize - 1);
+            //#endif
+          }
         }
         //}
       }
@@ -2517,16 +2725,28 @@ void flashRepro_GBA()
       }
       else if (strcmp(flashid, "227E") == 0 || strcmp(flashid, "227A") == 0) 
       {
-        if ((romType == 0xC2) || (romType == 0x89) || (romType == 0x20)) {
-          //MX29GL128E (0xC2)
-          //PC28F256M29 (0x89)
-          OledShowString(0,1,"29 GL",8);
-          writeMX29GL128E_GBA(&tf);
+        // Spansion
+        if(manufacturerid == 0x1)
+        {
+          // S29GLXXXN
+          if((strcmp(flashid, "227E") == 0 || strcmp(flashid, "217E") == 0 || strcmp(flashid, "237E") == 0) && romType == 0x1) {
+            OledShowString(0,1,"S29GLXXXN",8);
+            writeSpansion_GBA(&tf);
+          }
         }
-        else if ((romType == 0x1) || (romType == 0x4)) {
-          //MSP55LV128(N)
-          OledShowString(0,1,"MSP55LV",8);
-          writeMSP55LV128_GBA(&tf);
+        else 
+        {
+          if ((romType == 0xC2) || (romType == 0x89) || (romType == 0x20)) {
+            //MX29GL128E (0xC2)
+            //PC28F256M29 (0x89)
+            OledShowString(0,1,"29 GL",8);
+            writeMX29GL128E_GBA(&tf);
+          }
+          else if ((romType == 0x1) || (romType == 0x4)) {
+            //MSP55LV128(N)
+            OledShowString(0,1,"MSP55LV",8);
+            writeMSP55LV128_GBA(&tf);
+          }
         }
       }
 
@@ -2553,8 +2773,16 @@ void flashRepro_GBA()
       }
       else if (strcmp(flashid, "227E") == 0 || strcmp(flashid, "227A") == 0) 
       {
-        resetMX29GL128E_GBA();
-        delay(1000);
+        if(manufacturerid == 0x1)
+        {
+          resetSpansion_GBA();
+          delay(1000);
+        }
+        else
+        {
+          resetMX29GL128E_GBA();
+          delay(1000);
+        }
       }
 
 

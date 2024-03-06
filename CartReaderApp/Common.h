@@ -37,6 +37,7 @@ extern boolean filebrowse;
 extern bool errorLvl;
 extern boolean ignoreError;
 extern char flashid[5];
+extern int manufacturerid;
 
 // Variable to count errors
 extern unsigned long writeErrors;
