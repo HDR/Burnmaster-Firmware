@@ -446,7 +446,7 @@ void readROM_GB() {
   strcat(fileName, ".GB");
 
   // create a new folder for the rom file
-  load_dword(foldern);
+  foldern = load_dword();
   f_chdir("/");
   sprintf(folder, "GB/ROM/%s/%d", romName, foldern);
 
@@ -572,7 +572,7 @@ boolean compare_checksum_GB() {
   strcat(fileName, ".GB");
 
   // last used rom folder
-  load_dword(foldern);
+  foldern = load_dword();
   sprintf(folder, "GB/ROM/%s/%d", romName, foldern - 1);
 
   char calcsumStr[5];
@@ -606,7 +606,7 @@ void readSRAM_GB() {
     strcat(fileName, ".sav");
 
     // create a new folder for the save file
-    load_dword(foldern);
+    foldern = load_dword();
     sprintf(folder, "GB/SAVE/%s/%d", romName, foldern);
     my_mkdir(folder);
     f_chdir(folder);

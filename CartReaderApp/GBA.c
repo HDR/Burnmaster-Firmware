@@ -20,6 +20,7 @@ boolean readType;
 unsigned long cartSize;
 char cartID[5];
 byte romVersion = 0;
+byte forceSaveType = 0;
 
 
 
@@ -1704,6 +1705,8 @@ void idFlashrom_GBA()
       print_Error("Check voltage?", true);
     }
   }
+
+  printf("GBA flash ID = 0x%s, ROMType : 0x%04x\n",flashid,romType);
 }
 
 boolean blankcheckFlashrom_GBA() 
@@ -1727,7 +1730,7 @@ void eraseIntel4000_GBA()
 {
   // If the game is smaller than 16Mbit only erase the needed blocks
   unsigned long lastBlock = 0xFFFFFF;
-  if (fileSize < 0xFFFFFF)
+  if (fileSize < 0x1000000)
     lastBlock = fileSize;
 
   // Erase 4 blocks with 16kwords each
@@ -1774,7 +1777,7 @@ void eraseIntel4000_GBA()
   showPersent(1,1,70,2);
 
   // Erase the second chip
-  if (fileSize > 0xFFFFFF) {
+  if (fileSize > 0x1000000) {
     // 126 blocks with 64kwords each
     for (unsigned long currBlock = 0x1000000; currBlock < 0x1FDFFFF; currBlock += 0x1FFFF) {
       // Unlock Block
@@ -1819,7 +1822,7 @@ void eraseIntel4400_GBA()
 {
   // If the game is smaller than 32Mbit only erase the needed blocks
   unsigned long lastBlock = 0x1FFFFFF;
-  if (fileSize < 0x1FFFFFF)
+  if (fileSize < 0x2000000)
     lastBlock = fileSize;
 
   // Erase 4 blocks with 16kwords each
@@ -2012,6 +2015,31 @@ void sectorEraseMX29GL128E_GBA(unsigned long lastSector)
   showPersent(1,1,68,2);
 }
 
+void sectorEraseMX29GL128E_GBA_1(unsigned long lastSector) 
+{
+  // Erase 128 sectors with 128kbytes each
+  unsigned long currSector;
+  for (currSector = 0x0; currSector < lastSector; currSector += 0x10000) {
+    writeWord_GAB(0xAAA, 0xAA);
+    writeWord_GAB(0x555, 0x55);
+    writeWord_GAB(0xAAA, 0x80);
+    writeWord_GAB(0xAAA, 0xAA);
+    writeWord_GAB(0x555, 0x55);
+    writeWord_GAB(currSector, 0x30);
+    // Blink LED
+    LED_RED_BLINK;
+    showPersent(currSector,lastSector,68,2);
+    // Read the status register
+    word statusReg = readWord_GAB(currSector);
+    while ((statusReg | 0xFF7F) != 0xFFFF) {
+      statusReg = readWord_GAB(currSector);
+    }
+
+  }
+
+  showPersent(1,1,68,2);
+}
+
 void writeIntel4000_GBA(FIL * ptf) 
 {
   for (unsigned long currBlock = 0; currBlock < fileSize; currBlock += 0x20000) 
@@ -2113,13 +2141,12 @@ void writeMSP55LV128_GBA(FIL * ptf)
           writeWord_GBA(currSector + currSdBuffer + currWriteBuffer + currByte*2, currWord);
         }
 
-        delayMicroseconds(deley_us_lv128);
+        //delayMicroseconds(deley_us_lv128);
         delayMicroseconds(deley_us_lv128);
         // Confirm write buffer
         writeWord_GAB(currSector, 0x29);
+        delayMicroseconds(deley_us_lv128);
 
-        delayMicroseconds(deley_us_lv128);
-        delayMicroseconds(deley_us_lv128);
 
 
         // Read the status register
@@ -2130,7 +2157,7 @@ void writeMSP55LV128_GBA(FIL * ptf)
         {
           //delay(1);//Microseconds(600);)
           delayMicroseconds(deley_us_lv128);          
-          //statusReg = readWord_GAB(currSector + currSdBuffer + currWriteBuffer + 30);
+          statusReg = readWord_GAB(currSector + currSdBuffer + currWriteBuffer + 30);
 
 
           //
@@ -2178,7 +2205,7 @@ void writeMSP55LV128_GBA(FIL * ptf)
                 delayMicroseconds(deley_us_lv128);
                 writeWord_GAB(0xAAA, 0xF0);
 
-                delay(1000);
+                delay(2000);
                 printf("write err2!\n");
 
                 LED_BLUE_BLINK;
@@ -2234,14 +2261,14 @@ void writeMX29GL128E_GBA(FIL * ptf)
 
         // Write buffer
         word currWord;
-        for (byte cnt = 0; cnt < 64; cnt ++) {
+        for (byte cnt = 0; cnt < 32; cnt ++) {
           // Join two bytes into one word
-          currWord = ((word *)sdBuffer)[currWriteBuffer>>1 + cnt];
+          currWord = *(word *)(sdBuffer + currWriteBuffer + cnt*2);
           writeWord_GBA(currSector + currSdBuffer + currWriteBuffer + cnt*2, currWord);
         }
 
         // Confirm write buffer
-        delay(1);
+        //delay(1);
         writeWord_GAB(currSector, 0x29);
         delay(1);
 
@@ -2253,11 +2280,58 @@ void writeMX29GL128E_GBA(FIL * ptf)
           statusReg = readWord_GAB(currSector + currSdBuffer + currWriteBuffer + 62);
           
         }
+
+        //delay(1);
       }
     }
   }
   showPersent(1,1,68,3);
 }
+
+
+void writeMX29GL128E_GBA_1(FIL * ptf) 
+{
+  for (unsigned long currSector = 0; currSector < fileSize; currSector += 0x10000) 
+  {
+    // Blink led
+    LED_BLUE_BLINK;
+    showPersent(currSector,fileSize,68,3);
+    // Write to flashrom
+    for (unsigned long currSdBuffer = 0; currSdBuffer < 0x10000; currSdBuffer += 512) 
+    {
+      // Fill SD buffer
+      UINT rdt;
+      f_read(ptf, sdBuffer, 512, &rdt);
+
+      // Write 32 words at a time
+      for (int currWriteBuffer = 0; currWriteBuffer < 512; currWriteBuffer += 2) {
+
+        word currWord = *(word *)(sdBuffer + currWriteBuffer);
+        // Write Buffer command
+        writeWord_GAB(0xAAA, 0xAA);
+        writeWord_GAB(0x555, 0x55);
+        writeWord_GAB(0xAAA, 0xA0);
+        writeWord_GBA(currSector + currSdBuffer + currWriteBuffer, currWord);
+        delayMicroseconds(10);
+
+        // Read the status register
+        word statusReg = readWord_GAB(currSector + currSdBuffer + currWriteBuffer);
+
+        while ((statusReg | 0xFF7F) != (currWord | 0xFF7F)) {
+          delay_GBA();
+          statusReg = readWord_GAB(currSector + currSdBuffer + currWriteBuffer);
+        }
+
+        //delay(1);
+      }
+    }
+  }
+  showPersent(1,1,68,3);
+}
+
+
+
+
 
 boolean verifyFlashrom_GBA() 
 {
@@ -2481,12 +2555,15 @@ void flashRepro_GBA()
         //else {
         OledShowString(10,2,"Erasing...",8);
 
-        if ((romType == 0xC2) || (romType == 0x89) || (romType == 0x20)) {
+        if ((romType == 0xC2) || (romType == 0x89)) {
           //MX29GL128E
           //PC28F256M29 (0x89)
           
           sectorEraseMX29GL128E_GBA(fileSize - 1);
           
+        }
+        else if (romType == 0x20){
+          sectorEraseMX29GL128E_GBA_1(fileSize - 1);
         }
         else if ((romType == 0x1) || (romType == 0x4)) {
           //MSP55LV128(N)
@@ -2517,11 +2594,15 @@ void flashRepro_GBA()
       }
       else if (strcmp(flashid, "227E") == 0 || strcmp(flashid, "227A") == 0) 
       {
-        if ((romType == 0xC2) || (romType == 0x89) || (romType == 0x20)) {
+        if ((romType == 0xC2) || (romType == 0x89)) {
           //MX29GL128E (0xC2)
           //PC28F256M29 (0x89)
           OledShowString(0,1,"29 GL",8);
           writeMX29GL128E_GBA(&tf);
+        }
+        else if (romType == 0x20){
+          OledShowString(0,1,"ST M29",8);
+          writeMX29GL128E_GBA_1(&tf);
         }
         else if ((romType == 0x1) || (romType == 0x4)) {
           //MSP55LV128(N)
@@ -2771,7 +2852,17 @@ void setup_GBA()
     sprintf(tmsg,"%d MB",cartSize);    
     OledShowString(64,2,tmsg,8);
   }
+
+
+
+  //deal with the save type, some roms' flag maybe one type, but the PHY Cart is not.
+  //this works by Patches to the rom file...
   strcpy(tmsg,"Save: ");
+  if(forceSaveType != 0){
+    saveType = forceSaveType;
+    strcat(tmsg,"f-");
+  }
+
   switch (saveType)
   {
     case 0:
@@ -2796,6 +2887,10 @@ void setup_GBA()
 
     case 5:
       strcat(tmsg,"1024K Flash");
+      break;
+
+    case 6:
+      strcat(tmsg,"512K Sram");
       break;
   }
   OledShowString(0,3,tmsg,8);
@@ -3239,38 +3334,37 @@ uint8_t gbaMenu() {
         // wait for user choice to come back from the question box menu
         switch (GBASaveMenu)
         {
-          case 0:
-            // 4K EEPROM
-            saveType = 1;
-            break;
-
           case 1:
-            // 64K EEPROM
-            saveType = 2;
+            // 4K EEPROM
+            forceSaveType = 1;
             break;
 
           case 2:
-            // 256K SRAM/FRAM
-            saveType = 3;
+            // 64K EEPROM
+            forceSaveType = 2;
             break;
 
           case 3:
-            // 512K SRAM/FRAM
-            saveType = 6;
+            // 256K SRAM/FRAM
+            forceSaveType = 3;
             break;
 
           case 4:
-            // 512K FLASH
-            saveType = 4;
+            // 512K SRAM/FRAM
+            forceSaveType = 6;
             break;
 
           case 5:
+            // 512K FLASH
+            forceSaveType = 4;
+            break;
+
+          case 6:
             // 1024K FLASH
-            saveType = 5;
+            forceSaveType = 5;
             break;
         }
-      }
-       
+      }       
       break;
 
 

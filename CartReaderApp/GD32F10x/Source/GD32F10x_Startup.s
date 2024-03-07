@@ -3,7 +3,7 @@
 *                        The Embedded Experts                        *
 **********************************************************************
 *                                                                    *
-*            (c) 2014 - 2022 SEGGER Microcontroller GmbH             *
+*            (c) 2014 - 2020 SEGGER Microcontroller GmbH             *
 *                                                                    *
 *       www.segger.com     Support: support@segger.com               *
 *                                                                    *
@@ -49,6 +49,13 @@ Additional information:
         SystemInit is usually supplied by the CMSIS files.
         This file declares a weak implementation as fallback.
 
+    __SUPPORT_RESET_HALT_AFTER_BTL
+      If != 0 (default)
+        Support J-Link's reset strategy Reset and Halt After Bootloader.
+        https://wiki.segger.com/Reset_and_Halt_After_Bootloader
+      If == 0,
+        Disable support for Reset and Halt After Bootloader.
+
     __NO_SYSTEM_CLK_UPDATE
       If defined,
         SystemCoreClockUpdate is not automatically called.
@@ -84,6 +91,10 @@ Additional information:
         .syntax unified
 
 
+#ifndef   __SUPPORT_RESET_HALT_AFTER_BTL
+  #define __SUPPORT_RESET_HALT_AFTER_BTL  1
+#endif
+
 /*********************************************************************
 *
 *       Global functions
@@ -112,6 +123,17 @@ Additional information:
         .balign 2
         .thumb_func
 Reset_Handler:
+#if __SUPPORT_RESET_HALT_AFTER_BTL != 0
+        //
+        // Perform a dummy read access from address 0x00000008 followed by two nop's
+        // This is needed to support J-Links reset strategy: Reset and Halt After Bootloader.
+        // https://wiki.segger.com/Reset_and_Halt_After_Bootloader
+        //
+        movs R0, #8
+        ldr  R0, [R0]
+        nop
+        nop
+#endif
 #ifndef __NO_SYSTEM_INIT
         //
         // Call SystemInit
