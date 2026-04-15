@@ -7,10 +7,10 @@
 
 void save_dword(uint32_t data)
 {
-  //
   fmc_unlock();
+  fmc_page_erase(FMC_WRITE_START_ADDR);
+  fmc_flag_clear(FMC_FLAG_BANK0_END | FMC_FLAG_BANK0_WPERR | FMC_FLAG_BANK0_PGERR);
   fmc_word_program(FMC_WRITE_START_ADDR, data);
-  //lock the main FMC after the program operation */
   fmc_lock();
 }
 
