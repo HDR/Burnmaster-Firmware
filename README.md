@@ -18,6 +18,8 @@ This repository is setup to auto-build the firmware when a commit is made, build
 - The save folder fails to increment, because of this the Burnmaster can only hold a single save of each type.
 
 
+---
+
 This source code is provided directly by funnyplaying, i have nothing to do with the development of the firmware.
 
 **Note:** Be aware that the source code is for 1.10 and not 1.12 as i have not recieved the source code for the latest version from FunnyPlaying.
