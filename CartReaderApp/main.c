@@ -80,12 +80,14 @@ uint8_t Icon_data_GBA[] =
 // GBx start menu
 static const char gbxMenuItem1[] = "Game Boy (Color)";
 static const char gbxMenuItem2[] = "Game Boy Advance";
-static const char gbxMenuTestAll[] = "CartTest";
-static const char gbxMenuTestFast[] = "CartTestFast";
+static const char gbxMenuGBATestAll[] = "GBATest";
+static const char gbxMenuGBATestFast[] = "GBATestFast";
+static const char gbxMenuGBTestAll[] = "GB(C)Test";
+static const char gbxMenuGBTestFast[] = "GB(C)TestFast";
 static const char gbxAbout[] = "About...";
 
-static const char* const menuOptionsGBC[] = {gbxMenuItem1,gbxMenuTestFast,gbxMenuTestAll,gbxAbout};
-static const char* const menuOptionsGBA[] = {gbxMenuItem2,gbxMenuTestFast,gbxMenuTestAll,gbxAbout};
+static const char* const menuOptionsGBC[] = {gbxMenuItem1,gbxMenuGBTestFast,gbxMenuGBTestAll,gbxAbout};
+static const char* const menuOptionsGBA[] = {gbxMenuItem2,gbxMenuGBATestFast,gbxMenuGBATestAll,gbxAbout};
 static const char* const menuOptionsGBx[] = {gbxMenuItem1, gbxMenuItem2};
 
 
@@ -95,8 +97,8 @@ void aboutScreen()
   OledClear();
   OledShowString(0,0,(char *)("Portable"),16);
   OledShowString(8,2,(char *)("Cart Flasher"),16);
-  OledShowString(20,4,(char *)("Ver:1.10"),8);
-  OledShowString(20,5,(char *)("2024.1"),8);
+  OledShowString(20,4,(char *)("Ver:1.12"),8);
+  OledShowString(20,5,(char *)("2024.5"),8);
   OledShowString(20,6,(char *)("Orz Studio"),8);
 
   OledShowString(0,7,(char *)("Press OK Button..."),8);
@@ -151,7 +153,7 @@ uint8_t gbxMenu()
     //
     LED_GREEN_ON;
     OledClear();
-    OledShowPicData(86,2,29,6,Icon_data_GBC);
+    OledShowPicData(88,2,29,6,Icon_data_GBC);
     gbType = questionBox_OLED("Portable Cart Flasher", menuOptionsGBC, 4, 1, 1, 0);    
     switch (gbType)
     {

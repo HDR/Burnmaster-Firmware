@@ -65,14 +65,14 @@
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="397" useTextEdit="1" path="main.c" left="0" top="351" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="40" y="279" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/main.c" path="fatfs/sdcard.c" left="0" top="253" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="29" y="8" useTextEdit="1" path="GB.h" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="94" useTextEdit="1" path="GB.c" left="0" selected="1" top="61" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="1986" useTextEdit="1" path="GBA.c" left="0" top="1924" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="94" useTextEdit="1" path="GB.c" left="0" top="61" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="14" y="245" useTextEdit="1" path="GBA.c" left="0" selected="1" top="201" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="30" y="11" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/GBA.c" path="GBA.h" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="36" y="64" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/GB.c" path="Common.h" left="0" top="4" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="36" y="64" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/GB.c" path="Common.h" left="0" top="5" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="113" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/GBA.c" path="Common.c" left="0" top="54" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="19" y="417" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/main.c" path="Operate.c" left="0" top="383" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="13" y="417" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/main.c" path="Operate.c" left="0" top="383" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="31" y="842" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/GBA.c" path="Display.c" left="0" top="818" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="10" y="41" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/GBA.c" path="Display.h" left="0" top="6" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="10" y="41" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/GBA.c" path="Display.h" left="0" top="3" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="23" y="22" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/Operate.c" path="Operate.h" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="24" y="201" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/fatfs/diskio.c" path="fatfs/sdcard.h" left="0" top="169" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="4541" useTextEdit="1" path="fatfs/ff.c" left="0" top="4523" codecName="Default"/>
@@ -82,7 +82,7 @@
   <SessionOpenFile windowGroup="DockEditLeft" x="25" y="904" useTextEdit="1" path="GBM.c" left="0" top="868" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="29" y="9" useTextEdit="1" path="GBM.h" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="24" y="313" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/GBA.c" path="GD32F10x/Device/Include/gd32f10x_gpio.h" left="0" top="289" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="8" y="323" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/GBA.c" path="GD32F10x/Device/Include/gd32f10x.h" left="0" top="261" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="8" y="323" useTextEdit="1" openedFrom="E:/work/GZcartreader/new/GDCartReader/GBA.c" path="GD32F10x/Device/Include/gd32f10x.h" left="0" top="264" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="241" useTextEdit="1" path="GD32F10x/Source/GD32F10x_Startup.s" left="0" top="219" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="32" y="83" useTextEdit="1" path="GDCartReader.emProject" left="0" top="50" codecName="Default"/>
  </Files>
