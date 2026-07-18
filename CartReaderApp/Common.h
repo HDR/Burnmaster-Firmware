@@ -8,6 +8,10 @@
 #include "Operate.h"
 #include "fatfs/ff.h"
 
+#if defined(__CC_ARM) && !defined(__clang__)
+#define __asm__(x) __NOP()
+#endif
+
 
 
 #define byte uint8_t
@@ -55,12 +59,12 @@ extern char checksumStr[5];
 extern byte sdBuffer[512];
 
 
-int getSystick();
-void SysClockInit();
+int getSystick(void);
+void SysClockInit(void);
 void SysTick_Handler(void);
 void delay(int n);
-void ResetSystem();
-void SysClockFree();
+void ResetSystem(void);
+void SysClockFree(void);
 
 void delayMicroseconds(uint16_t us);
 

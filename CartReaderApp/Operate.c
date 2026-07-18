@@ -135,7 +135,6 @@ unsigned char questionBox_OLED(char * question, const char* const answers[7], in
     }
     else
     {
-      printf("getKey-%d\n",b);
       scroll_tick = 0;
       scroll_start = 0;
     }
@@ -261,13 +260,11 @@ uint8_t my_mkdir(char * dir)
     FRESULT W_Dresult = f_opendir(&W_Ddir, RootPath); //检测文件夹
     if(W_Dresult == FR_OK)
     {
-            printf("Exist[%s]\r\n",RootPath);
             f_closedir(&W_Ddir);
             break;
     }
     else
     {
-            printf("Err - %d[%s]\r\n",W_Dresult, RootPath);
             if(W_Dresult == FR_NO_PATH)
             {
                     opendir_err = 1;
@@ -289,8 +286,7 @@ uint8_t my_mkdir(char * dir)
     {
             strcat(RootPath, SonPath[num-i-1]);
             FRESULT W_Dresult = f_mkdir(RootPath);
-            if(W_Dresult == FR_OK) { printf(">> Mk dir OK[%s]\r\n", RootPath); bret = true;}
-            else printf(">> Err - %d [%s]\r\n",W_Dresult, RootPath);
+          if(W_Dresult == FR_OK) { bret = true;}
     }
   }
   else bret = true;
@@ -343,11 +339,12 @@ browserstart:
   bnomore = false;
 
   // Open filepath directory
-  if (f_opendir(&tdir,filePath) != FR_OK) {
+  FRESULT openDirRes = f_opendir(&tdir,filePath);
+  if (openDirRes != FR_OK) {
     OledClear();
     print_Error("SD Error", true);
   }
-  f_chdir(filePath);
+  FRESULT chdirRes = f_chdir(filePath);
 
 next_page:
 
@@ -370,7 +367,6 @@ next_page:
       strcpy(tanswers[menucnt],fileNames[currFile]);
       currFile++;
       menucnt++;
-      printf("\nfile:[%s]-[%s]",finfo.fname,finfo.altname);
 
       
       if(menucnt >= 7)

@@ -14,7 +14,7 @@ extern "C"{
 
 
 void save_dword(uint32_t data);
-uint32_t load_dword();
+uint32_t load_dword(void);
 
 
  

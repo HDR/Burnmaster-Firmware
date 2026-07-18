@@ -21,7 +21,220 @@ unsigned long cartSize;
 char cartID[5];
 byte romVersion = 0;
 byte forceSaveType = 0;
+byte gbaSaveTypeSource = 0;
+byte gbaGuessedSaveType = 0;
+byte gbaGuessedSaveTypeSource = 0;
+byte gbaSelectedSaveType = 0;
+byte gbaSelectedSaveTypeSource = 0;
+char gbaSelectedCartID[5] = {0};
+boolean gbaNativeAmdDetected = 0;
+boolean gbaEraseFailed = 0;
+unsigned long gbaEraseFailedSector = 0;
+word gbaEraseFailedStatus = 0;
 
+static const char* const saveOptionsGBA[7];
+
+const char* gbaSaveTypeName(byte type)
+{
+  switch (type)
+  {
+    case 1:
+      return "4K EEPROM";
+    case 2:
+      return "64K EEPROM";
+    case 3:
+      return "256K SRAM/FRAM";
+    case 4:
+      return "512K FLASHROM";
+    case 5:
+      return "1M FLASHROM";
+    case 6:
+      return "512K SRAM/FRAM";
+    case 7:
+      return "1M SRAM/FRAM";
+    default:
+      return "Unknown";
+  }
+}
+
+const char* gbaSaveTypeSourceName(byte source)
+{
+  switch (source)
+  {
+    case 1:
+      return "gba.txt";
+    case 2:
+      return "Force Savetype";
+    case 3:
+      return "Manual Menu";
+    case 4:
+      return "Cart Override";
+    default:
+      return "Unknown";
+  }
+}
+
+const char* gbaSaveMediumName(byte type)
+{
+  switch (type)
+  {
+    case 1:
+    case 2:
+      return "EEPROM";
+    case 3:
+    case 6:
+    case 7:
+      return "SRAM/FRAM";
+    case 4:
+    case 5:
+      return "FLASH";
+    default:
+      return "UNKNOWN";
+  }
+}
+
+unsigned long gbaSaveTypeSizeBytes(byte type)
+{
+  switch (type)
+  {
+    case 1:
+      return 512;
+    case 2:
+      return 8192;
+    case 3:
+      return 32768;
+    case 4:
+    case 6:
+      return 65536;
+    case 5:
+    case 7:
+      return 131072;
+    default:
+      return 0;
+  }
+}
+
+void logSaveTypeDecision_GBA(const char* stage)
+{
+  unsigned long saveSize = gbaSaveTypeSizeBytes(saveType);
+  printf("[GBA][SAVE] %s: cartID=%s type=%u mode=%s medium=%s size=0x%08lX source=%s force=%u\n",
+    stage,
+    cartID,
+    (unsigned int)saveType,
+    gbaSaveTypeName(saveType),
+    gbaSaveMediumName(saveType),
+    saveSize,
+    gbaSaveTypeSourceName(gbaSaveTypeSource),
+    (unsigned int)forceSaveType);
+}
+
+void logGuessedSaveTypeDecision_GBA(const char* stage)
+{
+  unsigned long saveSize = gbaSaveTypeSizeBytes(gbaGuessedSaveType);
+  printf("[GBA][SAVE] %s: cartID=%s type=%u mode=%s medium=%s size=0x%08lX source=%s\n",
+    stage,
+    cartID,
+    (unsigned int)gbaGuessedSaveType,
+    gbaSaveTypeName(gbaGuessedSaveType),
+    gbaSaveMediumName(gbaGuessedSaveType),
+    saveSize,
+    gbaSaveTypeSourceName(gbaGuessedSaveTypeSource));
+}
+
+byte gbaSaveTypeToMenuChoice(byte type)
+{
+  switch (type)
+  {
+    case 1:
+      return 1;
+    case 2:
+      return 2;
+    case 3:
+      return 3;
+    case 6:
+      return 4;
+    case 7:
+      return 5;
+    case 4:
+      return 6;
+    case 5:
+      return 7;
+    default:
+      return 1;
+  }
+}
+
+byte gbaMenuChoiceToSaveType(byte choice)
+{
+  switch (choice)
+  {
+    case 1:
+      return 1;
+    case 2:
+      return 2;
+    case 3:
+      return 3;
+    case 4:
+      return 6;
+    case 5:
+      return 7;
+    case 6:
+      return 4;
+    case 7:
+      return 5;
+    default:
+      return 0;
+  }
+}
+
+void setSelectedSaveType_GBA(byte type, byte source)
+{
+  gbaSelectedSaveType = type;
+  gbaSelectedSaveTypeSource = source;
+  strcpy(gbaSelectedCartID, cartID);
+  saveType = type;
+  gbaSaveTypeSource = source;
+}
+
+void promptSaveTypeSelection_GBA(byte source)
+{
+  byte defaultType = saveType;
+  byte defaultChoice = 1;
+  unsigned char menuChoice = 0;
+  byte selectedType = 0;
+
+  if (defaultType == 0) {
+    if (gbaGuessedSaveType != 0) {
+      defaultType = gbaGuessedSaveType;
+    }
+    else if (forceSaveType != 0) {
+      defaultType = forceSaveType;
+    }
+  }
+
+  defaultChoice = gbaSaveTypeToMenuChoice(defaultType);
+  menuChoice = questionBox_OLED("Select save type:", saveOptionsGBA, 7, defaultChoice, 1, 1);
+  selectedType = gbaMenuChoiceToSaveType(menuChoice);
+
+  if (selectedType != 0) {
+    setSelectedSaveType_GBA(selectedType, source);
+    printf("[GBA][SAVE] Medium selected: cartID=%s type=%u mode=%s source=%s\n",
+      cartID,
+      (unsigned int)saveType,
+      gbaSaveTypeName(saveType),
+      gbaSaveTypeSourceName(gbaSaveTypeSource));
+  }
+}
+
+void updateMediumMenuLabel_GBA(char* label)
+{
+  if (saveType == 0) {
+    strcpy(label, "Select save medium");
+    return;
+  }
+
+  sprintf(label, "Medium: %s", gbaSaveTypeName(saveType));
+}
 
 
 
@@ -177,6 +390,12 @@ word readWord_buf_GBA(unsigned long Address, uint16_t *outBuf, uint16_t cnt)
 
   for(WORD i = 0;i<cnt;i++)
   {
+    unsigned long currAddress = myAddress + i;
+
+    GPIO_OCTL(ADDR_1) = (GPIO_OCTL(ADDR_1)&0xFFFF000F) + ((currAddress << 8)&0xFF00) + ((currAddress >> 8)&0xF0);
+    GPIO_OCTL(ADDR_2) = (GPIO_OCTL(ADDR_2)&0xFFFFF0FF) + (currAddress & 0x0F00);
+    GPIO_OCTL(ADDR_3) = (GPIO_OCTL(ADDR_3)&0xFFFF00FF) + ((currAddress >> 8)&0xFF00);
+
     // Pull RD(PH6) to LOW
     gpio_bit_reset(CTRLGBA,GBA_RD);
 
@@ -297,6 +516,21 @@ void writeWord_GAB(unsigned long myAddress, word myWord) {
 #endif
 }
 
+word readWord29GL_GBA(unsigned long myAddress) {
+  if (gbaNativeAmdDetected) {
+    return readWord_GBA(myAddress);
+  }
+  return readWord_GAB(myAddress);
+}
+
+void writeWord29GL_GBA(unsigned long myAddress, word myWord) {
+  if (gbaNativeAmdDetected) {
+    writeWord_GBA(myAddress, myWord);
+    return;
+  }
+  writeWord_GAB(myAddress, myWord);
+}
+
 
 void setAddrOutMode()
 {
@@ -333,6 +567,18 @@ byte readByte_GBA(unsigned long myAddress)
   // Pull OE_SRAM(PH6) HIGH
   gpio_bit_set(CTRLGBA,GBA_RD|CS_SRAM);
   return tempByte;
+}
+
+word calcLogoChecksum_GBA(void)
+{
+  word logoChecksum = 0;
+
+  for (int currByte = 0x4; currByte < 0xA0; currByte++)
+  {
+    logoChecksum += readByte_GBA(currByte);
+  }
+
+  return logoChecksum;
 }
 
 void writeByte_GBA(unsigned long myAddress, byte myData) 
@@ -378,6 +624,18 @@ void getCartInfo_GBA()
   // Read Header into array
   OledClear();
 
+  cartSize = 0;
+  saveType = 0;
+  gbaSaveTypeSource = 0;
+  gbaGuessedSaveType = 0;
+  gbaGuessedSaveTypeSource = 0;
+  strcpy(romName, "ERROR");
+  cartID[0] = 0x00;
+  cartID[1] = 0x00;
+  cartID[2] = 0x00;
+  cartID[3] = 0x00;
+  cartID[4] = 0x00;
+
   for (int currWord = 0; currWord < 96; currWord++) 
   {
     word tempWord = readWord_GBA(currWord<<1);
@@ -394,10 +652,25 @@ void getCartInfo_GBA()
 
   printf("\r\ncksum = %04x\r\n",logoChecksum);
 
+  cartID[0] = (char)sdBuffer[0xAC];
+  cartID[1] = (char)sdBuffer[0xAD];
+  cartID[2] = (char)sdBuffer[0xAE];
+  cartID[3] = (char)sdBuffer[0xAF];
+  cartID[4] = 0x00;
+
   if (logoChecksum != 0x4B1B) 
   {
+    printf("[GBA][SAVE] Header invalid: expected_logo_cksum=0x4B1B actual=0x%04X rawCartID=%02X %02X %02X %02X guessed_ascii='%c%c%c%c'\n",
+      logoChecksum,
+      (unsigned int)sdBuffer[0xAC],
+      (unsigned int)sdBuffer[0xAD],
+      (unsigned int)sdBuffer[0xAE],
+      (unsigned int)sdBuffer[0xAF],
+      (sdBuffer[0xAC] >= 32 && sdBuffer[0xAC] <= 126) ? sdBuffer[0xAC] : '.',
+      (sdBuffer[0xAD] >= 32 && sdBuffer[0xAD] <= 126) ? sdBuffer[0xAD] : '.',
+      (sdBuffer[0xAE] >= 32 && sdBuffer[0xAE] <= 126) ? sdBuffer[0xAE] : '.',
+      (sdBuffer[0xAF] >= 32 && sdBuffer[0xAF] <= 126) ? sdBuffer[0xAF] : '.');
     print_Error("CARTRIDGE ERROR", false);
-    strcpy(romName, "ERROR");
     OledShowString(0,1,"Press OK Button to\nignore or powercycle\nto try again!",8);
     WaitOKBtn();
   }
@@ -407,17 +680,6 @@ void getCartInfo_GBA()
     char tempStr[5] = {0};
     FIL tf;
     UINT rdt;
-
-    // cart not in list
-    cartSize = 0;
-    saveType = 0;
-
-    // Get cart ID
-    cartID[0] = (char)sdBuffer[0xAC];
-    cartID[1] = (char)sdBuffer[0xAD];
-    cartID[2] = (char)sdBuffer[0xAE];
-    cartID[3] = (char)sdBuffer[0xAF];
-    cartID[4] = 0x00;
 
     f_chdir("/");
     if (f_open(&tf,"gba.txt", FA_READ) == FR_OK) 
@@ -459,7 +721,13 @@ void getCartInfo_GBA()
           f_read(&tf,&tb,1,&rdt);
 
           // Read the next ascii character and subtract 48 to convert to decimal
-          saveType = tb - 48;
+          gbaGuessedSaveType = tb - 48;
+          gbaGuessedSaveTypeSource = 1;
+          printf("[GBA][SAVE] gba.txt match: cartID=%s romSize=%luMB type=%u mode=%s\n",
+            cartID,
+            cartSize,
+            (unsigned int)gbaGuessedSaveType,
+            gbaSaveTypeName(gbaGuessedSaveType));
         }
         // If no match, empty string, advance by 7 and try again
         else 
@@ -474,6 +742,24 @@ void getCartInfo_GBA()
     {
       print_Error("GBA.txt missing", false);
     }
+
+    if (gbaGuessedSaveType == 0) {
+      printf("[GBA][SAVE] No save type matched in gba.txt for cartID=%s\n", cartID);
+    }
+
+    if ((strcmp(cartID, "BTTJ") == 0) && (gbaGuessedSaveTypeSource == 1) && (gbaGuessedSaveType == 1)) {
+      printf("[GBA][SAVE] Override gba.txt EEPROM mapping for cartID=%s; manual save type selection required\n", cartID);
+      gbaGuessedSaveType = 0;
+      gbaGuessedSaveTypeSource = 0;
+    }
+
+    if ((strcmp(cartID, "BOCE") == 0) && (gbaGuessedSaveTypeSource == 1) && (gbaGuessedSaveType == 4)) {
+      printf("[GBA][SAVE] Override gba.txt FLASH mapping for cartID=%s; using 1M SRAM/FRAM per cartridge hardware\n", cartID);
+      gbaGuessedSaveType = 7;
+      gbaGuessedSaveTypeSource = 4;
+    }
+
+    logGuessedSaveTypeDecision_GBA("Guessed from gba.txt/override");
 
     // Get name
     byte myByte = 0;
@@ -696,6 +982,14 @@ void writeSRAM_GBA(boolean browseFile, unsigned long sramSize, uint32_t pos)
   FIL tf;
   if (f_open(&tf, filePath, FA_READ) == FR_OK) 
   {
+    printf("[GBA][SRAM] Write start: file=%s size=0x%08lX pos=0x%08lX\n", filePath, sramSize, pos);
+    unsigned long actualFileSize = f_size(&tf);
+    printf("[GBA][SRAM] File size=0x%08lX expected=0x%08lX\n", actualFileSize, sramSize);
+    if (actualFileSize != sramSize) {
+      f_close(&tf);
+      print_Error("SRAM size mismatch", false);
+      return;
+    }
 
     OledShowString(0,1,"SRAM writing...",8);
 
@@ -707,6 +1001,10 @@ void writeSRAM_GBA(boolean browseFile, unsigned long sramSize, uint32_t pos)
 
     for (unsigned long currAddress = 0; currAddress < sramSize; currAddress += 512) 
     {
+      if ((currAddress == 0) || ((currAddress % 0x2000) == 0)) {
+        printf("[GBA][SRAM] Write block addr=0x%08lX of 0x%08lX\n", currAddress, sramSize);
+      }
+
       //fill sdBuffer
       UINT rdt;
       f_read(&tf, sdBuffer, 512, &rdt);
@@ -721,6 +1019,7 @@ void writeSRAM_GBA(boolean browseFile, unsigned long sramSize, uint32_t pos)
     }
     // Close the file:
     f_close(&tf);
+    printf("[GBA][SRAM] Write complete: size=0x%08lX\n", sramSize);
     showPersent(1,1,6,2);
     OledShowString(0,3,"finished!",8);
 
@@ -826,32 +1125,69 @@ void TestSRAM_GBA(unsigned long sramSize)
 *****************************************/
 
 
+void pulseEepromWriteClock_GBA()
+{
+  delay_GBA();
+  gpio_bit_reset(CTRLGBA,GBA_WR);
+  delay_GBA();
+  gpio_bit_set(CTRLGBA,GBA_WR);
+  delay_GBA();
+}
+
+void writeEepromBit_GBA(byte bit)
+{
+  if (bit) {
+    gpio_bit_set(ADDR_1,GPIO_PIN_8);
+  }
+  else {
+    gpio_bit_reset(ADDR_1,GPIO_PIN_8);
+  }
+
+  delay_GBA();
+  pulseEepromWriteClock_GBA();
+}
+
+void setEepromBusOutput_GBA()
+{
+  gpio_init(ADDR_1,GPIO_MODE_OUT_PP,GPIO_OSPEED_50MHZ,GPIO_PIN_8|GPIO_PIN_7|GPIO_PIN_6|GPIO_PIN_5|GPIO_PIN_4);
+  gpio_init(ADDR_2,GPIO_MODE_OUT_PP,GPIO_OSPEED_50MHZ,GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11);
+  gpio_init(ADDR_1,GPIO_MODE_OUT_PP,GPIO_OSPEED_50MHZ,GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15);
+}
+
+void setEepromBusInput_GBA()
+{
+  gpio_init(ADDR_1,GPIO_MODE_IN_FLOATING,GPIO_OSPEED_50MHZ,GPIO_PIN_8|GPIO_PIN_7|GPIO_PIN_6|GPIO_PIN_5|GPIO_PIN_4);
+  gpio_init(ADDR_2,GPIO_MODE_IN_FLOATING,GPIO_OSPEED_50MHZ,GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11);
+  gpio_init(ADDR_1,GPIO_MODE_IN_FLOATING,GPIO_OSPEED_50MHZ,GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15);
+}
+
+void setEepromSelectAddress_GBA()
+{
+  gpio_init(ADDR_3,GPIO_MODE_OUT_PP,GPIO_OSPEED_50MHZ,
+    GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15);
+  gpio_bit_reset(ADDR_3,GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14);
+  gpio_bit_set(ADDR_3,GPIO_PIN_15);
+}
+
+byte sampleEepromReadBit_GBA(byte settleDelay);
+
+
 // Send address as bits to eeprom
 void send_GBA(word currAddr, word numBits) 
 {
   for (word addrBit = numBits; addrBit > 0; addrBit--) {
     // If you want the k-th bit of n, then do
     // (n & ( 1 << k )) >> k
-    if (((currAddr & ( 1 << (addrBit - 1))) >> (addrBit - 1))) {
-      // Set A0(PF0) to High
-      gpio_bit_set(ADDR_1,GPIO_PIN_8);
-    }
-    else {
-      // Set A0(PF0) to Low
-      gpio_bit_reset(ADDR_1,GPIO_PIN_8);
-    }
-    // Set WR(PH5) to LOW
-    gpio_bit_reset(CTRLGBA,GBA_WR);
-    // Set WR(PH5) to High
-    gpio_bit_set(CTRLGBA,GBA_WR);
+    writeEepromBit_GBA((currAddr & ( 1 << (addrBit - 1))) >> (addrBit - 1));
   }
 }
 
 
 // Write 512K eeprom block
-void writeBlock_EEP(word startAddr, word eepSize) 
+boolean writeBlock_EEP(word startAddr, word eepSize) 
 {
   // Setup
+  setEepromSelectAddress_GBA();
   // Set A0(PF0) to Output
   gpio_init(ADDR_1,GPIO_MODE_OUT_PP,GPIO_OSPEED_50MHZ,GPIO_PIN_8|GPIO_PIN_7);
   // Set A23/D7(PC7) to Output
@@ -873,18 +1209,8 @@ void writeBlock_EEP(word startAddr, word eepSize)
     gpio_bit_reset(CTRLGBA,CS_ROM);
 
     // Send write request "10"
-    // Set A0(PF0) to High
-    gpio_bit_set(ADDR_1,GPIO_PIN_8);
-    // Set WR(PH5) to LOW
-    gpio_bit_reset(CTRLGBA,GBA_WR);
-    // Set WR(PH5) to High
-    gpio_bit_set(CTRLGBA,GBA_WR);
-    // Set A0(PF0) to LOW
-    gpio_bit_reset(ADDR_1,GPIO_PIN_8);
-    // Set WR(PH5) to LOW
-    gpio_bit_reset(CTRLGBA,GBA_WR);
-    // Set WR(PH5) to High
-    gpio_bit_set(CTRLGBA,GBA_WR);
+    writeEepromBit_GBA(1);
+    writeEepromBit_GBA(0);
 
     // Send either 6 or 14 bit address
     if (eepSize == 4) {
@@ -902,31 +1228,110 @@ void writeBlock_EEP(word startAddr, word eepSize)
     }
 
     // Send stop bit
-    // Set A0(PF0) to LOW
-    gpio_bit_reset(ADDR_1,GPIO_PIN_8);
-    // Set WR(PH5) to LOW
-    gpio_bit_reset(CTRLGBA,GBA_WR);
-    // Set WR(PH5) to High
-    gpio_bit_set(CTRLGBA,GBA_WR);
+    writeEepromBit_GBA(0);
 
     // Set CS_ROM(PH3) to High
     gpio_bit_set(CTRLGBA,CS_ROM);
 
     // Wait until done
-    // Set A0(PF0) to Input
-    gpio_init(ADDR_1,GPIO_MODE_IN_FLOATING,GPIO_OSPEED_50MHZ,GPIO_PIN_8);
+    setEepromSelectAddress_GBA();
+    setEepromBusInput_GBA();
+    gpio_bit_reset(CTRLGBA,CS_ROM);
 
+    unsigned long readyTimeout = 0;
     do {
-      // Set  CS_ROM(PH3) RD(PH6) to LOW
-      gpio_bit_reset(CTRLGBA,CS_ROM);
-      // Set  CS_ROM(PH3) RD(PH6) to High
-      gpio_bit_set(CTRLGBA,CS_ROM);
-    }
-    while (((GPIO_ISTAT(ADDR_1) >> 8) & 0x1) == 0);
+      byte readyBit = sampleEepromReadBit_GBA(6);
 
-    // Set A0(PF0) to Output
-    gpio_init(ADDR_1,GPIO_MODE_OUT_PP,GPIO_OSPEED_50MHZ,GPIO_PIN_8);
+      if (readyBit != 0) {
+        break;
+      }
+
+      readyTimeout++;
+      if (readyTimeout > 500000UL) {
+        printf("[GBA][EEP] Write timeout block=0x%04X cell=0x%04X ready=%u size=%uK\n",
+          startAddr,
+          currAddr,
+          (unsigned int)((GPIO_ISTAT(ADDR_1) >> 8) & 0x1),
+          (unsigned int)eepSize);
+        gpio_bit_set(CTRLGBA,CS_ROM);
+        setEepromBusOutput_GBA();
+        gpio_bit_set(ADDR_1,GPIO_PIN_8);
+        return 0;
+      }
+    }
+    while (1);
+
+    gpio_bit_set(CTRLGBA,CS_ROM);
+    setEepromBusOutput_GBA();
+    gpio_bit_set(ADDR_1,GPIO_PIN_8);
   }
+
+  return 1;
+}
+
+void packEepromBits_GBA(const bool* dataBits, byte* outBytes)
+{
+  for (byte j = 0; j < 64; j += 8) {
+    outBytes[j / 8] = dataBits[0 + j] << 7 | dataBits[1 + j] << 6 | dataBits[2 + j] << 5 | dataBits[3 + j] << 4 | dataBits[4 + j] << 3 | dataBits[5 + j] << 2 | dataBits[6 + j] << 1 | dataBits[7 + j];
+  }
+}
+
+byte sampleEepromReadBit_GBA(byte settleDelay)
+{
+  delay_GBA();
+  gpio_bit_reset(CTRLGBA,GBA_RD);
+  delay_GBA();
+  gpio_bit_set(CTRLGBA,GBA_RD);
+  delay_GBA();
+
+  while (settleDelay > 0) {
+    delay_GBA();
+    settleDelay--;
+  }
+
+  return (GPIO_ISTAT(ADDR_1) >> 8) & 0x1;
+}
+
+void readDataCell_EEP(word currAddr, word eepSize, bool* dummyBits, bool* dataBits, byte settleDelay)
+{
+  setEepromSelectAddress_GBA();
+  // Set CS_ROM(PH3) to LOW
+  gpio_bit_reset(CTRLGBA,CS_ROM);
+
+  // Send read request "11"
+  writeEepromBit_GBA(1);
+  writeEepromBit_GBA(1);
+
+  if (eepSize == 4) {
+    send_GBA(currAddr, 6);
+  }
+  else {
+    send_GBA(currAddr, 14);
+  }
+
+  // Send stop bit
+  writeEepromBit_GBA(0);
+
+  gpio_bit_set(CTRLGBA,CS_ROM);
+
+  __asm__("nop\n\t""nop\n\t""nop\n\t""nop\n\t""nop\n\t""nop\n\t""nop\n\t""nop\n\t");
+
+  setEepromBusInput_GBA();
+  gpio_bit_reset(CTRLGBA,CS_ROM);
+
+  for (byte i = 0; i < 4; i++)
+  {
+    dummyBits[i] = sampleEepromReadBit_GBA(settleDelay);
+  }
+
+  for (byte currBit = 0; currBit < 64; currBit++)
+  {
+    dataBits[currBit] = sampleEepromReadBit_GBA(settleDelay);
+  }
+
+  gpio_bit_set(CTRLGBA,CS_ROM);
+  setEepromBusOutput_GBA();
+  gpio_bit_set(ADDR_1,GPIO_PIN_8);
 }
 
 // Reads 512 bytes from eeprom
@@ -947,84 +1352,11 @@ void readBlock_EEP(word startAddress, word eepSize) {
   // Read 64*8=512 bytes
   for (word currAddr = startAddress; currAddr < startAddress + 64; currAddr++) 
   {
-    // Set CS_ROM(PH3) to LOW
-    gpio_bit_reset(CTRLGBA,CS_ROM);
+    bool dummyBits[4];
+    bool tempBits[64];
 
-    // Send read request "11"
-    // Set A0(PF0) to High
-    gpio_bit_set(ADDR_1,GPIO_PIN_8);
-    // Set WR(PH5) to LOW
-    gpio_bit_reset(CTRLGBA,GBA_WR);
-    // Set WR(PH5) to High
-    gpio_bit_set(CTRLGBA,GBA_WR);
-    // Set WR(PH5) to LOW
-    gpio_bit_reset(CTRLGBA,GBA_WR);
-    // Set WR(PH5) to High
-    gpio_bit_set(CTRLGBA,GBA_WR);
-
-    // Send either 6 or 14 bit address
-    if (eepSize == 4) {
-      send_GBA(currAddr, 6);
-    }
-    else {
-      send_GBA(currAddr, 14);
-    }
-
-    // Send stop bit
-    // Set A0(PF0) to LOW
-    gpio_bit_reset(ADDR_1,GPIO_PIN_8);
-    // Set WR(PH5) to LOW
-    gpio_bit_reset(CTRLGBA,GBA_WR);
-    // Set WR(PH5) to High
-    gpio_bit_set(CTRLGBA,GBA_WR);
-
-    // Set CS_ROM(PH3) to High
-    gpio_bit_set(CTRLGBA,CS_ROM);
-
-    __asm__("nop\n\t""nop\n\t""nop\n\t""nop\n\t""nop\n\t""nop\n\t""nop\n\t""nop\n\t");
-
-    // Read data
-    // Set A0(PF0) to Input
-    gpio_init(ADDR_1,GPIO_MODE_IN_FLOATING,GPIO_OSPEED_50MHZ,GPIO_PIN_8);
-    // Set CS_ROM(PH3) to low
-    gpio_bit_reset(CTRLGBA,CS_ROM);
-
-    // Array that holds the bits
-    bool tempBits[65];
-
-    // Ignore the first 4 bits
-    for (byte i = 0; i < 4; i++) 
-    {
-      // Set RD(PH6) to LOW
-      gpio_bit_reset(CTRLGBA,GBA_RD);
-      // Set RD(PH6) to High
-      gpio_bit_set(CTRLGBA,GBA_RD);
-    }
-
-    // Read the remaining 64bits into array
-    for (byte currBit = 0; currBit < 64; currBit++) 
-    {
-      // Set RD(PH6) to LOW
-      gpio_bit_reset(CTRLGBA,GBA_RD);
-      // Set RD(PH6) to High
-      gpio_bit_set(CTRLGBA,GBA_RD);
-
-      // Read bit from A0(PF0)
-      tempBits[currBit] = ((GPIO_ISTAT(ADDR_1) >> 8) & 0x1);
-    }
-
-    // Set CS_ROM(PH3) to High
-    gpio_bit_set(CTRLGBA,CS_ROM);
-    // Set A0(PF0) to Output
-    gpio_init(ADDR_1,GPIO_MODE_OUT_PP,GPIO_OSPEED_50MHZ,GPIO_PIN_8);
-    // Set A0(PF0) to High
-    gpio_bit_set(ADDR_1,GPIO_PIN_8);
-
-
-    // OR 8 bits into one byte for a total of 8 bytes
-    for (byte j = 0; j < 64; j += 8) {
-      sdBuffer[((currAddr - startAddress) * 8) + (j / 8)] = tempBits[0 + j] << 7 | tempBits[1 + j] << 6 | tempBits[2 + j] << 5 | tempBits[3 + j] << 4 | tempBits[4 + j] << 3 | tempBits[5 + j] << 2 | tempBits[6 + j] << 1 | tempBits[7 + j];
-    }
+    readDataCell_EEP(currAddr, eepSize, dummyBits, tempBits, 6);
+    packEepromBits_GBA(tempBits, &sdBuffer[(currAddr - startAddress) * 8]);
   }
 }
 
@@ -1080,15 +1412,31 @@ void writeEeprom_GBA(word eepSize) {
   //open file on sd card
   if (f_open(&tf, filePath, FA_READ) == FR_OK) 
   {
+    unsigned long expectedFileSize = (eepSize == 4) ? 512UL : 8192UL;
+    unsigned long actualFileSize = f_size(&tf);
+    printf("[GBA][EEP] File size=0x%08lX expected=0x%08lX\n", actualFileSize, expectedFileSize);
+    if (actualFileSize != expectedFileSize) {
+      f_close(&tf);
+      print_Error("EEP size mismatch", false);
+      return;
+    }
+
     for (word i = 0; i < eepSize * 16; i += 64) 
     {
+      printf("[GBA][EEP] Write block start=0x%04X size=%uK\n", i, (unsigned int)eepSize);
+
       // Fill romBuffer
       UINT rdt;
       f_read(&tf, sdBuffer, 512, &rdt);
       // Disable interrupts for more uniform clock pulses
       __disable_irq();
       // Write 512 bytes
-      writeBlock_EEP(i, eepSize);
+      if (!writeBlock_EEP(i, eepSize)) {
+        __enable_irq();
+        f_close(&tf);
+        print_Error("EEP Write Timeout", false);
+        return;
+      }
       __enable_irq();
 
       // Wait
@@ -1642,17 +1990,143 @@ void resetIntel_GBA(unsigned long partitionSize)
 
 void resetMX29GL128E_GBA() 
 {
-  writeWord_GAB(0, 0xF0);
+  writeWord29GL_GBA(0, 0xF0);
   delay(1);
+}
+
+boolean waitErase29GLReady_GBA(unsigned long currSector)
+{
+  unsigned long pollCount = 0;
+  word statusReg = readWord29GL_GBA(currSector);
+
+  while ((statusReg | 0xFF7F) != 0xFFFF) {
+    pollCount++;
+
+    if ((pollCount & 0x3FFFF) == 0) {
+      printf("[GBA][ERASE] Poll sector=0x%08lX status=0x%04X mode=%s\n", currSector, statusReg, gbaNativeAmdDetected ? "native" : "swapped");
+    }
+
+    if (pollCount >= 0x200000) {
+      gbaEraseFailed = 1;
+      gbaEraseFailedSector = currSector;
+      gbaEraseFailedStatus = statusReg;
+      printf("[GBA][ERASE] Timeout sector=0x%08lX status=0x%04X protect=0x%04X mode=%s\n",
+        currSector,
+        statusReg,
+        readWord29GL_GBA(currSector + 0x04),
+        gbaNativeAmdDetected ? "native" : "swapped");
+      resetMX29GL128E_GBA();
+      return 0;
+    }
+
+    statusReg = readWord29GL_GBA(currSector);
+  }
+
+  return 1;
+}
+
+boolean eraseSector29GL_GBA(unsigned long currSector)
+{
+  writeWord29GL_GBA(0xAAA, 0xAA);
+  writeWord29GL_GBA(0x555, 0x55);
+  writeWord29GL_GBA(0xAAA, 0x80);
+  writeWord29GL_GBA(0xAAA, 0xAA);
+  writeWord29GL_GBA(0x555, 0x55);
+  writeWord29GL_GBA(currSector, 0x30);
+
+  return waitErase29GLReady_GBA(currSector);
+}
+
+void dumpEraseSector29GL_GBA(unsigned long currSector, unsigned long sectorStep)
+{
+  unsigned long prevSector = (currSector >= sectorStep) ? (currSector - sectorStep) : currSector;
+  unsigned long nextSector = currSector + sectorStep;
+  unsigned long currMid = currSector + (sectorStep >> 1);
+  unsigned long currTail = currSector + sectorStep - 2;
+
+  resetMX29GL128E_GBA();
+  printf("[GBA][ERASE] Snapshot prev=0x%08lX [%04X %04X %04X]\n",
+    prevSector,
+    readWord29GL_GBA(prevSector + 0x0),
+    readWord29GL_GBA(prevSector + 0x2),
+    readWord29GL_GBA(prevSector + 0x4));
+  printf("[GBA][ERASE] Snapshot curr=0x%08lX [%04X %04X %04X]\n",
+    currSector,
+    readWord29GL_GBA(currSector + 0x0),
+    readWord29GL_GBA(currSector + 0x2),
+    readWord29GL_GBA(currSector + 0x4));
+  printf("[GBA][ERASE] Snapshot curr-mid=0x%08lX [0x%04X] curr-tail=0x%08lX [0x%04X]\n",
+    currMid,
+    readWord29GL_GBA(currMid),
+    currTail,
+    readWord29GL_GBA(currTail));
+  printf("[GBA][ERASE] Snapshot next=0x%08lX [%04X %04X %04X]\n",
+    nextSector,
+    readWord29GL_GBA(nextSector + 0x0),
+    readWord29GL_GBA(nextSector + 0x2),
+    readWord29GL_GBA(nextSector + 0x4));
+}
+
+void probe29GLStability_GBA(unsigned long lastSector, unsigned long sectorStep)
+{
+  unsigned long maxSector = lastSector & ~(sectorStep - 1);
+  unsigned long sampleMid = ((maxSector >> 1) / sectorStep) * sectorStep;
+  unsigned long sampleLast = maxSector;
+  word id0_a = 0;
+  word id2_a = 0;
+  word id0_b = 0;
+  word id2_b = 0;
+  word protect0 = 0;
+  word protectMid = 0;
+  word protectLast = 0;
+
+  writeWord29GL_GBA(0xAAA, 0xAA);
+  writeWord29GL_GBA(0x555, 0x55);
+  writeWord29GL_GBA(0xAAA, 0x90);
+  delay_GBA();
+  delay_GBA();
+  id0_a = readWord29GL_GBA(0x0);
+  id2_a = readWord29GL_GBA(0x2);
+
+  writeWord29GL_GBA(0xAAA, 0xAA);
+  writeWord29GL_GBA(0x555, 0x55);
+  writeWord29GL_GBA(0xAAA, 0x90);
+  delay_GBA();
+  delay_GBA();
+  id0_b = readWord29GL_GBA(0x0);
+  id2_b = readWord29GL_GBA(0x2);
+
+  writeWord29GL_GBA(0xAAA, 0xAA);
+  writeWord29GL_GBA(0x555, 0x55);
+  writeWord29GL_GBA(0xAAA, 0x90);
+  delay_GBA();
+  delay_GBA();
+  protect0 = readWord29GL_GBA(0x000000 + 0x04);
+  protectMid = readWord29GL_GBA(sampleMid + 0x04);
+  protectLast = readWord29GL_GBA(sampleLast + 0x04);
+  resetMX29GL128E_GBA();
+
+  printf("[GBA][ERASE] Precheck ID A: [0x0]=0x%04X [0x2]=0x%04X mode=%s\n", id0_a, id2_a, gbaNativeAmdDetected ? "native" : "swapped");
+  printf("[GBA][ERASE] Precheck ID B: [0x0]=0x%04X [0x2]=0x%04X mode=%s\n", id0_b, id2_b, gbaNativeAmdDetected ? "native" : "swapped");
+  printf("[GBA][ERASE] Precheck protect: s0=0x%04X sMid(0x%08lX)=0x%04X sLast(0x%08lX)=0x%04X\n",
+    protect0,
+    sampleMid,
+    protectMid,
+    sampleLast,
+    protectLast);
+
+  if (id0_a != id0_b || id2_a != id2_b || protect0 == 0xFFFF || protectMid == 0xFFFF || protectLast == 0xFFFF) {
+    printf("[GBA][ERASE] Precheck suspicious: unstable ID or invalid protect read, hardware/contact issue becomes more likely\n");
+  }
 }
 
 boolean sectorCheckMX29GL128E_GBA() {
   boolean sectorProtect = 0;
-  writeWord_GAB(0xAAA, 0xAA);
-  writeWord_GAB(0x555, 0x55);
-  writeWord_GAB(0xAAA, 0x90);
+  writeWord29GL_GBA(0xAAA, 0xAA);
+  writeWord29GL_GBA(0x555, 0x55);
+  writeWord29GL_GBA(0xAAA, 0x90);
   for (unsigned long currSector = 0x0; currSector < 0xFFFFFF; currSector += 0x20000) {
-    if (readWord_GAB(currSector + 0x04) != 0x0)
+    if (readWord29GL_GBA(currSector + 0x04) != 0x0)
       sectorProtect = 1;
   }
   resetMX29GL128E_GBA();
@@ -1661,6 +2135,16 @@ boolean sectorCheckMX29GL128E_GBA() {
 
 void idFlashrom_GBA() 
 {
+  word intel_id0 = 0;
+  word intel_id2 = 0;
+  word intel_id4 = 0;
+  word amd_id0 = 0;
+  word amd_id2 = 0;
+  word amd_id4 = 0;
+  word swapped_id0 = 0;
+  word swapped_id2 = 0;
+  gbaNativeAmdDetected = 0;
+  printf("[GBA][ID] Start flash identification\n");
   // Send Intel ID command to flashrom
   writeWord_GBA(0, 0x90);
   delay_GBA();
@@ -1669,14 +2153,51 @@ void idFlashrom_GBA()
   delay_GBA();
 
   // Read flashrom ID
-  sprintf(flashid, "%02X%02X", ((readWord_GBA(0x2) >> 8) & 0xFF), (readWord_GBA(0x4) & 0xFF));
+  intel_id0 = readWord_GBA(0x0);
+  intel_id2 = readWord_GBA(0x2);
+  intel_id4 = readWord_GBA(0x4);
+  printf("[GBA][ID] Intel raw words: [0x0]=0x%04X [0x2]=0x%04X [0x4]=0x%04X\n", intel_id0, intel_id2, intel_id4);
+  sprintf(flashid, "%02X%02X", ((intel_id2 >> 8) & 0xFF), (intel_id4 & 0xFF));
+  printf("[GBA][ID] Intel command ID = 0x%s\n", flashid);
 
   // Intel Strataflash
   if (strcmp(flashid, "8802") == 0 || (strcmp(flashid, "8816") == 0)) 
   {
     cartSize = 0x2000000;
+    printf("[GBA][ID] Matched Intel flash family, cartSize = 0x%08X\n", cartSize);
   }
   else {
+    printf("[GBA][ID] Intel ID not matched, try native AMD/Spansion x16 ID sequence\n");
+
+    writeWord_GBA(0xAAA, 0xAA);
+    writeWord_GBA(0x555, 0x55);
+    writeWord_GBA(0xAAA, 0x90);
+
+    delay_GBA();
+    delay_GBA();
+    delay_GBA();
+    delay_GBA();
+
+    amd_id0 = readWord_GBA(0x0);
+    amd_id2 = readWord_GBA(0x2);
+    amd_id4 = readWord_GBA(0x4);
+    printf("[GBA][ID] AMD raw words: [0x0]=0x%04X [0x2]=0x%04X [0x4]=0x%04X\n", amd_id0, amd_id2, amd_id4);
+    printf("[GBA][ID] AMD candidate: manuf=0x%02X device16=0x%04X ext=0x%04X\n", (amd_id0 & 0xFF), amd_id2, amd_id4);
+
+    if (amd_id2 == 0x227E || amd_id2 == 0x227A) {
+      sprintf(flashid, "%04X", amd_id2 & 0xFFFF);
+      romType = (amd_id0 & 0xFF);
+      gbaNativeAmdDetected = 1;
+      cartSize = (romType == 0x01) ? 0x2000000 : 0x1000000;
+      printf("[GBA][ID] Matched native AMD/Spansion family, flashid = 0x%s, romType = 0x%02X, cartSize = 0x%08X\n", flashid, romType, cartSize);
+      writeWord_GBA(0, 0xF0);
+    }
+    else {
+      writeWord_GBA(0, 0xF0);
+      delay_GBA();
+      delay_GBA();
+
+    printf("[GBA][ID] Intel ID not matched, try swapped MX/MSP ID sequence\n");
     // Send swapped MX29GL128E/MSP55LV128 ID command to flashrom
 
     writeWord_GAB(0xAAA, 0xAA);
@@ -1688,21 +2209,29 @@ void idFlashrom_GBA()
     delay_GBA();
     delay_GBA();
     // Read flashrom ID
-    sprintf(flashid, "%02X%02X", ((readWord_GAB(0x2) >> 8) & 0xFF), (readWord_GAB(0x2) & 0xFF));
+    swapped_id0 = readWord_GAB(0x0);
+    swapped_id2 = readWord_GAB(0x2);
+    printf("[GBA][ID] Swapped raw words: [0x0]=0x%04X [0x2]=0x%04X\n", swapped_id0, swapped_id2);
+    sprintf(flashid, "%02X%02X", ((swapped_id2 >> 8) & 0xFF), (swapped_id2 & 0xFF));
+    printf("[GBA][ID] Swapped command ID = 0x%s\n", flashid);
 
     // MX29GL128E or MSP55LV128
     if (strcmp(flashid, "227E") == 0 || strcmp(flashid, "227A") == 0) {
       // MX is 0xC2 and MSP is 0x4 or 0x1
-      romType = (readWord_GAB(0x0) & 0xFF);
+      romType = (swapped_id0 & 0xFF);
+      gbaNativeAmdDetected = 0;
       cartSize = 0x1000000;
+      printf("[GBA][ID] Matched MX/MSP/ST/Intel compatible family, romType = 0x%02X, cartSize = 0x%08X\n", romType, cartSize);
       resetMX29GL128E_GBA();
     }
     else 
     {
+      printf("[GBA][ID] Unknown flash ID after both probes: 0x%s\n", flashid);
       char tmsg[64] = {0};
       sprintf(tmsg,"Error!\nUnknown Flash!\nFlash ID: %s",flashid);
       OledShowString(0,0,tmsg,8);
       print_Error("Check voltage?", true);
+    }
     }
   }
 
@@ -1717,12 +2246,43 @@ boolean blankcheckFlashrom_GBA()
     LED_GREEN_BLINK;
 
     for (unsigned long currByte = 0; currByte < 0x20000; currByte += 2) {
-      if (readWord_GBA(currSector + currByte) != 0xFFFF) 
+      word actualWord = readWord_GBA(currSector + currByte);
+      if (actualWord != 0xFFFF) 
       {
+        printf("[GBA][ERASE] Blankcheck mismatch addr=0x%08lX actual=0x%04X\n", currSector + currByte, actualWord);
         return 0;
       }
     }
   }
+  return 1;
+}
+
+boolean waitIntelEraseReady_GBA(unsigned long currBlock)
+{
+  unsigned long pollCount = 0;
+  word statusReg = readWord_GBA(currBlock);
+
+  while ((statusReg | 0xFF7F) != 0xFFFF) {
+    pollCount++;
+
+    if ((pollCount & 0x3FFFF) == 0) {
+      printf("[GBA][ERASE] Intel poll block=0x%08lX status=0x%04X\n", currBlock, statusReg);
+    }
+
+    if (pollCount >= 0x200000) {
+      gbaEraseFailed = 1;
+      gbaEraseFailedSector = currBlock;
+      gbaEraseFailedStatus = statusReg;
+      printf("[GBA][ERASE] Intel timeout block=0x%08lX status=0x%04X head=0x%04X\n",
+        currBlock,
+        statusReg,
+        readWord_GBA(currBlock));
+      return 0;
+    }
+
+    statusReg = readWord_GBA(currBlock);
+  }
+
   return 1;
 }
 
@@ -1732,6 +2292,9 @@ void eraseIntel4000_GBA()
   unsigned long lastBlock = 0xFFFFFF;
   if (fileSize < 0x1000000)
     lastBlock = fileSize;
+  gbaEraseFailed = 0;
+  gbaEraseFailedSector = 0;
+  gbaEraseFailedStatus = 0;
 
   // Erase 4 blocks with 16kwords each
   for (unsigned long currBlock = 0x0; currBlock < 0x1FFFF; currBlock += 0x8000) {
@@ -1744,9 +2307,8 @@ void eraseIntel4000_GBA()
     writeWord_GBA(currBlock, 0xD0);
 
     // Read the status register
-    word statusReg = readWord_GBA(currBlock);
-    while ((statusReg | 0xFF7F) != 0xFFFF) {
-      statusReg = readWord_GBA(currBlock);
+    if (!waitIntelEraseReady_GBA(currBlock)) {
+      return;
     }
 
     LED_RED_BLINK;
@@ -1754,7 +2316,7 @@ void eraseIntel4000_GBA()
   }
 
   // Erase 126 blocks with 64kwords each
-  for (unsigned long currBlock = 0x20000; currBlock < lastBlock; currBlock += 0x1FFFF) 
+  for (unsigned long currBlock = 0x20000; currBlock < lastBlock; currBlock += 0x20000) 
   {
     // Unlock Block
     writeWord_GBA(currBlock, 0x60);
@@ -1765,9 +2327,8 @@ void eraseIntel4000_GBA()
     writeWord_GBA(currBlock, 0xD0);
 
     // Read the status register
-    word statusReg = readWord_GBA(currBlock);
-    while ((statusReg | 0xFF7F) != 0xFFFF) {
-      statusReg = readWord_GBA(currBlock);
+    if (!waitIntelEraseReady_GBA(currBlock)) {
+      return;
     }
     // Blink led
     LED_RED_BLINK;
@@ -1779,7 +2340,7 @@ void eraseIntel4000_GBA()
   // Erase the second chip
   if (fileSize > 0x1000000) {
     // 126 blocks with 64kwords each
-    for (unsigned long currBlock = 0x1000000; currBlock < 0x1FDFFFF; currBlock += 0x1FFFF) {
+    for (unsigned long currBlock = 0x1000000; currBlock < 0x1FE0000; currBlock += 0x20000) {
       // Unlock Block
       writeWord_GBA(currBlock, 0x60);
       writeWord_GBA(currBlock, 0xD0);
@@ -1789,9 +2350,8 @@ void eraseIntel4000_GBA()
       writeWord_GBA(currBlock, 0xD0);
 
       // Read the status register
-      word statusReg = readWord_GBA(currBlock);
-      while ((statusReg | 0xFF7F) != 0xFFFF) {
-        statusReg = readWord_GBA(currBlock);
+      if (!waitIntelEraseReady_GBA(currBlock)) {
+        return;
       }
       // Blink led
       LED_RED_BLINK;
@@ -1808,9 +2368,8 @@ void eraseIntel4000_GBA()
       writeWord_GBA(currBlock, 0xD0);
 
       // Read the status register
-      word statusReg = readWord_GBA(currBlock);
-      while ((statusReg | 0xFF7F) != 0xFFFF) {
-        statusReg = readWord_GBA(currBlock);
+      if (!waitIntelEraseReady_GBA(currBlock)) {
+        return;
       }
       // Blink led
       LED_RED_BLINK;
@@ -1824,6 +2383,9 @@ void eraseIntel4400_GBA()
   unsigned long lastBlock = 0x1FFFFFF;
   if (fileSize < 0x2000000)
     lastBlock = fileSize;
+  gbaEraseFailed = 0;
+  gbaEraseFailedSector = 0;
+  gbaEraseFailedStatus = 0;
 
   // Erase 4 blocks with 16kwords each
   for (unsigned long currBlock = 0x0; currBlock < 0x1FFFF; currBlock += 0x8000) {
@@ -1836,9 +2398,8 @@ void eraseIntel4400_GBA()
     writeWord_GBA(currBlock, 0xD0);
 
     // Read the status register
-    word statusReg = readWord_GBA(currBlock);
-    while ((statusReg | 0xFF7F) != 0xFFFF) {
-      statusReg = readWord_GBA(currBlock);
+    if (!waitIntelEraseReady_GBA(currBlock)) {
+      return;
     }
 
     LED_RED_BLINK;
@@ -1846,7 +2407,7 @@ void eraseIntel4400_GBA()
   }
 
   // Erase 255 blocks with 64kwords each
-  for (unsigned long currBlock = 0x20000; currBlock < lastBlock; currBlock += 0x1FFFF)
+  for (unsigned long currBlock = 0x20000; currBlock < lastBlock; currBlock += 0x20000)
   {
     // Unlock Block
     writeWord_GBA(currBlock, 0x60);
@@ -1857,9 +2418,8 @@ void eraseIntel4400_GBA()
     writeWord_GBA(currBlock, 0xD0);
 
     // Read the status register
-    word statusReg = readWord_GBA(currBlock);
-    while ((statusReg | 0xFF7F) != 0xFFFF) {
-      statusReg = readWord_GBA(currBlock);
+    if (!waitIntelEraseReady_GBA(currBlock)) {
+      return;
     }
     // Blink led
     LED_RED_BLINK;
@@ -1871,7 +2431,7 @@ void eraseIntel4400_GBA()
   /* No need to erase the second chip as max rom size is 32MB
     if (fileSize > 0x2000000) {
     // 255 blocks with 64kwords each
-    for (unsigned long currBlock = 0x2000000; currBlock < 0x3FDFFFF; currBlock += 0x1FFFF) {
+    for (unsigned long currBlock = 0x2000000; currBlock < 0x3FE0000; currBlock += 0x20000) {
       // Unlock Block
       writeWord_GBA(currBlock, 0x60);
       writeWord_GBA(currBlock, 0xD0);
@@ -1994,20 +2554,23 @@ void sectorEraseMX29GL128E_GBA(unsigned long lastSector)
 {
   // Erase 128 sectors with 128kbytes each
   unsigned long currSector;
+  gbaEraseFailed = 0;
+  gbaEraseFailedSector = 0;
+  gbaEraseFailedStatus = 0;
+
   for (currSector = 0x0; currSector < lastSector; currSector += 0x20000) {
-    writeWord_GAB(0xAAA, 0xAA);
-    writeWord_GAB(0x555, 0x55);
-    writeWord_GAB(0xAAA, 0x80);
-    writeWord_GAB(0xAAA, 0xAA);
-    writeWord_GAB(0x555, 0x55);
-    writeWord_GAB(currSector, 0x30);
     // Blink LED
     LED_RED_BLINK;
     showPersent(currSector,lastSector,68,2);
-    // Read the status register
-    word statusReg = readWord_GAB(currSector);
-    while ((statusReg | 0xFF7F) != 0xFFFF) {
-      statusReg = readWord_GAB(currSector);
+    if (!eraseSector29GL_GBA(currSector)) {
+      printf("[GBA][ERASE] Retry sector=0x%08lX after reset\n", currSector);
+      resetMX29GL128E_GBA();
+      delay(1);
+      if (!eraseSector29GL_GBA(currSector)) {
+        dumpEraseSector29GL_GBA(currSector, 0x20000);
+        return;
+      }
+      printf("[GBA][ERASE] Retry succeeded at sector=0x%08lX\n", currSector);
     }
 
   }
@@ -2019,20 +2582,23 @@ void sectorEraseMX29GL128E_GBA_1(unsigned long lastSector)
 {
   // Erase 128 sectors with 128kbytes each
   unsigned long currSector;
+  gbaEraseFailed = 0;
+  gbaEraseFailedSector = 0;
+  gbaEraseFailedStatus = 0;
+
   for (currSector = 0x0; currSector < lastSector; currSector += 0x10000) {
-    writeWord_GAB(0xAAA, 0xAA);
-    writeWord_GAB(0x555, 0x55);
-    writeWord_GAB(0xAAA, 0x80);
-    writeWord_GAB(0xAAA, 0xAA);
-    writeWord_GAB(0x555, 0x55);
-    writeWord_GAB(currSector, 0x30);
     // Blink LED
     LED_RED_BLINK;
     showPersent(currSector,lastSector,68,2);
-    // Read the status register
-    word statusReg = readWord_GAB(currSector);
-    while ((statusReg | 0xFF7F) != 0xFFFF) {
-      statusReg = readWord_GAB(currSector);
+    if (!eraseSector29GL_GBA(currSector)) {
+      printf("[GBA][ERASE] Retry sector=0x%08lX after reset\n", currSector);
+      resetMX29GL128E_GBA();
+      delay(1);
+      if (!eraseSector29GL_GBA(currSector)) {
+        dumpEraseSector29GL_GBA(currSector, 0x10000);
+        return;
+      }
+      printf("[GBA][ERASE] Retry succeeded at sector=0x%08lX\n", currSector);
     }
 
   }
@@ -2252,12 +2818,12 @@ void writeMX29GL128E_GBA(FIL * ptf)
       // Write 32 words at a time
       for (int currWriteBuffer = 0; currWriteBuffer < 512; currWriteBuffer += 64) {
         // Write Buffer command
-        writeWord_GAB(0xAAA, 0xAA);
-        writeWord_GAB(0x555, 0x55);
-        writeWord_GAB(currSector, 0x25);
+        writeWord29GL_GBA(0xAAA, 0xAA);
+        writeWord29GL_GBA(0x555, 0x55);
+        writeWord29GL_GBA(currSector, 0x25);
 
         // Write word count (minus 1)
-        writeWord_GAB(currSector, 0x1F);
+        writeWord29GL_GBA(currSector, 0x1F);
 
         // Write buffer
         word currWord;
@@ -2269,19 +2835,101 @@ void writeMX29GL128E_GBA(FIL * ptf)
 
         // Confirm write buffer
         //delay(1);
-        writeWord_GAB(currSector, 0x29);
+        writeWord29GL_GBA(currSector, 0x29);
         delay(1);
 
         // Read the status register
-        word statusReg = readWord_GAB(currSector + currSdBuffer + currWriteBuffer + 62);
+        word statusReg = readWord29GL_GBA(currSector + currSdBuffer + currWriteBuffer + 62);
 
         while ((statusReg | 0xFF7F) != (currWord | 0xFF7F)) {
           delay_GBA();
-          statusReg = readWord_GAB(currSector + currSdBuffer + currWriteBuffer + 62);
+          statusReg = readWord29GL_GBA(currSector + currSdBuffer + currWriteBuffer + 62);
           
         }
 
         //delay(1);
+      }
+    }
+  }
+  showPersent(1,1,68,3);
+}
+
+void writeMX29GL128E_MX_GBA(FIL * ptf)
+{
+  for (unsigned long currSector = 0; currSector < fileSize; currSector += 0x20000)
+  {
+    LED_BLUE_BLINK;
+    showPersent(currSector,fileSize,68,3);
+
+    for (unsigned long currSdBuffer = 0; currSdBuffer < 0x20000; currSdBuffer += 512)
+    {
+      UINT rdt;
+      if (f_read(ptf, sdBuffer, 512, &rdt) != FR_OK) {
+        printf("\nF_read err!");
+      }
+
+      // Fallback to single-word program for MX29GL128E.
+      for (int currWriteBuffer = 0; currWriteBuffer < 512; currWriteBuffer += 2)
+      {
+        int retryCount = 0;
+        word currWord = *(word *)(sdBuffer + currWriteBuffer);
+        unsigned long currAddress = currSector + currSdBuffer + currWriteBuffer;
+
+_reProgramMX:
+        writeWord29GL_GBA(0xAAA, 0xAA);
+        delayMicroseconds(deley_us_lv128);
+        writeWord29GL_GBA(0x555, 0x55);
+        delayMicroseconds(deley_us_lv128);
+        writeWord29GL_GBA(0xAAA, 0xA0);
+        delayMicroseconds(deley_us_lv128);
+
+        writeWord_GBA(currAddress, currWord);
+
+        delayMicroseconds(deley_us_lv128);
+        word statusReg = readWord29GL_GBA(currAddress);
+
+        while ((statusReg | 0xFF7F) != (currWord | 0xFF7F))
+        {
+          delayMicroseconds(deley_us_lv128);
+          statusReg = readWord29GL_GBA(currAddress);
+
+          if (statusReg & 0x22)
+          {
+            word confirmStatus = readWord29GL_GBA(currAddress);
+            delayMicroseconds(deley_us_lv128);
+
+            if ((confirmStatus | 0xFF7F) != (currWord | 0xFF7F))
+            {
+              retryCount++;
+              printf("[GBA][WRITE] MX29 retry sector=0x%08lX addr=0x%08lX status=0x%04X\n",
+                currSector,
+                currAddress,
+                confirmStatus);
+
+              writeWord29GL_GBA(0xAAA, 0xAA);
+              delayMicroseconds(deley_us_lv128);
+              writeWord29GL_GBA(0x555, 0x55);
+              delayMicroseconds(deley_us_lv128);
+              writeWord29GL_GBA(0xAAA, 0xF0);
+              delay(1);
+
+              if (retryCount >= 8) {
+                printf("[GBA][WRITE] MX29 abort sector=0x%08lX addr=0x%08lX data=0x%04X final=0x%04X\n",
+                  currSector,
+                  currAddress,
+                  currWord,
+                  confirmStatus);
+                return;
+              }
+
+              goto _reProgramMX;
+            }
+
+            break;
+          }
+        }
+
+        delayMicroseconds(deley_us_lv128);
       }
     }
   }
@@ -2308,18 +2956,18 @@ void writeMX29GL128E_GBA_1(FIL * ptf)
 
         word currWord = *(word *)(sdBuffer + currWriteBuffer);
         // Write Buffer command
-        writeWord_GAB(0xAAA, 0xAA);
-        writeWord_GAB(0x555, 0x55);
-        writeWord_GAB(0xAAA, 0xA0);
+        writeWord29GL_GBA(0xAAA, 0xAA);
+        writeWord29GL_GBA(0x555, 0x55);
+        writeWord29GL_GBA(0xAAA, 0xA0);
         writeWord_GBA(currSector + currSdBuffer + currWriteBuffer, currWord);
         delayMicroseconds(10);
 
         // Read the status register
-        word statusReg = readWord_GAB(currSector + currSdBuffer + currWriteBuffer);
+        word statusReg = readWord29GL_GBA(currSector + currSdBuffer + currWriteBuffer);
 
         while ((statusReg | 0xFF7F) != (currWord | 0xFF7F)) {
           delay_GBA();
-          statusReg = readWord_GAB(currSector + currSdBuffer + currWriteBuffer);
+          statusReg = readWord29GL_GBA(currSector + currSdBuffer + currWriteBuffer);
         }
 
         //delay(1);
@@ -2414,6 +3062,10 @@ boolean verifyFlashrom_GBA_new()
           word currWord =  ((word *)sdBuffer)[i];
           if (tbuf[i] != currWord) {
             writeErrors++;
+            printf("[GBA][VERIFY] Mismatch addr=0x%08lX expected=0x%04X actual=0x%04X\n",
+              currSector + currSdBuffer + (i << 1),
+              currWord,
+              tbuf[i]);
             f_close(&tf);
             return 0;
           }
@@ -2482,28 +3134,40 @@ void flashRepro_GBA()
   uint32_t use_tick = getSystick();
 
   OledClear();
+  printf("[GBA][FLASH] Enter flashRepro_GBA\n");
   idFlashrom_GBA();
 
   if ((strcmp(flashid, "8802") == 0) || (strcmp(flashid, "8816") == 0) || (strcmp(flashid, "227E") == 0) || (strcmp(flashid, "227A") == 0)) 
   {
+    printf("[GBA][FLASH] Supported flash detected, flashid = 0x%s, romType = 0x%04X, cartSize = 0x%08X\n", flashid, romType, cartSize);
     sprintf(tmsg,"ID:%s size:%d MB.",flashid,cartSize / 0x100000);
     // MX29GL128E or MSP55LV128(N)
     if (strcmp(flashid, "227E") == 0 || strcmp(flashid, "227A") == 0) 
     {
+      printf("[GBA][FLASH] Enter manufacturer sub-decision for 0x227E/0x227A family\n");
       // MX is 0xC2 and MSP55LV128 is 0x4 and MSP55LV128N 0x1
-      if (romType == 0xC2) {
+      if (gbaNativeAmdDetected && romType == 0x01) {
+        printf("[GBA][FLASH] Manufacturer decision: Spansion/Cypress S29GL256S\n");
+        strcat(tmsg,"\n Spansion\n S29GL256S");
+      }
+      else if (romType == 0xC2) {
+        printf("[GBA][FLASH] Manufacturer decision: Macronix MX29GL128E\n");
         strcat(tmsg,"\n Macronix\n MX29GL128E");
       }
       else if ((romType == 0x1) || (romType == 0x4)) {
+        printf("[GBA][FLASH] Manufacturer decision: Fujitsu MSP55LV128N\n");
         strcat(tmsg,"\n Fujitsu\n MSP55LV128N");
       }
       else if (romType == 0x89) {
+        printf("[GBA][FLASH] Manufacturer decision: Intel PC28F256M29\n");
         strcat(tmsg,"\n Intel\n PC28F256M29");
       }
       else if (romType == 0x20) {
+        printf("[GBA][FLASH] Manufacturer decision: ST M29W128GH\n");
         strcat(tmsg,"\n ST\n M29W128GH");
       }
       else {
+        printf("[GBA][FLASH] Unsupported romType in 0x227E/0x227A family: 0x%04X\n", romType);
         sprintf(tmsg,"%s\n RomType : 0x%04x",tmsg,romType);
         OledShowString(0,0,tmsg,8);
         print_Error("Unknown manufacturer", true);
@@ -2511,10 +3175,12 @@ void flashRepro_GBA()
     }
     // Intel 4000L0YBQ0
     else if (strcmp(flashid, "8802") == 0) {
+      printf("[GBA][FLASH] Manufacturer decision: Intel 4000L0YBQ0\n");
       strcat(tmsg,"\n Intel\n 4000L0YBQ0");
     }
     // Intel 4400L0ZDQ0
     else if (strcmp(flashid, "8816") == 0) {
+      printf("[GBA][FLASH] Manufacturer decision: Intel 4400L0ZDQ0\n");
       strcat(tmsg,"\n Intel\n 4400L0ZDQ0");
     }
 
@@ -2531,22 +3197,38 @@ void flashRepro_GBA()
     // Open file on sd card
     if (f_open(&tf, filePath, FA_READ) == FR_OK) 
     {
+      printf("[GBA][FLASH] Open image OK: %s\n", filePath);
       // Get rom size from file
       fileSize = f_size(&tf);
+      gbaEraseFailed = 0;
+      gbaEraseFailedSector = 0;
+      gbaEraseFailedStatus = 0;
+      printf("[GBA][FLASH] Image size = 0x%08X (%lu bytes)\n", fileSize, fileSize);
+
       sprintf(tmsg,"FileSize: %dMB",fileSize / 0x100000);
       OledShowString(0,0,tmsg,8);
 
       // Erase needed sectors
       if (strcmp(flashid, "8802") == 0) {
+        printf("[GBA][ERASE] Decision: eraseIntel4000_GBA + resetIntel_GBA(0x200000)\n");
         OledShowString(10,2,"Erasing...",8);
 
         eraseIntel4000_GBA();
         resetIntel_GBA(0x200000);
+        if (blankcheckFlashrom_GBA() == 0) {
+          f_close(&tf);
+          print_Error("Erase failed!", true);
+        }
       }
       else if (strcmp(flashid, "8816") == 0) {
+        printf("[GBA][ERASE] Decision: eraseIntel4400_GBA + resetIntel_GBA(0x200000)\n");
         OledShowString(10,2,"Erasing...",8);
         eraseIntel4400_GBA();
         resetIntel_GBA(0x200000);
+        if (blankcheckFlashrom_GBA() == 0) {
+          f_close(&tf);
+          print_Error("Erase failed!", true);
+        }
       }
       else if (strcmp(flashid, "227E") == 0 || strcmp(flashid, "227A") == 0) {
         //if (sectorCheckMX29GL128E_GBA()) {
@@ -2555,7 +3237,9 @@ void flashRepro_GBA()
         //else {
         OledShowString(10,2,"Erasing...",8);
 
-        if ((romType == 0xC2) || (romType == 0x89)) {
+        if ((romType == 0xC2) || (romType == 0x89) || (gbaNativeAmdDetected && romType == 0x01)) {
+          probe29GLStability_GBA(fileSize - 1, 0x20000);
+          printf("[GBA][ERASE] Decision: sectorEraseMX29GL128E_GBA(last=0x%08X)\n", fileSize - 1);
           //MX29GL128E
           //PC28F256M29 (0x89)
           
@@ -2563,15 +3247,24 @@ void flashRepro_GBA()
           
         }
         else if (romType == 0x20){
+          probe29GLStability_GBA(fileSize - 1, 0x10000);
+          printf("[GBA][ERASE] Decision: sectorEraseMX29GL128E_GBA_1(last=0x%08X)\n", fileSize - 1);
           sectorEraseMX29GL128E_GBA_1(fileSize - 1);
         }
         else if ((romType == 0x1) || (romType == 0x4)) {
+          printf("[GBA][ERASE] Decision: sectorEraseMSP55LV128_GBA(last=0x%08X)\n", fileSize - 1);
           //MSP55LV128(N)
           //#ifndef TEST_MY_CART
           sectorEraseMSP55LV128_GBA(fileSize - 1);
           //#endif
         }
         //}
+      }
+
+      if (gbaEraseFailed) {
+        printf("[GBA][ERASE] Abort write after erase failure: sector=0x%08lX status=0x%04X\n", gbaEraseFailedSector, gbaEraseFailedStatus);
+        f_close(&tf);
+        print_Error("Erase timeout", true);
       }
       
       // Skip blankcheck to save time
@@ -2589,22 +3282,30 @@ void flashRepro_GBA()
 
       if ((strcmp(flashid, "8802") == 0) || (strcmp(flashid, "8816") == 0)) 
       {
+        printf("[GBA][WRITE] Decision: writeIntel4000_GBA\n");
         OledShowString(0,1,"Intel 4x00",8);
         writeIntel4000_GBA(&tf);
       }
       else if (strcmp(flashid, "227E") == 0 || strcmp(flashid, "227A") == 0) 
       {
-        if ((romType == 0xC2) || (romType == 0x89)) {
-          //MX29GL128E (0xC2)
+        if (romType == 0xC2) {
+          printf("[GBA][WRITE] Decision: writeMX29GL128E_MX_GBA\n");
+          OledShowString(0,1,"29 GL",8);
+          writeMX29GL128E_MX_GBA(&tf);
+        }
+        else if ((romType == 0x89) || (gbaNativeAmdDetected && romType == 0x01)) {
+          printf("[GBA][WRITE] Decision: writeMX29GL128E_GBA\n");
           //PC28F256M29 (0x89)
           OledShowString(0,1,"29 GL",8);
           writeMX29GL128E_GBA(&tf);
         }
         else if (romType == 0x20){
+          printf("[GBA][WRITE] Decision: writeMX29GL128E_GBA_1\n");
           OledShowString(0,1,"ST M29",8);
           writeMX29GL128E_GBA_1(&tf);
         }
         else if ((romType == 0x1) || (romType == 0x4)) {
+          printf("[GBA][WRITE] Decision: writeMSP55LV128_GBA\n");
           //MSP55LV128(N)
           OledShowString(0,1,"MSP55LV",8);
           writeMSP55LV128_GBA(&tf);
@@ -2619,6 +3320,7 @@ void flashRepro_GBA()
 
       if (strcmp(flashid, "8802") == 0) 
       {
+        printf("[GBA][RESET] Decision before verify: resetIntel_GBA(0x8000), (0x100000), (0x200000)\n");
         // Don't know the correct size so just take some guesses
         resetIntel_GBA(0x8000);
         delay(1000);
@@ -2629,11 +3331,13 @@ void flashRepro_GBA()
       }
       else if (strcmp(flashid, "8816") == 0) 
       {
+        printf("[GBA][RESET] Decision before verify: resetIntel_GBA(0x200000)\n");
         resetIntel_GBA(0x200000);
         delay(1000);
       }
       else if (strcmp(flashid, "227E") == 0 || strcmp(flashid, "227A") == 0) 
       {
+        printf("[GBA][RESET] Decision before verify: resetMX29GL128E_GBA\n");
         resetMX29GL128E_GBA();
         delay(1000);
       }
@@ -2642,10 +3346,12 @@ void flashRepro_GBA()
 
       if (verifyFlashrom_GBA_new() == 1) 
       {
+        printf("[GBA][VERIFY] verifyFlashrom_GBA_new = OK\n");
         //OledShowString(74,6,"OK!",8);
       }
       else 
       {
+        printf("[GBA][VERIFY] verifyFlashrom_GBA_new = FAIL\n");
         OledClear();
         print_Error("verify ERROR!", true);
       }
@@ -2658,15 +3364,18 @@ void flashRepro_GBA()
 
 
       use_tick = (getSystick() - use_tick)/1055;
+      printf("[GBA][FLASH] Total elapsed ticks decision path done, ui seconds = %lu\n", use_tick);
       sprintf(tmsg,"Use Time: %d(s)",use_tick);
       OledShowString(10,6,tmsg,8);
     }
     else {
+      printf("[GBA][FLASH] Open image FAIL: %s\n", filePath);
       print_Error("Can't open file!", true);
     }
   }
   else 
   {
+    printf("[GBA][FLASH] Unsupported flash, stop. flashid = 0x%s romType = 0x%04X\n", flashid, romType);
     sprintf(tmsg,"Error!\nUnknown Flash!\nFlash ID: %s",flashid);
     OledShowString(0,0,tmsg,8);
     print_Error("Check voltage?", true);
@@ -2860,8 +3569,32 @@ void setup_GBA()
   strcpy(tmsg,"Save: ");
   if(forceSaveType != 0){
     saveType = forceSaveType;
+    gbaSaveTypeSource = 2;
+    printf("[GBA][SAVE] Force save type applied: type=%u mode=%s\n",
+      (unsigned int)saveType,
+      gbaSaveTypeName(saveType));
     strcat(tmsg,"f-");
   }
+  else if ((gbaSelectedSaveType != 0) && (strcmp(gbaSelectedCartID, cartID) == 0)) {
+    saveType = gbaSelectedSaveType;
+    gbaSaveTypeSource = gbaSelectedSaveTypeSource;
+    printf("[GBA][SAVE] Reuse selected medium: cartID=%s type=%u mode=%s source=%s\n",
+      cartID,
+      (unsigned int)saveType,
+      gbaSaveTypeName(saveType),
+      gbaSaveTypeSourceName(gbaSaveTypeSource));
+  }
+  else if (gbaGuessedSaveType != 0) {
+    saveType = gbaGuessedSaveType;
+    gbaSaveTypeSource = gbaGuessedSaveTypeSource;
+    printf("[GBA][SAVE] Apply guessed medium: cartID=%s type=%u mode=%s source=%s\n",
+      cartID,
+      (unsigned int)saveType,
+      gbaSaveTypeName(saveType),
+      gbaSaveTypeSourceName(gbaSaveTypeSource));
+  }
+
+  logSaveTypeDecision_GBA("Effective before menu");
 
   switch (saveType)
   {
@@ -2891,6 +3624,10 @@ void setup_GBA()
 
     case 6:
       strcat(tmsg,"512K Sram");
+      break;
+
+    case 7:
+      strcat(tmsg,"1024K Sram");
       break;
   }
   OledShowString(0,3,tmsg,8);
@@ -2935,7 +3672,8 @@ static const char GBAMenuItem3[] = "Read Save";
 static const char GBAMenuItem4[] = "Write Save";
 static const char GBAMenuItem5[] = "Force Savetype";
 static const char GBAMenuItem6[] = "Reset";
-static const char* const menuOptionsGBA[] = {GBAMenuItem1, GBAMenuItem2, GBAMenuItem3, GBAMenuItem4, GBAMenuItem5, GBAMenuItem6};
+static char GBAMenuItem7[40] = "Select save medium";
+static const char* const menuOptionsGBA[] = {GBAMenuItem1, GBAMenuItem2, GBAMenuItem3, GBAMenuItem4, GBAMenuItem5, GBAMenuItem6, GBAMenuItem7};
 
 // Rom menu
 static const char GBARomItem1[] = "1MB";
@@ -2951,15 +3689,17 @@ static const char GBASaveItem1[] = "4K EEPROM";
 static const char GBASaveItem2[] = "64K EEPROM";
 static const char GBASaveItem3[] = "256K SRAM/FRAM";
 static const char GBASaveItem4[] = "512K SRAM/FRAM";
-static const char GBASaveItem5[] = "512K FLASHROM";
-static const char GBASaveItem6[] = "1M FLASHROM";
-static const char* const saveOptionsGBA[] = {GBASaveItem1, GBASaveItem2, GBASaveItem3, GBASaveItem4, GBASaveItem5, GBASaveItem6};
+static const char GBASaveItem5[] = "1M SRAM/FRAM";
+static const char GBASaveItem6[] = "512K FLASHROM";
+static const char GBASaveItem7[] = "1M FLASHROM";
+static const char* const saveOptionsGBA[] = {GBASaveItem1, GBASaveItem2, GBASaveItem3, GBASaveItem4, GBASaveItem5, GBASaveItem6, GBASaveItem7};
 
 uint8_t gbaMenu() {
   // create menu with title and 4 options to choose from
 
   uint8_t bret = 0;
-  unsigned char retMenu = questionBox_OLED("GBA Cart Reader", menuOptionsGBA, 6, 1, 1, 1);
+  updateMediumMenuLabel_GBA(GBAMenuItem7);
+  unsigned char retMenu = questionBox_OLED("GBA Cart Reader", menuOptionsGBA, 7, 1, 1, 1);
   char tmsg[32] = {0};
 
   // wait for user choice to come back from the question box menu
@@ -3060,72 +3800,54 @@ uint8_t gbaMenu() {
       // Read save
       if (saveType == 0) 
       {
-        // create submenu with title and 6 options to choose from
-        unsigned char GBASaveMenu = questionBox_OLED("Select save type:", saveOptionsGBA, 6, 1, 1, 1);
-        // wait for user choice to come back from the question box menu
-        switch (GBASaveMenu)
+        promptSaveTypeSelection_GBA(3);
+        if (saveType == 0)
         {
-          case 1:
-            // 4K EEPROM
-            saveType = 1;
-            break;
-
-          case 2:
-            // 64K EEPROM
-            saveType = 2;
-            break;
-
-          case 3:
-            // 256K SRAM/FRAM
-            saveType = 3;
-            break;
-
-          case 4:
-            // 512K SRAM/FRAM
-            saveType = 6;
-            break;
-
-          case 5:
-            // 512K FLASH
-            saveType = 4;
-            break;
-
-          case 6:
-            // 1024K FLASH
-            saveType = 5;
-            break;
+          print_Error("Select medium first", false);
+          break;
         }
       }
+
+      printf("[GBA][SAVE] Read Save selected: type=%u mode=%s source=%s force=%u\n",
+        (unsigned int)saveType,
+        gbaSaveTypeName(saveType),
+        gbaSaveTypeSourceName(gbaSaveTypeSource),
+        (unsigned int)forceSaveType);
 
       OledClear();
       switch (saveType)
       {
         case 1:
           // 4K EEPROM
+          printf("[GBA][SAVE] Read path -> EEPROM 4K\n");
           readEeprom_GBA(4);
           setROM_GBA();
           break;
 
         case 2:
           // 64K EEPROM
+          printf("[GBA][SAVE] Read path -> EEPROM 64K\n");
           readEeprom_GBA(64);
           setROM_GBA();
           break;
 
         case 3:
           // 256K SRAM/FRAM
+          printf("[GBA][SAVE] Read path -> SRAM/FRAM 256K\n");
           readSRAM_GBA(1, 32768, 0);
           setROM_GBA();
           break;
 
         case 4:
           // 512K FLASH
+          printf("[GBA][SAVE] Read path -> FLASH 512K\n");
           readFLASH_GBA(1, 65536, 0);
           setROM_GBA();
           break;
 
         case 5:
           // 1024K FLASH (divided into two banks)
+          printf("[GBA][SAVE] Read path -> FLASH 1M (banked)\n");
           switchBank_GBA(0x0);
           setROM_GBA();
           readFLASH_GBA(1, 65536, 0);
@@ -3137,7 +3859,15 @@ uint8_t gbaMenu() {
 
         case 6:
           // 512K SRAM/FRAM
+          printf("[GBA][SAVE] Read path -> SRAM/FRAM 512K\n");
           readSRAM_GBA(1, 65536, 0);
+          setROM_GBA();
+          break;
+
+        case 7:
+          // 1M SRAM/FRAM
+          printf("[GBA][SAVE] Read path -> SRAM/FRAM 1M\n");
+          readSRAM_GBA(1, 131072, 0);
           setROM_GBA();
           break;
       }
@@ -3147,59 +3877,35 @@ uint8_t gbaMenu() {
 
     case MENU_4:
       // Write save
-      if (saveType == 0) 
+      if (saveType == 0)
       {
-        // create submenu with title and 6 options to choose from
-        unsigned char GBASavesMenu = questionBox_OLED("Select save type:", saveOptionsGBA, 6, 1, 1, 1);
-        // wait for user choice to come back from the question box menu
-        switch (GBASavesMenu)
+        promptSaveTypeSelection_GBA(3);
+        if (saveType == 0)
         {
-          case 1:
-            // 4K EEPROM
-            saveType = 1;
-            break;
-
-          case 2:
-            // 64K EEPROM
-            saveType = 2;
-            break;
-
-          case 3:
-            // 256K SRAM/FRAM
-            saveType = 3;
-            break;
-
-          case 4:
-            // 512K SRAM/FRAM
-            saveType = 6;
-            break;
-
-          case 5:
-            // 512K FLASH
-            saveType = 4;
-            break;
-
-          case 6:
-            // 1024K FLASH
-            saveType = 5;
-            break;
+          print_Error("Select medium first", false);
+          break;
         }
       }
+
+      printf("[GBA][SAVE] Write Save selected: type=%u mode=%s source=%s force=%u\n",
+        (unsigned int)saveType,
+        gbaSaveTypeName(saveType),
+        gbaSaveTypeSourceName(gbaSaveTypeSource),
+        (unsigned int)forceSaveType);
 
       OledClear();
       switch (saveType)
       {
         case 1:
-          // 4K EEPROM
+          printf("[GBA][SAVE] Write path -> EEPROM 4K\n");
           writeEeprom_GBA(4);
           writeErrors = verifyEEP_GBA(4);
-          if (writeErrors == 0) 
+          if (writeErrors == 0)
           {
-            OledShowString(0,4,"Verified OK",8);            
+            OledShowString(0,4,"Verified OK",8);
           }
-          else 
+          else
           {
-            //
             sprintf(tmsg,"Error: %d bytes.",writeErrors);
             OledShowString(0,4,tmsg,8);
             print_Error("Did not verify...", false);
@@ -3208,16 +3914,15 @@ uint8_t gbaMenu() {
           break;
 
         case 2:
-          // 64K EEPROM
+          printf("[GBA][SAVE] Write path -> EEPROM 64K\n");
           writeEeprom_GBA(64);
           writeErrors = verifyEEP_GBA(64);
-          if (writeErrors == 0) 
+          if (writeErrors == 0)
           {
-            OledShowString(0,4,"Verified OK",8);            
+            OledShowString(0,4,"Verified OK",8);
           }
-          else 
+          else
           {
-            //
             sprintf(tmsg,"Error: %d bytes.",writeErrors);
             OledShowString(0,4,tmsg,8);
             print_Error("Did not verify...", false);
@@ -3226,16 +3931,15 @@ uint8_t gbaMenu() {
           break;
 
         case 3:
-          // 256K SRAM/FRAM
+          printf("[GBA][SAVE] Write path -> SRAM/FRAM 256K\n");
           writeSRAM_GBA(1, 32768, 0);
           writeErrors = verifySRAM_GBA(32768, 0);
-          if (writeErrors == 0) 
+          if (writeErrors == 0)
           {
-            OledShowString(0,4,"Verified OK",8);            
+            OledShowString(0,4,"Verified OK",8);
           }
-          else 
+          else
           {
-            //
             sprintf(tmsg,"Error: %d bytes.",writeErrors);
             OledShowString(0,4,tmsg,8);
             print_Error("Did not verify...", false);
@@ -3244,22 +3948,21 @@ uint8_t gbaMenu() {
           break;
 
         case 4:
-          // 512K FLASH
           idFlash_GBA();
           resetFLASH_GBA();
-          if (strcmp(flashid, "BFD4") != 0) 
+          if (strcmp(flashid, "BFD4") != 0)
           {
             OledShowString(0,3,"Flashrom Type \n not supported!",8);
             sprintf(tmsg,"ID: %s",flashid);
             print_Error(tmsg, true);
           }
           eraseFLASH_GBA();
-          if (blankcheckFLASH_GBA(65536)) 
+          if (blankcheckFLASH_GBA(65536))
           {
             writeFLASH_GBA(1, 65536, 0);
             verifyFLASH_GBA(65536, 0);
           }
-          else 
+          else
           {
             print_Error("Erase failed!", false);
           }
@@ -3267,17 +3970,16 @@ uint8_t gbaMenu() {
           break;
 
         case 5:
-          // 1M FLASH
+          printf("[GBA][SAVE] Write path -> FLASH 1M (banked)\n");
           idFlash_GBA();
           resetFLASH_GBA();
-          if (strcmp(flashid, "C209") != 0) 
+          if (strcmp(flashid, "C209") != 0)
           {
             OledShowString(0,3,"Flashrom Type \n not supported!",8);
             sprintf(tmsg,"ID: %s",flashid);
             print_Error(tmsg, true);
           }
           eraseFLASH_GBA();
-          // 131072 bytes are divided into two 65536 byte banks
           switchBank_GBA(0x0);
           setROM_GBA();
           if (blankcheckFLASH_GBA(65536))
@@ -3285,35 +3987,44 @@ uint8_t gbaMenu() {
             writeFLASH_GBA(1, 65536, 0);
             verifyFLASH_GBA(65536, 0);
           }
-          else 
+          else
           {
             print_Error("Erase failed!", false);
           }
           switchBank_GBA(0x1);
           setROM_GBA();
-          if (blankcheckFLASH_GBA(65536)) 
-          {
-            writeFLASH_GBA(0, 65536, 65536);
-            verifyFLASH_GBA(65536, 65536);
-          }
-          else 
-          {
-            print_Error("Erase failed!", false);
-          }
+          writeFLASH_GBA(0, 65536, 65536);
+          verifyFLASH_GBA(65536, 65536);
           setROM_GBA();
           break;
 
         case 6:
-          // 512K SRAM/FRAM
+          printf("[GBA][SAVE] Write path -> SRAM/FRAM 512K\n");
           writeSRAM_GBA(1, 65536, 0);
           writeErrors = verifySRAM_GBA(65536, 0);
-          if (writeErrors == 0) 
+          if (writeErrors == 0)
           {
-            OledShowString(0,7,"Verified OK",8);            
+            OledShowString(0,7,"Verified OK",8);
           }
-          else 
+          else
           {
-            //
+            sprintf(tmsg,"Error: %d bytes.",writeErrors);
+            OledShowString(0,5,tmsg,8);
+            print_Error("Did not verify...", false);
+          }
+          setROM_GBA();
+          break;
+
+        case 7:
+          printf("[GBA][SAVE] Write path -> SRAM/FRAM 1M\n");
+          writeSRAM_GBA(1, 131072, 0);
+          writeErrors = verifySRAM_GBA(131072, 0);
+          if (writeErrors == 0)
+          {
+            OledShowString(0,7,"Verified OK",8);
+          }
+          else
+          {
             sprintf(tmsg,"Error: %d bytes.",writeErrors);
             OledShowString(0,5,tmsg,8);
             print_Error("Did not verify...", false);
@@ -3324,52 +4035,18 @@ uint8_t gbaMenu() {
       OledShowString(0,7,"Press OK Button...",8);
       WaitOKBtn();
       break;
-      
+
     case MENU_5:
-      {
-       
-        // create submenu with title and 7 options to choose from
-        unsigned char GBASaveMenu = questionBox_OLED("Select save type:", saveOptionsGBA, 6, 1, 1, 1);
-
-        // wait for user choice to come back from the question box menu
-        switch (GBASaveMenu)
-        {
-          case 1:
-            // 4K EEPROM
-            forceSaveType = 1;
-            break;
-
-          case 2:
-            // 64K EEPROM
-            forceSaveType = 2;
-            break;
-
-          case 3:
-            // 256K SRAM/FRAM
-            forceSaveType = 3;
-            break;
-
-          case 4:
-            // 512K SRAM/FRAM
-            forceSaveType = 6;
-            break;
-
-          case 5:
-            // 512K FLASH
-            forceSaveType = 4;
-            break;
-
-          case 6:
-            // 1024K FLASH
-            forceSaveType = 5;
-            break;
-        }
-      }       
+      promptSaveTypeSelection_GBA(2);
+      forceSaveType = saveType;
       break;
-
 
     case MENU_6:
       ResetSystem();
+      break;
+
+    case MENU_7:
+      promptSaveTypeSelection_GBA(3);
       break;
   }
 

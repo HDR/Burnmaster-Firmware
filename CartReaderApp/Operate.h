@@ -1,4 +1,5 @@
-#pragma onece
+#ifndef OPERATE_H
+#define OPERATE_H
 
 #define BTNNONE (0)
 #define BTNUP (1)
@@ -23,12 +24,14 @@
 #define MENU_PGDN (103)
 
 
-void KeyBrdInit();
-uint8_t keyState();
-uint8_t checkButton();
-void WaitOKBtn();
+void KeyBrdInit(void);
+uint8_t keyState(void);
+uint8_t checkButton(void);
+void WaitOKBtn(void);
 
 // Display a question box with selectable answers. Make sure default choice is in (0, num_answers]
 unsigned char questionBox_OLED(char * question, const char* const answers[7], int num_answers, int default_choice, uint8_t rollselect, uint8_t clrSrc);
 uint8_t my_mkdir(char * dir);
 void fileBrowser(char * start_dir , const char * browserTitle);
+
+#endif

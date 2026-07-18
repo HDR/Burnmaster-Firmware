@@ -20,13 +20,81 @@ Purpose : Generic application start
 #include "GB.h"
 #include "GBA.h"
 #include "fatfs/sdcard.h"
+#include "gd32f10x_gpio.h"
+#include "gd32f10x_rcu.h"
 #include "gd32f10x_sdio.h"
+#include "gd32f10x_usart.h"
 #include "flashparam.h"
 
+#pragma import(__use_no_semihosting_swi)
 
+struct __FILE
+{
+  int handle;
+};
 
+FILE __stdout;
+FILE __stdin;
+FILE __stderr;
 
+static void USART1_Init(void)
+{
+  rcu_periph_clock_enable(RCU_GPIOA);
+  rcu_periph_clock_enable(RCU_USART1);
 
+  gpio_init(GPIOA, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, GPIO_PIN_2);
+  gpio_init(GPIOA, GPIO_MODE_IN_FLOATING, GPIO_OSPEED_50MHZ, GPIO_PIN_3);
+
+  usart_deinit(USART1);
+  usart_baudrate_set(USART1, 115200U);
+  usart_word_length_set(USART1, USART_WL_8BIT);
+  usart_stop_bit_set(USART1, USART_STB_1BIT);
+  usart_parity_config(USART1, USART_PM_NONE);
+  usart_receive_config(USART1, USART_RECEIVE_ENABLE);
+  usart_transmit_config(USART1, USART_TRANSMIT_ENABLE);
+  usart_enable(USART1);
+}
+
+int fputc(int ch, FILE *f)
+{
+  (void)f;
+
+  usart_data_transmit(USART1, (uint16_t)ch);
+  while(RESET == usart_flag_get(USART1, USART_FLAG_TBE)){
+  }
+
+  return ch;
+}
+
+int ferror(FILE *f)
+{
+  (void)f;
+
+  return EOF;
+}
+
+void _ttywrch(int ch)
+{
+  usart_data_transmit(USART1, (uint16_t)ch);
+  while(RESET == usart_flag_get(USART1, USART_FLAG_TBE)){
+  }
+}
+
+char *_sys_command_string(char *cmd, int len)
+{
+  (void)cmd;
+  (void)len;
+
+  return NULL;
+}
+
+void _sys_exit(int return_code)
+{
+  (void)return_code;
+
+  while(1){
+  }
+}
 
 //PC5是卡带3V3电压档位，低电平有效，PB0是卡带5V电压档位，低电平有效
 
@@ -88,7 +156,7 @@ static const char gbxAbout[] = "About...";
 
 static const char* const menuOptionsGBC[] = {gbxMenuItem1,gbxMenuGBTestFast,gbxMenuGBTestAll,gbxAbout};
 static const char* const menuOptionsGBA[] = {gbxMenuItem2,gbxMenuGBATestFast,gbxMenuGBATestAll,gbxAbout};
-static const char* const menuOptionsGBx[] = {gbxMenuItem1, gbxMenuItem2};
+static const char* const menuOptionsGBx[] = {gbxMenuItem1,gbxMenuItem2};
 
 
 void aboutScreen()
@@ -97,12 +165,12 @@ void aboutScreen()
   OledClear();
   OledShowString(0,0,(char *)("Portable"),16);
   OledShowString(8,2,(char *)("Cart Flasher"),16);
-  OledShowString(20,4,(char *)("Ver:1.12"),8);
-  OledShowString(20,5,(char *)("2024.5"),8);
+  OledShowString(20,4,(char *)("Ver:1.13"),8);
+  OledShowString(20,5,(char *)("2026.6"),8);
   OledShowString(20,6,(char *)("Orz Studio"),8);
-
+	
   OledShowString(0,7,(char *)("Press OK Button..."),8);
-
+	
   WaitOKBtn();
 }
 
@@ -125,7 +193,7 @@ uint8_t gbxMenu()
     LED_BLUE_ON;
     OledClear();
     OledShowPicData(64,4,56,4,Icon_data_GBA);
-    gbType = questionBox_OLED("Portable Cart Flasher", menuOptionsGBA, 4, 1, 1, 0);    
+    gbType = questionBox_OLED("Portable Cart Flasher", menuOptionsGBA, 4, 1, 1, 0);
     switch (gbType)
     {
       case 0:
@@ -507,29 +575,29 @@ int main(void)
 {
   //  
   PriInit();
+  //USART1_Init();
+  //printf("Hello CartReaderApp\r\n");
   //
-  LEDSInit();
+  //LEDSInit();
   //test();
   OledInit();
   OledClear();
   KeyBrdInit();
   SDCardInit();
-
-
+	
   //fileBrowser("/","test");
   //printf("\n\nselect:%s",filePath);
   
-
-  //
+	
   //while(1)
   //{
-  //   //
+  //
   //   mainMenu();
   //}
-
+	
   delay(200);
   gbxScreen();
-
+	
   //
   f_mount(NULL,"",1);
   SysClockFree();

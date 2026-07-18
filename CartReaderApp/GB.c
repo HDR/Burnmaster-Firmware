@@ -1232,7 +1232,7 @@ unsigned long flashBanks;
 byte readByteCompensated(int address) {
   byte data = readByte_GB(address >> (flashX16Mode ? 1 : 0));
   if (flashSwitchLastBits) {
-    return (data & 0b11111100) | ((data << 1) & 0b10) | ((data >> 1) & 0b01);
+    return (data & 0xFC) | ((data << 1) & 0x02) | ((data >> 1) & 0x01);
   }
   return data;
 }
@@ -1248,7 +1248,7 @@ byte readByteCompensated(int address) {
 void writeByteCompensated(int address, byte data) {
   byte td;
   if (flashSwitchLastBits) {
-    td = (data & 0b11111100) | ((data << 1) & 0b10) | ((data >> 1) & 0b01);
+    td = (data & 0xFC) | ((data << 1) & 0x02) | ((data >> 1) & 0x01);
   }
   else td = data;
   writeByte_GB(address >> (flashX16Mode ? 1 : 0), td);
@@ -2253,7 +2253,8 @@ uint8_t gbFlashMenu()
   //
   uint8_t bret = 0;
 
-  unsigned char gbFlash = questionBox_OLED("Select type:", menuOptionsGBFlash, 6, 1, 1, 1);
+  unsigned char gbFlash = 1;
+
   OledClear();
   // wait for user choice to come back from the question box menu
   switch (gbFlash)
@@ -2424,9 +2425,8 @@ static const char GBMenuItem1[] = "Flash GBC Cart";
 static const char GBMenuItem2[] = "Read Rom";
 static const char GBMenuItem3[] = "Read Save";
 static const char GBMenuItem4[] = "Write Save";
-static const char GBMenuItem5[] = "NPower GB Memory";
 static const char GBMenuItem6[] = "Reset";
-static const char* const menuOptionsGB[] = {GBMenuItem1, GBMenuItem2, GBMenuItem3, GBMenuItem4, GBMenuItem5, GBMenuItem6};
+static const char* const menuOptionsGB[] = {GBMenuItem1, GBMenuItem2, GBMenuItem3, GBMenuItem4, GBMenuItem6};
 
 uint8_t gbMenu() 
 {
@@ -2434,7 +2434,7 @@ uint8_t gbMenu()
   uint8_t bret = 0;
   
   // create menu with title and 3 options to choose from
-  unsigned char gbMenu = questionBox_OLED("GB Cart Reader", menuOptionsGB, 6, 1, 1, 1);
+  unsigned char gbMenu = questionBox_OLED("GB Cart Reader", menuOptionsGB, 5, 1, 1, 1);
 
   // wait for user choice to come back from the question box menu
   switch (gbMenu)
@@ -2498,10 +2498,6 @@ uint8_t gbMenu()
       break;
 
     case 5:
-      // Flash GB Memory
-      gbmScreen();
-      break;
-    case 6:
       ResetSystem();
       break;
   }

@@ -12,6 +12,6 @@
 #define CS_ROM     GPIO_PIN_15
 
 void TestMemGBA(boolean bFast);
-void gbaScreen();
+void gbaScreen(void);
 
 #endif

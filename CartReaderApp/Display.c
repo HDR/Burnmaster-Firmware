@@ -664,7 +664,7 @@ void OledShowChar(uint8_t x,uint8_t y,uint8_t chr,uint8_t Char_Size)
 
 
 //显示一个字符串
-uint8_t OledShowString(uint8_t x,uint8_t y,char *str,uint8_t Char_Size)
+uint8_t OledShowString(uint8_t x,uint8_t y,const char *str,uint8_t Char_Size)
 {
   unsigned char j=0;
   

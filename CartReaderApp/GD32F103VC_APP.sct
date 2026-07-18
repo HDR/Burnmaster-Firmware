@@ -1,0 +1,11 @@
+LR_IROM1 0x0800C000 0x00034000  {
+  ER_IROM1 0x0800C000 0x00034000  {
+    startup_gd32f103vc.o (RESET, +First)
+    *(InRoot$$Sections)
+    .ANY (+RO)
+  }
+
+  RW_IRAM1 0x20000000 0x00010000  {
+    .ANY (+RW +ZI)
+  }
+}

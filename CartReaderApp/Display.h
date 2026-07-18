@@ -1,4 +1,5 @@
-#pragma onece
+#ifndef DISPLAY_H
+#define DISPLAY_H
 
 #define I2C1_SLAVE_ADDRESS7    0x78
 #define SSD1306_ADDR 0x3c
@@ -30,7 +31,7 @@ void OledClear(void);
 //Char_Size:选择字体 16/12 
 void OledShowChar(uint8_t x,uint8_t y,uint8_t chr,uint8_t Char_Size);
 //显示一个字符串
-uint8_t OledShowString(uint8_t x,uint8_t y,char *str,uint8_t Char_Size);
+uint8_t OledShowString(uint8_t x,uint8_t y,const char *str,uint8_t Char_Size);
 //显示一个位图
 void OledShowPicData(uint8_t x,uint8_t y,uint8_t wdt,uint8_t hgt,uint8_t *pPicData);
 //初始化
@@ -47,7 +48,7 @@ void showPersent(uint32_t processed, uint32_t total, uint8_t x, uint8_t line);
 
 
 //Leds
-void LEDSInit();
+void LEDSInit(void);
 void LED_ON(uint8_t LedNum);
 void LED_OFF(uint8_t LedNum);
 void LED_BLINK(uint8_t LedNum);
@@ -62,3 +63,5 @@ void LED_CLEAR(void);
 #define LED_RED_BLINK LED_BLINK(LED_R)
 #define LED_GREEN_BLINK LED_BLINK(LED_G)
 #define LED_BLUE_BLINK LED_BLINK(LED_B)
+
+#endif

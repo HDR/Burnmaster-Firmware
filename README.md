@@ -4,21 +4,19 @@ Based on Sanni's [cartreader](https://github.com/sanni/cartreader) firmware
 
 
 ## Building the firmware
-**Requires [SEGGER Embedded Studio (6.22a recommended)](https://www.segger.com/products/development-tools/embedded-studio/)** 
+### Requirements:
+**[Keil MDK-ARM](https://www.keil.com/demo/eval/arm.htm)** (uVision 5)
 
-To build the firmware open `GDCartReader.emProject` in Embedded Studio, then right click `Project 'GDCartReader'` and click `Build` the compiled firmware can be found at `ProjectFolder/Debug/Exe/GDCartReader.bin`, you will need to rename this file to `update.bin` which can now be put at the root of your SD Card to update your BurnMaster
+**[GD32F10x_DFP](https://gd32mcu.com/data/documents/pack/GigaDevice.GD32F10x_DFP.2.0.3.pack)**
 
-**Alternatively** you can simply clone this repository and make your changes, Github will automatically build your firmware (See Actions Tab)
+**[ARM Compiler 5.0.6 Update 7](https://developer.arm.com/downloads/view/ACOMP5?revision=r5p6-07rel1)** (Requires an account)
 
-### Repository Notes:
-
-This repository is setup to auto-build the firmware when a commit is made, builds can be found under the [Actions tab](https://github.com/HDR/Burnmaster-Firmware/actions), this makes it really easy to fork this repository and make your own changes without having to download Segger Embedded Studio
-
-### Known Bugs:
-- The save folder fails to increment, because of this the Burnmaster can only hold a single save for each game.
+To build the firmware open `GDCartReader.uvprojx` in uVision, then right click `Project` and click `Build Target` (after setting up uVision, which won't be covered here)
 
 ---
 
 This source code is provided directly by funnyplaying, i have nothing to do with the development of the firmware.
 
 **Note:** This repo will only host the firmware source provided by funnyplaying, PR's will not be merged, and will be left open (or closed in the case of ai generated PR's)
+
+**Note 2:** with 1.13 Funnyplaying switched from segger embedded studio to uVision, which requires you to register an account to get access to ARM Compiler 5.0.6

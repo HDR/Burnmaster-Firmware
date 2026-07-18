@@ -70,7 +70,7 @@ define memory with size = 4G;
 //
 // Combined regions per memory type
 //
-define region FLASH = [from 0x0800c000 size 0x34000];
+define region FLASH = [from 0x08000000 size 0x34000];
 define region RAM   = RAM1;
 
 //

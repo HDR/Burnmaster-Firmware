@@ -7,18 +7,25 @@
 
 void save_dword(uint32_t data)
 {
-  //
   fmc_unlock();
+  fmc_flag_clear(FMC_FLAG_BANK0_END | FMC_FLAG_BANK0_WPERR | FMC_FLAG_BANK0_PGERR);
+  fmc_page_erase(FMC_WRITE_START_ADDR);
+  fmc_flag_clear(FMC_FLAG_BANK0_END | FMC_FLAG_BANK0_WPERR | FMC_FLAG_BANK0_PGERR);
   fmc_word_program(FMC_WRITE_START_ADDR, data);
-  //lock the main FMC after the program operation */
+  fmc_flag_clear(FMC_FLAG_BANK0_END | FMC_FLAG_BANK0_WPERR | FMC_FLAG_BANK0_PGERR);
   fmc_lock();
 }
 
 uint32_t load_dword()
 {
-  //
   uint32_t *ptr = (uint32_t *)FMC_WRITE_START_ADDR;
-  return  ptr[0];
+  uint32_t raw = ptr[0];
+
+  if (raw == 0xFFFFFFFFU || raw > 0x7FFFFFFFU) {
+    return 0U;
+  }
+
+  return raw;
 }
 
 
@@ -26,9 +33,6 @@ uint32_t load_dword()
 
 static CONFIG_PARAMS g_config_params = {0};
 
-
-
- 
 static void fmc_erase_pages(void)
 {
     //unlock the flash program/erase controller 
