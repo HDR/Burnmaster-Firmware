@@ -22,3 +22,5 @@ This repository is setup to auto-build the firmware when a commit is made, build
 This source code is provided directly by funnyplaying, i have nothing to do with the development of the firmware.
 
 **Note:** This repo will only host the firmware source provided by funnyplaying, PR's will not be merged, and will be left open (or closed in the case of ai generated PR's)
+
+**Note 2:** 1.13 is on a separate branch, found [Here](https://github.com/HDR/Burnmaster-Firmware/tree/new), this is because Funnyplaying moved the project from Segger Embedded Studio to the ARM-MDK (uVision 5)
